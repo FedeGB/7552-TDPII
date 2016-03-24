@@ -4,6 +4,10 @@ install:
 - sudo apt-get -qq install g++-4.8
 language: cpp
 compiler: g++
+before_script:
+- echo "Versiones de compilador:"
+- echo g++ --version
+- echo gcc --version
 script:
 - make
 - ./main
