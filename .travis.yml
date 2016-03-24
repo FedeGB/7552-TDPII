@@ -1,5 +1,5 @@
 language: cpp
 compiler: g++
 script:
-	- make
-	- ./main
+- make
+- ./main
