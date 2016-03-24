@@ -5,9 +5,8 @@ install:
 language: cpp
 compiler: g++
 before_script:
-- echo "Versiones de compilador:"
-- echo g++ --version
-- echo gcc --version
+- g++ --version
+- gcc --version
 script:
 - make
 - ./main
