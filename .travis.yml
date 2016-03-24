@@ -1,6 +1,7 @@
 install:
-- export CXX="g++-4.9" CC="gcc-4.9"
-- echo ${CXX} --version
+-sudo add-apt-repository -y ppa:ubuntu-toolchain-r/test
+-sudo apt-get -qq update
+-sudo apt-get -qq install g++-4.8
 language: cpp
 compiler: g++
 script:
