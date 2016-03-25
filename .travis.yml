@@ -9,5 +9,4 @@ before_script:
 - gcc --version
 script:
 - make Travis
-- ./main
 - ./gTest
