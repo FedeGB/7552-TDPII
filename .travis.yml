@@ -5,8 +5,9 @@ install:
 language: cpp
 compiler: g++
 before_script:
-- g++ --version
+- g++-4.8 --version
 - gcc --version
 script:
 - make
 - ./main
+- ./gTest
