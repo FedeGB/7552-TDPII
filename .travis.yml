@@ -8,6 +8,6 @@ before_script:
 - g++-4.8 --version
 - gcc --version
 script:
-- make
+- make Travis
 - ./main
 - ./gTest
