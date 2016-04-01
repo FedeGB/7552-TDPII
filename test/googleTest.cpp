@@ -8,3 +8,7 @@ int main(int argc, char **argv) {
 TEST(TestCasesasa, Test) {
 	ASSERT_TRUE(true);
 }
+
+TEST(REQUESTHTTP, REQUESTCLIENTE){
+	ASSERT_TRUE(true);
+}
