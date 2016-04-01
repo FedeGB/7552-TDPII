@@ -6,5 +6,8 @@ install:
 language: cpp
 compiler: g++
 script:
-- make Test
-- ./gTest
+- mkdir build
+- cd build
+- cmake ../
+- make
+- ./test
