@@ -6,6 +6,7 @@
  */
 
 #include "Message.h"
+#include "User.h"
 
 Message::Message(User* sender, User* receptor, string data ) {
 	// TODO Auto-generated constructor stub

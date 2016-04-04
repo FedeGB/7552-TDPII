@@ -9,13 +9,12 @@
 #define SERVER_H_
 
 #include "mongoose.h"
-#include "Manager.h"
-
 
 #include <stdio.h>
 #include <string.h>
 #include <iostream>
 
+class Manager;
 
 using namespace std;
 

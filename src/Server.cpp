@@ -6,6 +6,7 @@
  */
 
 #include "Server.h"
+#include "Manager.h"
 
 static struct mg_serve_http_opts s_http_server_opts;
 
