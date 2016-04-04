@@ -6,6 +6,7 @@
  */
 
 #include "Database.h"
+#include "User.h"
 
 std::string DBpath = "/tmp/match";
 

@@ -13,8 +13,7 @@
 #include "rocksdb/options.h"
 #include <string>
 
-#include "Message.h"
-
+class Message;
 
 using namespace rocksdb;
 using namespace std;

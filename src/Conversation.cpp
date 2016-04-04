@@ -6,6 +6,7 @@
  */
 
 #include "Conversation.h"
+#include "User.h"
 
 Conversation::Conversation() {
 	// TODO Auto-generated constructor stub
