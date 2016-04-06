@@ -6,6 +6,7 @@
  */
 
 #include "Manager.h"
+#include "Database.h"
 
 Manager::Manager() {
 	this->db = new Database();

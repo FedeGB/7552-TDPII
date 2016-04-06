@@ -9,7 +9,8 @@
 #define CONVERSATION_H_
 
 #include <string>
-#include "User.h"
+
+class User;
 
 using namespace std;
 

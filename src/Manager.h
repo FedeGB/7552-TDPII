@@ -8,7 +8,7 @@
 #ifndef MANAGER_H_
 #define MANAGER_H_
 
-#include "Database.h"
+class Database;
 
 class Manager {
 public:
