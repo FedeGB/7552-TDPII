@@ -25,12 +25,15 @@ public:
 	User(Json::Value value);
 	virtual ~User();
 	string getName();
+	void setName(const string& name);
+
 	string getPassword();
 	double getLocationX() const;
 	void setLocationX(double locationX);
 	double getLocationY() const;
 	void setLocationY(double locationY);
 	void setPassword(const string& password);
+
 	const string& getPerfilImage() const;
 	void setPerfilImage(const string& perfilImage);
 	const string& getToken() const;

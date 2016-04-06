@@ -105,5 +105,8 @@ void User::loginNow(){
 	this->lastTimeConnected = time(0);
 }
 
+void User::setName(const string& name){
+	this->name = name;
+}
 
 

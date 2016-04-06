@@ -18,8 +18,11 @@ class UserFactory: public Factory {
 public:
 	UserFactory();
 	virtual ~UserFactory();
-	User* createUser(string json);
-
+	User* createUser(string username, string password);
+	User* createWithJsonValue(Json::Value value);
+	User* createWithJsonString(string json);
 };
 
 #endif /* USERFACTORY_H_ */
+
+
