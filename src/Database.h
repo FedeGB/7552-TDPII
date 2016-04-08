@@ -11,9 +11,12 @@
 #include "rocksdb/db.h"
 #include "rocksdb/slice.h"
 #include "rocksdb/options.h"
+#include "json/json.h"
+#include "Message.h"
+#include "User.h"
+
 #include <string>
 
-class Message;
 
 using namespace rocksdb;
 using namespace std;

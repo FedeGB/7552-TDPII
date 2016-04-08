@@ -9,6 +9,10 @@
 #define SERVER_H_
 
 #include "mongoose.h"
+#include "json/json.h"
+
+#include "User.h"
+#include "Database.h"
 
 #include <stdio.h>
 #include <string.h>

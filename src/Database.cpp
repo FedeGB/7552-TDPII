@@ -25,6 +25,7 @@ Database::Database() {
 		s = database->CreateColumnFamily(ColumnFamilyOptions(), "conversationsTable", &this->conversationsTable);
 		assert(s.ok());
 	  }*/
+	// TODO construir las columnas
 	  assert(s.ok());
 }
 
@@ -41,7 +42,7 @@ bool Database::put(string key, string value){
 }
 
 string Database::get(string key, string value){
-	Status s = database->Get(ReadOptions(), key, &value);
+	Status s = database->Get(ReadOptions(), key, &value); // TODO fixear esto, que reciba puntero o no reciba value
 	return value;
 }
 

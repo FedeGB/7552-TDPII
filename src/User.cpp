@@ -14,12 +14,13 @@ User::User(string name) {
 	this->locationY = 0;
 	this->token = "";
 	this->password = "";
-
+	this->lastTimeConnected = NULL;
+	this->name = "";
 }
 
-User::User(Json::Value value){
-	this->initWithJson(value);
-}
+//User::User(Json::Value value){
+//	this->initWithJson(value);
+//}
 
 User::~User() {
 	// TODO Auto-generated destructor stub
@@ -107,6 +108,10 @@ void User::loginNow(){
 
 void User::setName(const string& name){
 	this->name = name;
+}
+
+string User::getName(){
+	return this->name;
 }
 
 

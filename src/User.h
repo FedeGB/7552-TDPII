@@ -22,24 +22,31 @@ using namespace Json;
 class User {
 public:
 	User(string username);
-	User(Json::Value value);
+	//User(Json::Value value);
 	virtual ~User();
-	string getName();
+
 	void setName(const string& name);
+	string getName();
 
 	string getPassword();
+
 	double getLocationX() const;
 	void setLocationX(double locationX);
+
 	double getLocationY() const;
 	void setLocationY(double locationY);
+
 	void setPassword(const string& password);
 
 	const string& getPerfilImage() const;
 	void setPerfilImage(const string& perfilImage);
+
 	const string& getToken() const;
 	void setToken(const string& token);
+
 	const string& getUsername() const;
 	void setUsername(const string& username);
+
 	string getJsonString();
 	Json::Value getJson();
 	void initWithJson(Json::Value value);

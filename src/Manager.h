@@ -8,7 +8,12 @@
 #ifndef MANAGER_H_
 #define MANAGER_H_
 
+
+#include <iostream>
+
 class Database;
+
+using namespace std;
 
 class Manager {
 public:

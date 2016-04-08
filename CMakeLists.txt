@@ -7,6 +7,10 @@ include_directories ("${PROJECT_SOURCE_DIR}/include")
 
 set(TEST_LINK_LIBS libgtest.a z pthread rt)
 
-add_executable (test test/googleTest.cpp)
+add_executable (test src/Tests/DatabaseTests.cpp)
+add_executable (test src/Tests/MessageTests.cpp)
+add_executable (test src/Tests/UserTests.cpp)
+
+
 add_executable (main src/main.cpp)
 target_link_libraries (test ${TEST_LINK_LIBS})

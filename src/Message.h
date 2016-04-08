@@ -9,7 +9,11 @@
 #define MESSAGE_H_
 
 #include <iostream>
+#include "json/json.h"
+
 class User;
+
+
 
 using namespace std;
 //using namespace Json;
