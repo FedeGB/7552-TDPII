@@ -5,10 +5,3 @@ int main(int argc, char **argv) {
   return RUN_ALL_TESTS();
 }
 
-TEST(TestCasesasa, Test) {
-	ASSERT_TRUE(true);
-}
-
-TEST(REQUESTHTTP, REQUESTCLIENTE){
-	ASSERT_TRUE(true);
-}
