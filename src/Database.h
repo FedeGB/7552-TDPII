@@ -28,22 +28,25 @@ public:
 	virtual ~Database();
 
 	string get(string key, string value);
-	string getFromTable(ColumnFamilyHandle* tableHandler, string key);
+	string getFromColumn(ColumnFamilyHandle* tableHandler, string key);
 	bool put(string key, string value);
 	User* getUser(string key);
 	bool saveUser(User* user);
 	Message* getMessage(string emisor, string receptor, string messageID);
 	bool saveMessage(Message* message);
-	bool putInTable(ColumnFamilyHandle* tableHandler, string key, string value);
+	bool putInColumn(ColumnFamilyHandle* tableHandler, string key, string value);
 	Json::Value stringToJsonValue(string str);
 	string JsonValueToSting(Json::Value  json);
 
 
 private:
 	DB* database;
-	ColumnFamilyHandle* usersTable;
-	ColumnFamilyHandle* conversationsTable;
-	ColumnFamilyHandle* messagesTable;
+
+	ColumnFamilyHandle* columnDefault;
+	ColumnFamilyHandle* columnUsers;
+	ColumnFamilyHandle* columnConversations;
+	ColumnFamilyHandle* columnMessages;
+
 
 };
 
