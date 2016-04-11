@@ -186,6 +186,7 @@ bool Database::saveMessage(Message* message) {
 }
 
 Message* Database::getMessage(string emisor, string receptor, string messageID){
+	Conversation* conv = this->getConversation(emisor, receptor);
 	string aux = messageID;
 	aux+=emisor;
 	aux+=receptor;
@@ -194,6 +195,22 @@ Message* Database::getMessage(string emisor, string receptor, string messageID){
 	Message* message = new Message(jsonValue);
 	message->initWithJson(jsonValue);
 	return message;
+}
+
+
+Conversation* Database::getConversation(string emisor, string receptor){
+	string aux = emisor;
+	aux+=receptor;
+	string json = this->getFromColumn(this->columnConversations, aux);
+	Json::Value jsonValue = this->stringToJsonValue(json);
+	Conversation* conv = new Conversation(jsonValue);
+	//conv->initWithJson(jsonValue);
+	return conv;
+}
+
+
+bool saveConversation(string emisor, string receptor, int numberOfMessages){
+
 }
 
 Json::Value Database::stringToJsonValue(string str) {

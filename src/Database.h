@@ -14,6 +14,7 @@
 #include "json/json.h"
 #include "Message.h"
 #include "User.h"
+#include "Conversation.h"
 
 #include <string>
 
@@ -37,6 +38,8 @@ public:
 	bool putInColumn(ColumnFamilyHandle* tableHandler, string key, string value);
 	Json::Value stringToJsonValue(string str);
 	string JsonValueToSting(Json::Value  json);
+	Conversation* getConversation(string emisor, string receptor);
+	bool saveConversation(string emisor, string receptor, int numberOfMessages);
 
 
 private:

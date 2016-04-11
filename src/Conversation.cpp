@@ -8,10 +8,21 @@
 #include "Conversation.h"
 #include "User.h"
 
-Conversation::Conversation() {
-	// TODO Auto-generated constructor stub
+
+Conversation::Conversation(User* user1, User* user2) {
+	this->user1 = user1;
+	this->user2 = user2;
+	this->numberMessages = 0;
 
 }
+
+Conversation::Conversation(Json::Value value) {
+	this->user1 = new User(value.get("user1","").asString());
+	this->user1 = new User(value.get("user2","").asString());
+	this->numberMessages = 0;
+
+}
+
 
 Conversation::~Conversation() {
 	// TODO Auto-generated destructor stub
@@ -48,3 +59,6 @@ User* Conversation::getUser2()  {
 void Conversation::setUser2( User* user2) {
 	this->user2 = user2;
 }
+
+
+

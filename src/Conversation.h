@@ -9,6 +9,8 @@
 #define CONVERSATION_H_
 
 #include <string>
+#include "json/json.h"
+
 
 class User;
 
@@ -16,7 +18,8 @@ using namespace std;
 
 class Conversation {
 public:
-	Conversation();
+	Conversation(User* user1, User* user2);
+	Conversation(Json::Value value);
 	virtual ~Conversation();
 	const string& getId() const;
 	void setId(const string& id);

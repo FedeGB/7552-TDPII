@@ -49,17 +49,18 @@ TEST(DatabaseTests,TestSaveAndGetUser){
 	delete user;
 	delete database;
 }
-
-/*TEST(DatabaseTests,TestSaveAndGetMessage){
+/*
+TEST(DatabaseTests,TestSaveAndGetMessage){
 	Database* database = new Database();
 	User* user1 = new User("User1");
 	User* user2 = new User("User2");
 	string data = "hola";
 	Message* message = new Message(user1, user2, data);
-	message->setId(1);
+	message->setId("1");
 	database->saveMessage(message);
-	ASSERT_EQ(data, database->getMessage(user1,user2, ));
-	delete user;
+	ASSERT_EQ(data, database->getMessage(user1,user2, "1" ));
+	delete user1;
+	delete user2;
 	delete database;
 }*/
 
