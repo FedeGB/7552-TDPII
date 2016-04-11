@@ -3,7 +3,7 @@ project (Tinder)
 
 list(APPEND CMAKE_MODULE_PATH ${PROJECT_SOURCE_DIR}/CMake)
 
-set (CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11 -lJsoncpp -lopencv_java -LDFLAGS= -pthread -lpthread -DMONGOOSE_ENABLE_THREADS")
+set (CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11 -LDFLAGS= -pthread -lpthread -DMONGOOSE_ENABLE_THREADS")
 set (HIGHGUI_LIBRARIES ${HIGHGUI_LIBRARIES} bz2)
 
 link_directories("${PROJECT_SOURCE_DIR}/lib")
