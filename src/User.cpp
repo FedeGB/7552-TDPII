@@ -14,7 +14,7 @@ User::User(string name) {
 	this->locationY = 0;
 	this->token = "";
 	this->password = "";
-	this->lastTimeConnected = NULL;
+	//this->lastTimeConnected = NULL; TODO fix this
 	this->name = "";
 }
 
