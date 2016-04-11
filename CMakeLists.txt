@@ -4,10 +4,8 @@ project (Tinder)
 list(APPEND CMAKE_MODULE_PATH ${PROJECT_SOURCE_DIR}/CMake)
 
 set (CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11 -LDFLAGS= -pthread -lpthread -DMONGOOSE_ENABLE_THREADS")
-SET(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -lsnappy")
-SET(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -lgflags")
-SET(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -lz")
-SET(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -lbz2")
+SET(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -lsnappy -lgflags -lz -lbz2")
+
 
 
 link_directories("${PROJECT_SOURCE_DIR}/lib")
@@ -41,7 +39,12 @@ endif()
 
 target_link_libraries(tests ${GTEST_BOTH_LIBRARIES} ${TEST_LINK_LIBS})
 target_link_libraries(main ${GTEST_BOTH_LIBRARIES} ${TEST_LINK_LIBS})
-
+TARGET_LINK_LIBRARIES(main /usr/local/lib/librocksdb.a)
+TARGET_LINK_LIBRARIES(main /usr/local/lib/libjsoncpp.a)
+TARGET_LINK_LIBRARIES(main /usr/lib/libgtest.a)
+TARGET_LINK_LIBRARIES(main ${CMAKE_THREAD_LIBS_INIT})
+TARGET_LINK_LIBRARIES(main ${ZLIB_LIBRARIES})
+TARGET_LINK_LIBRARIES(main ${BZIP2_LIBRARIES})
 
 
 
