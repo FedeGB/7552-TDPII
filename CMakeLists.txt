@@ -3,10 +3,7 @@ project (Tinder)
 
 list(APPEND CMAKE_MODULE_PATH ${PROJECT_SOURCE_DIR}/CMake)
 
-set (CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11 -LDFLAGS= -pthread -lpthread -DMONGOOSE_ENABLE_THREADS")
-SET(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -lsnappy -lgflags -lz -lbz2")
-SET(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS} ")
-
+set (CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11 -LDFLAGS= -pthread -DMONGOOSE_ENABLE_THREADS")
 
 link_directories("${PROJECT_SOURCE_DIR}/lib")
 include_directories ("${PROJECT_SOURCE_DIR}/include")
@@ -31,8 +28,8 @@ if(ROCKSDB_FOUND)
 	include_directories("${ROCKSDB_INCLUDE_DIRS}")
 	target_link_libraries(main ${ROCKSDB_LIBRARIES})
 	target_link_libraries(tests ${ROCKSDB_LIBRARIES})
-	#target_link_libraries(dbtest ${ROCKSDB_LIBRARIES})
-	#set(LIBS ${LIBS} ${ROCKSDB_LIBRARIES})
+	target_link_libraries(main "-lsnappy -lgflags -lz -lbz2")
+	target_link_libraries(tests "-lsnappy -lgflags -lz -lbz2")
 else()
 	message(FATAL_ERROR "No se encuentra RocksDB")
 endif()
@@ -40,8 +37,6 @@ endif()
 target_link_libraries(tests ${GTEST_BOTH_LIBRARIES} ${TEST_LINK_LIBS})
 target_link_libraries(main ${GTEST_BOTH_LIBRARIES} ${TEST_LINK_LIBS})
 TARGET_LINK_LIBRARIES(main ${CMAKE_THREAD_LIBS_INIT})
-TARGET_LINK_LIBRARIES(main ${ZLIB_LIBRARIES})
-TARGET_LINK_LIBRARIES(main ${BZIP2_LIBRARIES})
 
 
 
