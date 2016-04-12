@@ -1,52 +1,9 @@
-sudo: false
-language: cpp
-compiler: gcc
-addons:
-  apt:
-    sources:
-      - ubuntu-toolchain-r-test
-    packages:
-      - gcc-multilib
-      - gcc-5
-      - g++-5
-      - gcc-5-locales
-      - gcc-5-multilib
-      - g++-5-multilib
-      - libstdc++6-5-dbg
-      - lib32stdc++6-5-dbg
-      - libstdc++-5-doc
-      - libgcc1-dbg
-      - libgomp1-dbg
-      - libitm1-dbg
-      - libatomic1-dbg
-      - libasan2-dbg
-      - liblsan0-dbg
-      - libtsan0-dbg
-      - libubsan0-dbg
-      - libcilkrts5-dbg
-      - zlib1g-dev
-      - libbz2-dev
-      - libsnappy-dev
+sudo: required
+services:
+  - docker
+
 before_install:
-  - mkdir -p root/bin root/usr/bin root/usr/lib root/usr/include
-  - export PATH=`pwd`/root/bin:`pwd`/root/usr/bin:`pwd`/root/usr/local/bin:$PATH
-  - export LIBRARY_PATH=`pwd`/root/usr/lib64:`pwd`/root/usr/local/lib64:`pwd`/root/usr/lib:`pwd`/root/usr/local/lib:$LIBRARY_PATH
-  - export LD_LIBRARY_PATH=`pwd`/root/usr/lib64:`pwd`/root/usr/local/lib64:`pwd`/root/usr/lib:`pwd`/root/usr/local/lib:$LD_LIBRARY_PATH
-  - export CPATH=`pwd`/root/usr/include:`pwd`/root/usr/local/include:$CPATH
-  - ln -s /usr/bin/gcc-5 `pwd`/root/usr/bin/gcc
-  - ln -s /usr/bin/g++-5 `pwd`/root/usr/bin/g++
-  - export CXX=`pwd`/root/usr/bin/g++
-  - export CC=`pwd`/root/usr/bin/gcc
-install:
-  - wget https://gflags.googlecode.com/files/libgflags0_2.0-1_amd64.deb
-  - dpkg-deb -x libgflags0_2.0-1_amd64.deb `pwd`/root/
-  - wget https://gflags.googlecode.com/files/libgflags-dev_2.0-1_amd64.deb
-  - dpkg-deb -x libgflags-dev_2.0-1_amd64.deb `pwd`/root/
-  - wget https://github.com/NickCis/rocksdb/releases/download/deb-new/rocksdb_3.10-0.deb
-  - dpkg-deb -x rocksdb_3.10-0.deb `pwd`/root/
+  - docker pull juanmahidalgo/match
+
 script:
-  - $CXX --version
-  - mkdir build
-  - cd build
-  - cmake ../ 
-  - make
+  - docker run -it juanmahidalgo/match
