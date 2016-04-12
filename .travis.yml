@@ -8,5 +8,6 @@ services:
 before_install:
 
 - docker pull juanmahidalgo/match
-- docker run -it juanmahidalgo/match
 
+script:
+- docker run -it juanmahidalgo/match
