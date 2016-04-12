@@ -24,7 +24,6 @@ addons:
       - libtsan0-dbg
       - libubsan0-dbg
       - libcilkrts5-dbg
-      - libquadmath0-dbg
       - zlib1g-dev
       - libbz2-dev
       - libsnappy-dev
