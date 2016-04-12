@@ -29,6 +29,8 @@ public:
 	void setUser1(User* user1);
 	User* getUser2();
 	void setUser2(User* user2);
+	void addOneMessage();
+
 
 private:
 	string id;

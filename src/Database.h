@@ -16,7 +16,7 @@
 #include "User.h"
 #include "Conversation.h"
 
-#include <string>
+#include <iostream>
 
 
 using namespace rocksdb;
@@ -34,6 +34,7 @@ public:
 	User* getUser(string key);
 	bool saveUser(User* user);
 	Message* getMessage(string emisor, string receptor, string messageID);
+	std::vector<Message*> getMessages(string emisor, string receptor);
 	bool saveMessage(Message* message);
 	bool putInColumn(ColumnFamilyHandle* tableHandler, string key, string value);
 	Json::Value stringToJsonValue(string str);

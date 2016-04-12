@@ -7,6 +7,8 @@
 
 #include "Database.h"
 #include "User.h"
+#include <string>
+
 
 std::string kDBPath = "/tmp/rocksdb";
 
@@ -186,15 +188,48 @@ bool Database::saveMessage(Message* message) {
 }
 
 Message* Database::getMessage(string emisor, string receptor, string messageID){
+	Message* message;
 	Conversation* conv = this->getConversation(emisor, receptor);
 	string aux = messageID;
 	aux+=emisor;
 	aux+=receptor;
-	string json = this->getFromColumn(this->columnMessages, aux);
-	Json::Value jsonValue = this->stringToJsonValue(json);
-	Message* message = new Message(jsonValue);
-	message->initWithJson(jsonValue);
+	if (conv->getNumberMessages() == 0){
+		return NULL;
+	}
+	else{
+		string json = this->getFromColumn(this->columnMessages, aux);
+		Json::Value jsonValue = this->stringToJsonValue(json);
+		message->initWithJson(jsonValue);
+		message = new Message(jsonValue);
+	}
 	return message;
+}
+
+std::vector<Message*> Database::getMessages(string emisor, string receptor){
+	Message* message;
+	Conversation* conv = this->getConversation(emisor, receptor);
+	string id = conv->getId();
+	int numberOfMessages = conv->getNumberMessages();
+	std::vector<Message*> messages;
+	string convId = conv->getId();
+	for ( int i = 0; i < numberOfMessages; i++){
+		std::stringstream result;
+		result << numberOfMessages;
+		string aux = result.str()+emisor+receptor;
+		message = this->getMessage(emisor, receptor, aux);
+		messages.push_back(message);
+	}
+//
+//	if (conv->getNumberMessages() == 0){
+//		return messages;
+//	}
+//	else{
+//		string json = this->getFromColumn(this->columnMessages, aux);
+//		Json::Value jsonValue = this->stringToJsonValue(json);
+//		message->initWithJson(jsonValue);
+//		message = new Message(jsonValue);
+//	}
+	return messages;
 }
 
 
@@ -202,9 +237,13 @@ Conversation* Database::getConversation(string emisor, string receptor){
 	string aux = emisor;
 	aux+=receptor;
 	string json = this->getFromColumn(this->columnConversations, aux);
+	if(json == ""){
+		aux=receptor+emisor;
+		json = this->getFromColumn(this->columnConversations, aux);
+		if(json == "") return NULL;
+	}
 	Json::Value jsonValue = this->stringToJsonValue(json);
 	Conversation* conv = new Conversation(jsonValue);
-	//conv->initWithJson(jsonValue);
 	return conv;
 }
 

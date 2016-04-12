@@ -31,7 +31,7 @@ User* UserFactory::createWithJsonValue(Json::Value value) {
 	double locationX = value.get("locationX", 0).asDouble();
 	double locationY =  value.get("locationY", 0).asDouble();
 	string perfilImage = value.get("perfilImage", "").asString();
-	time_t lastTimeConnected = value.get("lastTimeConnected", "").asDouble();
+	//time_t lastTimeConnected = value.get("lastTimeConnected", "").asDouble();
 	string token = value.get("token","").asString();
 
 	User* u = new User(username);

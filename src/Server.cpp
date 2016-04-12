@@ -65,9 +65,9 @@ void Server::handleCreateUser(struct mg_connection *nc, struct http_message *hm)
 	string str(user);
 	string str2(password);
 	std::cout << str << str2 << std::endl;
-	printf("%c \n",user);
-	printf("%c \n", password);
-	printf("pasa \n");
+	//printf("%c \n",user);
+	//printf("%c \n", password);
+	//printf("pasa \n");
 	this->manager->createUser(hm->body.p);
 	/* Send headers */
 	mg_printf(nc, "%s", "HTTP/1.1 200 OK\r\nTransfer-Encoding: chunked\r\n\r\n");
@@ -128,6 +128,7 @@ string Server::login(string user, string password){
 		jsonValue["result"] = "OK";
 		jsonValue["data"] = userFound->getJson();
 	}
+	return "ok";  // TODO fixear esto
 }
 
 
