@@ -1,8 +1,6 @@
 sudo: required
 
-language: python
-python:
-  - 2.7
+language: ruby
 
 services:
   - docker
@@ -10,5 +8,6 @@ services:
 before_install:
   - docker pull juanmahidalgo/match
   - docker run -it juanmahidalgo/match /bin/sh -c " bundle exec foreman start;"
+
 script:
   - bundle exec rake test
