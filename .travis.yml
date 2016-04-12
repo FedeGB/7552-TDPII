@@ -1,13 +1,12 @@
 sudo: required
 
-language: cpp
+language: ruby
 
 services:
   - docker
 
 before_install:
-
-- docker pull juanmahidalgo/match
-
+  - docker pull juanmahidalgo/match
+  - docker run -it juanmahidalgo/match /bin/sh -c " bundle exec foreman start;"
 script:
-- docker run -it juanmahidalgo/match
+  - bundle exec rake test
