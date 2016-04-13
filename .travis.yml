@@ -7,3 +7,4 @@ before_install:
 
 script:
   - docker run -it juanmahidalgo/match
+  - coveralls --exclude lib --exclude tests --gcov-options '\-lp'
