@@ -17,9 +17,17 @@ Conversation::Conversation(User* user1, User* user2) {
 
 }
 
+Conversation::Conversation(User* user1, User* user2, string id ) {
+	this->user1 = user1;
+	this->user2 = user2;
+	this->numberMessages = 0;
+	this->id = id;
+
+}
+
 Conversation::Conversation(Json::Value value) {
 	this->user1 = new User(value.get("user1","").asString());
-	this->user1 = new User(value.get("user2","").asString());
+	this->user2 = new User(value.get("user2","").asString());
 	this->numberMessages = value.get("numberMessages","").asInt();
 	this->id = value.get("id","").asString();
 }

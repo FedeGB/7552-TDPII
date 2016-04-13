@@ -13,6 +13,7 @@ Message::Message(User* sender, User* receptor, string data ) {
 	this->sender = sender;
 	this->receptor = receptor;
 	this->data = data;
+	this->id = "";
 }
 
 Message::Message(Json::Value value ) {
@@ -23,7 +24,7 @@ Message::Message(Json::Value value ) {
 	this->receptor = receptorUser;
 	this->id = value.get("id","").asString();
 	this->data = value.get("data","").asString();
-	this->date = value.get("date","").asDouble();
+	this->date = value.get("date","").asString();
 
 }
 

@@ -10,7 +10,7 @@
 #include <string>
 
 
-std::string kDBPath = "/tmp/rocksdb";
+std::string kDBPath = "/tmp/rocksdb5";
 
 Database::Database() {
 
@@ -58,8 +58,6 @@ Database::Database() {
 
 */
 
-	printf("ENTRA AL INIT \n");
-
 	// open DB
 	Options options;
 	options.create_if_missing = true;
@@ -84,32 +82,18 @@ Database::Database() {
 	column_families.push_back(ColumnFamilyDescriptor("columnConversations",ColumnFamilyOptions()));
 	column_families.push_back(ColumnFamilyDescriptor("columnMessages",ColumnFamilyOptions()));
 	std::vector<ColumnFamilyHandle*> handles;
-	printf("DESP DEL HANDLE \n");
 
 	Status status = DB::Open(options, kDBPath ,column_families,&handles,&this->database);
 	assert(s.ok());
-	printf("DESP DEL SEGUNDO OPEN \n");
 
 	this->columnDefault = handles[0];
 	this->columnUsers = handles[1];
 	this->columnConversations = handles[2];
 	this->columnMessages = handles[3];
-	printf("SALE DEL INIT \n");
-
-
 
 }
 
 Database::~Database() {
-/*
-	delete this->columnDefault;
-	delete this->columnUsers;
-	delete this->columnMessages;
-	delete this->columnConversations;
-	delete this->database; // TODO agregar las columns
-
-*/
-
 
 	Status s;
 	delete this->columnDefault;
@@ -128,12 +112,9 @@ Database::~Database() {
 }
 
 bool Database::put(string key, string value){
-	printf("ENTRA ACA 2\n");
 	Status  s = database->Put(WriteOptions(), key, value);
-
 	//bool s = this->putInColumn(this->columnDefault, key, value);
 	return s.ok();
-	printf("ENTRA ACA 3\n");
 
 }
 
@@ -144,7 +125,6 @@ string Database::get(string key, string value){
 
 bool Database::putInColumn(ColumnFamilyHandle* tableHandler, string key, string value){
 	Status s = database->Put(WriteOptions(), tableHandler, key, value);
-	printf("ENTRA ACA \n");
 	return s.ok();
 }
 
@@ -155,23 +135,15 @@ string Database::getFromColumn(ColumnFamilyHandle* tableHandler, string key){
 }
 
 bool Database::saveUser(User* user) {
-	printf("ENTRA ACA 3\n");
-
 	string username = user->getUsername();
 	string json = user->getJsonString();
-	printf("ENTRA ACA4 \n");
-
 	return this->putInColumn(this->columnUsers,username,json);
-	printf("ENTRA ACA 5\n");
-
 	return true;
 }
 User* Database::getUser(string username) {
 	string json = this->getFromColumn(this->columnUsers, username);
-	std::cout << "MUESTRO EL JSON" << std::endl;
-
-	std::cout << json << std::endl;
-
+	//std::cout << "MUESTRO EL JSON" << std::endl;
+	//std::cout << json << std::endl;
 	Json::Value jsonValue = this->stringToJsonValue(json);
 	User* user = new User(username);
 	user->initWithJson(jsonValue);
@@ -189,19 +161,19 @@ bool Database::saveMessage(Message* message) {
 
 Message* Database::getMessage(string emisor, string receptor, string messageID){
 	Message* message;
-	Conversation* conv = this->getConversation(emisor, receptor);
+	//Conversation* conv = this->getConversation(emisor, receptor);
 	string aux = messageID;
 	aux+=emisor;
 	aux+=receptor;
-	if (conv->getNumberMessages() == 0){
-		return NULL;
-	}
-	else{
+	//if (conv->getNumberMessages() == 0){
+	//	return NULL;
+	//}
+	//else{
 		string json = this->getFromColumn(this->columnMessages, aux);
 		Json::Value jsonValue = this->stringToJsonValue(json);
-		message->initWithJson(jsonValue);
+		//message->initWithJson(jsonValue);
 		message = new Message(jsonValue);
-	}
+	//}
 	return message;
 }
 
@@ -219,16 +191,6 @@ std::vector<Message*> Database::getMessages(string emisor, string receptor){
 		message = this->getMessage(emisor, receptor, aux);
 		messages.push_back(message);
 	}
-//
-//	if (conv->getNumberMessages() == 0){
-//		return messages;
-//	}
-//	else{
-//		string json = this->getFromColumn(this->columnMessages, aux);
-//		Json::Value jsonValue = this->stringToJsonValue(json);
-//		message->initWithJson(jsonValue);
-//		message = new Message(jsonValue);
-//	}
 	return messages;
 }
 
@@ -240,7 +202,11 @@ Conversation* Database::getConversation(string emisor, string receptor){
 	if(json == ""){
 		aux=receptor+emisor;
 		json = this->getFromColumn(this->columnConversations, aux);
-		if(json == "") return NULL;
+		if(json == ""){
+			User* user1 = this->getUser(emisor);
+			User* user2 = this->getUser(receptor);
+			return new Conversation(user1, user2, "0");
+		}
 	}
 	Json::Value jsonValue = this->stringToJsonValue(json);
 	Conversation* conv = new Conversation(jsonValue);
@@ -249,7 +215,7 @@ Conversation* Database::getConversation(string emisor, string receptor){
 
 
 bool saveConversation(string emisor, string receptor, int numberOfMessages){
-
+	return true;
 }
 
 Json::Value Database::stringToJsonValue(string str) {

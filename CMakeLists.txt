@@ -10,9 +10,8 @@ include_directories ("${PROJECT_SOURCE_DIR}/include")
 
 enable_testing()
 find_package(GTest REQUIRED)
-include_directories(${GTEST_INCLUDE_DIRS})
 
-set(TEST_LINK_LIBS libgtest.a libjsoncpp.a z pthread rt)
+set(TEST_LINK_LIBS libjsoncpp.a z pthread rt)
 
 file( GLOB FILES src/Conversation.cpp src/Database.cpp src/Manager.cpp src/Message.cpp src/Server.cpp src/User.cpp src/mongoose.c)
 
@@ -36,7 +35,6 @@ endif()
 
 target_link_libraries(tests ${GTEST_BOTH_LIBRARIES} ${TEST_LINK_LIBS})
 target_link_libraries(main ${GTEST_BOTH_LIBRARIES} ${TEST_LINK_LIBS})
-TARGET_LINK_LIBRARIES(main ${CMAKE_THREAD_LIBS_INIT})
 
 
 

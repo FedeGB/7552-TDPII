@@ -19,6 +19,8 @@ using namespace std;
 class Conversation {
 public:
 	Conversation(User* user1, User* user2);
+	Conversation(User* user1, User* user2, string id );
+
 	Conversation(Json::Value value);
 	virtual ~Conversation();
 	const string& getId() const;
@@ -36,6 +38,7 @@ private:
 	string id;
 	User* user1;
 	User* user2;
+
 	int numberMessages;
 };
 

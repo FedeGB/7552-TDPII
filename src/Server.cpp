@@ -8,10 +8,10 @@
 #include "Server.h"
 #include "Manager.h"
 
-static struct mg_serve_http_opts s_http_server_opts;
+//static struct mg_serve_http_opts s_http_server_opts;
 
 Server::Server() {
-	this->s_http_port = "8000";
+	//this->s_http_port = "8000";
 	this->manager = new Manager();
 	//this->mgr.user_data = this;
 }
@@ -38,7 +38,6 @@ void Server::update(){
 
 static void handleLogin(struct mg_connection *nc, struct http_message *hm) {
 	char user[100], password[100];
-	double result;
 
 	/* Get form variables */
 	mg_get_http_var(&hm->query_string, "user", user, sizeof(user));
@@ -46,8 +45,8 @@ static void handleLogin(struct mg_connection *nc, struct http_message *hm) {
 	string str(user);
 	string str2(password);
 	std::cout << str << str2 << std::endl;
-	printf("%c \n",user);
-	printf("%c \n", password);
+	//printf("%c \n",user);
+	//printf("%c \n", password);
 	/* Send headers */
 	mg_printf(nc, "%s", "HTTP/1.1 200 OK\r\nTransfer-Encoding: chunked\r\n\r\n");
 	/* Compute the result and send it back as a JSON object */
