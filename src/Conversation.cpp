@@ -8,14 +8,14 @@
 #include "Conversation.h"
 #include "User.h"
 
-
+/*
 Conversation::Conversation(User* user1, User* user2) {
 	this->user1 = user1;
 	this->user2 = user2;
 	this->numberMessages = 0;
 	this->id = "";
 
-}
+}*/
 
 Conversation::Conversation(User* user1, User* user2, string id ) {
 	this->user1 = user1;

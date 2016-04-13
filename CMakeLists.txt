@@ -3,7 +3,10 @@ project (Tinder)
 
 list(APPEND CMAKE_MODULE_PATH ${PROJECT_SOURCE_DIR}/CMake)
 
-set (CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11 -LDFLAGS= -pthread -DMONGOOSE_ENABLE_THREADS")
+option(CHECK_COVERAGE "Activa flags para checkear test coverage" ON)
+
+
+set (CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11 -LDFLAGS= -pthread -DMONGOOSE_ENABLE_THREADS --coverage")
 
 link_directories("${PROJECT_SOURCE_DIR}/lib")
 include_directories ("${PROJECT_SOURCE_DIR}/include")
@@ -27,10 +30,17 @@ if(ROCKSDB_FOUND)
 	include_directories("${ROCKSDB_INCLUDE_DIRS}")
 	target_link_libraries(main ${ROCKSDB_LIBRARIES})
 	target_link_libraries(tests ${ROCKSDB_LIBRARIES})
-	target_link_libraries(main "-lsnappy -lgflags -lz -lbz2")
-	target_link_libraries(tests "-lsnappy -lgflags -lz -lbz2")
+	target_link_libraries(main "-lgcov -lsnappy -lgflags -lz -lbz2")
+	target_link_libraries(tests "-lgcov -lsnappy -lgflags -lz -lbz2")
 else()
 	message(FATAL_ERROR "No se encuentra RocksDB")
+endif()
+
+if(CHECK_COVERAGE)
+	set_target_properties(tests PROPERTIES COMPILE_FLAGS "--coverage -lgcov -fprofile-arcs -ftest-coverage -g -ggdb -O0")
+	target_link_libraries(tests "-fprofile-arcs -ftest-coverage")
+	set_target_properties(main PROPERTIES COMPILE_FLAGS "--coverage -lgcov -fprofile-arcs -ftest-coverage -g -ggdb -O0")
+	target_link_libraries(main "-fprofile-arcs -ftest-coverage")
 endif()
 
 target_link_libraries(tests ${GTEST_BOTH_LIBRARIES} ${TEST_LINK_LIBS})

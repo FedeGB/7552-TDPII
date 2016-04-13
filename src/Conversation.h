@@ -18,7 +18,7 @@ using namespace std;
 
 class Conversation {
 public:
-	Conversation(User* user1, User* user2);
+	//Conversation(User* user1, User* user2);
 	Conversation(User* user1, User* user2, string id );
 
 	Conversation(Json::Value value);
