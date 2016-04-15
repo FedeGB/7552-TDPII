@@ -55,15 +55,15 @@ static void handleLogin(struct mg_connection *nc, struct http_message *hm) {
 }
 
 void Server::handleCreateUser(struct mg_connection *nc, struct http_message *hm) {
-	char user[100], password[100];
+	char user[50], password[50];
 	Json::Value value;
 	/* Get form variables */
-	mg_get_http_var(&hm->body, "user", user, sizeof(user));
-	mg_get_http_var(&hm->body, "password", password, sizeof(password));
-	printf("This is the body : %s \n", hm->body.p);
-	string str(user);
-	string str2(password);
-	std::cout << str << str2 << std::endl;
+	//mg_get_http_var(&hm->body, "user", user, sizeof(user));
+	//mg_get_http_var(&hm->body, "password", password, sizeof(password));
+	//printf("This is the body : %s \n", hm->body.p);
+	//string str(user);
+	//string str2(password);
+	//std::cout << str << str2 << std::endl;
 	//printf("%c \n",user);
 	//printf("%c \n", password);
 	//printf("pasa \n");

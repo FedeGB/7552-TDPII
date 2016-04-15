@@ -10,7 +10,7 @@
 #include <string>
 
 
-std::string kDBPath = "/tmp/rocksdb5";
+std::string kDBPath = "/tmp/rocksdb814e523453";
 
 Database::Database() {
 
