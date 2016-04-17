@@ -50,7 +50,7 @@ static void handleLogin(struct mg_connection *nc, struct http_message *hm) {
 	/* Send headers */
 	mg_printf(nc, "%s", "HTTP/1.1 200 OK\r\nTransfer-Encoding: chunked\r\n\r\n");
 	/* Compute the result and send it back as a JSON object */
-	//mg_printf_http_chunk(nc, "{ \"user\": %s password : %s }", str, str2);
+	mg_printf_http_chunk(nc, "{ \"token\": %s }", "asd123");
 	mg_send_http_chunk(nc, "", 0);  /* Send empty chunk, the end of response */
 }
 
@@ -67,11 +67,12 @@ void Server::handleCreateUser(struct mg_connection *nc, struct http_message *hm)
 	//printf("%c \n",user);
 	//printf("%c \n", password);
 	//printf("pasa \n");
+	std::cout << hm->body.p << std::endl; // TODO: Add to logging.
 	this->manager->createUser(hm->body.p);
 	/* Send headers */
 	mg_printf(nc, "%s", "HTTP/1.1 200 OK\r\nTransfer-Encoding: chunked\r\n\r\n");
 	/* Compute the result and send it back as a JSON object */
-	//mg_printf_http_chunk(nc, "{ \"user\": %s password : %s }", str, str2);
+	mg_printf_http_chunk(nc, "{\"errorNum\":%d, \"message\":\"%s\"}", 0, "Registerd");
 	mg_send_http_chunk(nc, "", 0);  /* Send empty chunk, the end of response */
 }
 
@@ -100,16 +101,22 @@ void Server::handleEvent(struct mg_connection* nc, int ev, void* ev_data){
 			//HttpRequestHandler requestHandler;
 			//requestHandler.proccesRequest(request);
 			//DEVUELVE TEXTO PLANO!
-			if (mg_vcmp(&hm->uri, "/api/login") == 0) {
-				handleLogin(nc, hm);                    /* Handle RESTful call */
+			if (mg_vcmp(&hm->uri, "/users/login") == 0) {
+				if(mg_vcmp(&hm->method, "GET") == 0) {
+					handleLogin(nc, hm);                    /* Handle RESTful call */
+				} else {
+					this->respondNotAllowedMethod(nc);
+				}
 			}
-			if (mg_vcmp(&hm->uri, "/api/createUser") == 0) {
-				handleCreateUser(nc, hm);                /* Handle RESTful call */
+			if (mg_vcmp(&hm->uri, "/users/create") == 0) {
+				if(mg_vcmp(&hm->method, "POST") == 0) {
+					handleCreateUser(nc, hm);                /* Handle RESTful call */
+				} else {
+					this->respondNotAllowedMethod(nc);	
+				}
 			}
-			mg_printf(nc, "HTTP/1.1 200 OK\r\n"
-	                "Content-Type: text/plain\r\n"
-	                "Content-Length: 21\r\n\r\n"
-			"{ User : \"Username\" }");
+			
+			this->respondNotFound(nc);
 			printf("Procesado un request \n");
 
 			break;
@@ -143,4 +150,12 @@ Manager* Server::getManager(){
 	return manager;
 }
 
+
+void Server::respondNotAllowedMethod(struct mg_connection* nc) {
+	mg_printf(nc, "HTTP/1.1 405 %s\r\n", "Method Not Allowed");		
+}
+
+void Server::respondNotFound(struct mg_connection* nc) {
+	mg_printf(nc, "HTTP/1.1 404 %s\r\n", "Not Found");			
+}
 

@@ -38,6 +38,9 @@ public:
 	void setManager(Manager* mg);
 	Manager* getManager();
 
+	void respondNotAllowedMethod(struct mg_connection*);
+	void respondNotFound(struct mg_connection*);
+
 private:
 	Manager* manager;
 	struct mg_mgr mgr;
