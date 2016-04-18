@@ -7,6 +7,7 @@
 
 #include "Manager.h"
 #include "Database.h"
+#include "Factories/UserFactory.h"
 
 Manager::Manager() {
 	this->db = new Database();
@@ -26,7 +27,8 @@ void Manager::setDatabase(Database* database){
 }
 
 string Manager::createUser(string json){
-	User* user = new User(json);
+	UserFactory userFact;
+	User* user = userFact.createWithJsonString(json);
 	this->db->saveUser(user);
 	return "pl";
 }

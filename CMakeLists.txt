@@ -16,7 +16,7 @@ find_package(GTest REQUIRED)
 
 set(TEST_LINK_LIBS libjsoncpp.a z pthread rt)
 
-file( GLOB FILES src/Conversation.cpp src/Database.cpp src/Manager.cpp src/Message.cpp src/Server.cpp src/User.cpp src/mongoose.c)
+file( GLOB FILES src/Conversation.cpp src/Database.cpp src/Manager.cpp src/Message.cpp src/Server.cpp src/User.cpp src/mongoose.c src/Factories/UserFactory.cpp src/Factories/Factory.cpp)
 
 file( GLOB TESTS src/Tests/*)
 

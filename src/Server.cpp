@@ -36,7 +36,7 @@ void Server::update(){
 	mg_mgr_poll(&mgr, 1000);
 }
 
-static void handleLogin(struct mg_connection *nc, struct http_message *hm) {
+void Server::handleLogin(struct mg_connection *nc, struct http_message *hm) {
 	char user[100], password[100];
 
 	/* Get form variables */
@@ -48,6 +48,8 @@ static void handleLogin(struct mg_connection *nc, struct http_message *hm) {
 	//printf("%c \n",user);
 	//printf("%c \n", password);
 	/* Send headers */
+	string result = this->loginUser(user, password);
+	std::cout << "RESULT: " << result << std::endl;
 	mg_printf(nc, "%s", "HTTP/1.1 200 OK\r\nTransfer-Encoding: chunked\r\n\r\n");
 	/* Compute the result and send it back as a JSON object */
 	mg_printf_http_chunk(nc, "{ \"token\": %s }", "asd123");
@@ -56,7 +58,7 @@ static void handleLogin(struct mg_connection *nc, struct http_message *hm) {
 
 void Server::handleCreateUser(struct mg_connection *nc, struct http_message *hm) {
 	char user[50], password[50];
-	Json::Value value;
+	//Json::Value value;
 	/* Get form variables */
 	//mg_get_http_var(&hm->body, "user", user, sizeof(user));
 	//mg_get_http_var(&hm->body, "password", password, sizeof(password));
@@ -105,18 +107,18 @@ void Server::handleEvent(struct mg_connection* nc, int ev, void* ev_data){
 				if(mg_vcmp(&hm->method, "GET") == 0) {
 					handleLogin(nc, hm);                    /* Handle RESTful call */
 				} else {
-					this->respondNotAllowedMethod(nc);
+					respondNotAllowedMethod(nc);
 				}
 			}
 			if (mg_vcmp(&hm->uri, "/users/create") == 0) {
 				if(mg_vcmp(&hm->method, "POST") == 0) {
 					handleCreateUser(nc, hm);                /* Handle RESTful call */
 				} else {
-					this->respondNotAllowedMethod(nc);	
+					respondNotAllowedMethod(nc);	
 				}
 			}
 			
-			this->respondNotFound(nc);
+			respondNotFound(nc);
 			printf("Procesado un request \n");
 
 			break;
@@ -126,7 +128,7 @@ void Server::handleEvent(struct mg_connection* nc, int ev, void* ev_data){
 		}
 }
 
-string Server::login(string user, string password){
+string Server::loginUser(string user, string password){
 	User* userFound = this->manager->getDatabase()->getUser(user);
 	Json::Value jsonValue = Json::Value();
 	if (password.compare(userFound->getPassword()) == 0){
@@ -134,7 +136,7 @@ string Server::login(string user, string password){
 		jsonValue["result"] = "OK";
 		jsonValue["data"] = userFound->getJson();
 	}
-	return "ok";  // TODO fixear esto
+	return userFound->getUsername();  // TODO fixear esto
 }
 
 

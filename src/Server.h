@@ -32,9 +32,10 @@ public:
 	void update();
 	//string readRequestHeader(mg_connection* conn, string header);
 	void handleEvent(struct mg_connection* nc, int ev, void* ev_data);
-	string login(string user, string password);
+	string loginUser(string, string);
 	void createUser(Json::Value json);
 	void handleCreateUser(struct mg_connection *nc, struct http_message *hm);
+	void handleLogin(struct mg_connection*, struct http_message*);
 	void setManager(Manager* mg);
 	Manager* getManager();
 

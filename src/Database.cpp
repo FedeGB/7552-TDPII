@@ -138,7 +138,6 @@ bool Database::saveUser(User* user) {
 	string username = user->getUsername();
 	string json = user->getJsonString();
 	return this->putInColumn(this->columnUsers,username,json);
-	return true;
 }
 User* Database::getUser(string username) {
 	string json = this->getFromColumn(this->columnUsers, username);
