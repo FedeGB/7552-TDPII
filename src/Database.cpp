@@ -137,6 +137,10 @@ string Database::getFromColumn(ColumnFamilyHandle* tableHandler, string key){
 bool Database::saveUser(User* user) {
 	string username = user->getUsername();
 	string json = user->getJsonString();
+	User* userload = this->getUser(username);
+	if(!userload->getUsername().empty()) {
+		return false;
+	}
 	return this->putInColumn(this->columnUsers,username,json);
 }
 User* Database::getUser(string username) {

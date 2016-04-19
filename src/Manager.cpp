@@ -26,9 +26,11 @@ void Manager::setDatabase(Database* database){
 	this->db = database;
 }
 
-string Manager::createUser(string json){
+bool Manager::createUser(string json){
 	UserFactory userFact;
 	User* user = userFact.createWithJsonString(json);
-	this->db->saveUser(user);
-	return "pl";
+	if(!user) {
+		return false;
+	}
+	return this->db->saveUser(user);
 }

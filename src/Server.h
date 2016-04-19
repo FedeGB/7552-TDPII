@@ -41,6 +41,7 @@ public:
 
 	void respondNotAllowedMethod(struct mg_connection*);
 	void respondNotFound(struct mg_connection*);
+	void response(struct mg_connection*, int, string, Json::Value);
 
 private:
 	Manager* manager;

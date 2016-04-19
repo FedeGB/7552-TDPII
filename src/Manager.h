@@ -21,7 +21,7 @@ public:
 	virtual ~Manager();
 	Database* getDatabase();
 	void setDatabase(Database* db);
-	string createUser(string json);
+	bool createUser(string json);
 
 private:
 	Database* db;

@@ -48,6 +48,7 @@ User* UserFactory::createWithJsonValue(Json::Value value) {
 User* UserFactory::createWithJsonString(string json) {
 	Json::Reader r = Json::Reader();
 	Json::Value val = Json::Value();
-	r.parse(json,val,false);
+	r.parse(json.c_str(),val);
+	val["token"] = val.get("username", "").asString() + val.get("password", "").asString();
 	return this->createWithJsonValue(val);
 }
