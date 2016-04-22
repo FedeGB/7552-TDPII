@@ -36,8 +36,11 @@ public:
 	void createUser(Json::Value json);
 	void handleCreateUser(struct mg_connection *nc, struct http_message *hm);
 	void handleLogin(struct mg_connection*, struct http_message*);
+	void handleGetUser(struct mg_connection *nc, struct http_message *hm);
+
 	void setManager(Manager* mg);
-	Manager* getManager();
+
+		Manager* getManager();
 
 	void respondNotAllowedMethod(struct mg_connection*);
 	void respondNotFound(struct mg_connection*);

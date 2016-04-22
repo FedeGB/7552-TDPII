@@ -10,8 +10,8 @@
 
 User::User(string name) {
 	this->username = name;
-	this->locationX = 0;
-	this->locationY = 0;
+	this->latitud = 0;
+	this->longitude = 0;
 	this->token = "";
 	this->password = "";
 	//this->lastTimeConnected = NULL;
@@ -26,20 +26,20 @@ User::~User() {
 	// TODO Auto-generated destructor stub
 }
 
-double User::getLocationX() const {
-	return locationX;
+double User::getLatitude() const {
+	return latitud;
 }
 
-void User::setLocationX(double locationX) {
-	this->locationX = locationX;
+void User::setLatitude(double latitud) {
+	this->latitud = latitud;
 }
 
-double User::getLocationY() const {
-	return locationY;
+double User::getLongitude() const {
+	return longitude;
 }
 
-void User::setLocationY(double locationY) {
-	this->locationY = locationY;
+void User::setLongitude(double locationY) {
+	this->longitude = locationY;
 }
 
 void User::setPassword(const string& password) {
@@ -86,8 +86,8 @@ Json::Value User::getJson() {
 	value["password"] = this->password;
 	value["name"] = this->name;
 	value["token"] = this->token;
-	value["locationX"] = this->locationX;
-	value["locationY"] = this->locationY;
+	value["latitud"] = this->latitud;
+	value["longitude"] = this->longitude;
 	value["perfilImage"] = this->perfilImage;
 	return value;
 }
@@ -102,8 +102,8 @@ void User::initWithJson(Json::Value value){
 	std::cout << this->name << std::endl;
 
 	this->token = value.get("token","").asString();
-	this->locationX = atof((value.get("locationX","").asString()).c_str());
-	this->locationY = atof((value.get("locationY","").asString()).c_str());
+	this->latitud = atof((value.get("latitud","").asString()).c_str());
+	this->longitude = atof((value.get("longitude","").asString()).c_str());
 	this->perfilImage = value.get("perfilImage","").asString();
 }
 

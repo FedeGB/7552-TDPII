@@ -58,14 +58,20 @@ void Server::handleLogin(struct mg_connection *nc, struct http_message *hm) {
 }
 
 void Server::handleCreateUser(struct mg_connection *nc, struct http_message *hm) {
-	char user[50], password[50];
 	std::cout << hm->body.p << std::endl; // TODO: Add to logging.
 	bool userWasCreated = this->manager->createUser(hm->body.p);
 	if(userWasCreated) {
-		response(nc, 0, "Registerd", 0);
+		response(nc, 0, "Registered", 0);
 	} else {
-		response(nc, 1, "Already registerd", 0);	
+		response(nc, 1, "Already Registered", 0);
 	}
+}
+
+void Server::handleGetUser(struct mg_connection *nc, struct http_message *hm) {
+    char username[100];
+    mg_get_http_var(&hm->query_string, "username", username, sizeof(username));
+    User* user = this->manager->getDatabase()->getUser(username);
+    response(nc, 0, user->getJsonString(),"");
 }
 
 /*
@@ -100,6 +106,23 @@ void Server::handleEvent(struct mg_connection* nc, int ev, void* ev_data){
 					respondNotAllowedMethod(nc);
 				}
 			}
+
+			if (mg_vcmp(&hm->uri, "/users/get") == 0) {
+				if(mg_vcmp(&hm->method, "GET") == 0) {
+					handleGetUser(nc, hm);                    /* Handle RESTful call */
+				} else {
+					respondNotAllowedMethod(nc);
+				}
+			}
+
+			if (mg_vcmp(&hm->uri, "/conversations/get") == 0) {
+				if(mg_vcmp(&hm->method, "GET") == 0) {
+					handleLogin(nc, hm);                    /* Handle RESTful call */
+				} else {
+					respondNotAllowedMethod(nc);
+				}
+			}
+
 			if (mg_vcmp(&hm->uri, "/users/create") == 0) {
 				if(mg_vcmp(&hm->method, "POST") == 0) {
 					handleCreateUser(nc, hm);                /* Handle RESTful call */
@@ -128,7 +151,7 @@ string Server::loginUser(string user, string password){
 		jsonValue["data"] = userFound->getJson();
 		return userFound->getToken();  // TODO fixear esto
 	}
-	return "";
+	return "Sucess";
 }
 
 

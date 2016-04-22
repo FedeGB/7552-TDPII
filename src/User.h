@@ -35,11 +35,11 @@ public:
 
 	string getPassword();
 
-	double getLocationX() const;
-	void setLocationX(double locationX);
+	double getLatitude() const;
+	void setLatitude(double locationX);
 
-	double getLocationY() const;
-	void setLocationY(double locationY);
+	double getLongitude() const;
+	void setLongitude(double locationY);
 
 	void setPassword(const string& password);
 
@@ -60,9 +60,10 @@ public:
 private:
 	string username;
 	string name;
+	string email;
 	string password;
-	double locationX;
-	double locationY;
+	double latitud;
+	double longitude;
 	string perfilImage;
 	string token;
 	time_t lastTimeConnected;

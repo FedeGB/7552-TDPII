@@ -15,6 +15,7 @@
 #include "Message.h"
 #include "User.h"
 #include "Conversation.h"
+#include "Match.h"
 
 #include <iostream>
 
@@ -28,22 +29,32 @@ public:
 	Database();
 	virtual ~Database();
 
+	bool put(string key, string value);
+	bool putInColumn(ColumnFamilyHandle* tableHandler, string key, string value);
+
 	string get(string key, string value);
 	string getFromColumn(ColumnFamilyHandle* tableHandler, string key);
-	bool put(string key, string value);
+
 	User* getUser(string key);
-	bool saveUser(User* user);
 	Message* getMessage(string emisor, string receptor, string messageID);
 	std::vector<Message*> getMessages(string emisor, string receptor);
+	Conversation* getConversation(string emisor, string receptor);
+	Match* getMatch(string user1, string user2);
+
+
+	bool saveUser(User* user);
 	bool saveMessage(Message* message);
-	bool putInColumn(ColumnFamilyHandle* tableHandler, string key, string value);
+	//bool saveConversation(string emisor, string receptor, int numberOfMessages); // TODO ver que onda esto
+
+	bool saveMatch(Match* match);
+
 	Json::Value stringToJsonValue(string str);
 	string JsonValueToSting(Json::Value  json);
-	Conversation* getConversation(string emisor, string receptor);
-	bool saveConversation(string emisor, string receptor, int numberOfMessages);
 
 
-private:
+
+
+		private:
 	DB* database;
 
 	ColumnFamilyHandle* columnDefault;

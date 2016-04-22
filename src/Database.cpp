@@ -10,7 +10,7 @@
 #include <string>
 
 
-std::string kDBPath = "/tmp/rocksdb";
+std::string kDBPath = "/tmp/rocksdb2";
 
 Database::Database() {
 
@@ -98,6 +98,8 @@ bool Database::saveUser(User* user) {
 	if(!userload->getUsername().empty()) {
 		return false;
 	}
+	std::cout << "User:"  << username << " Value: " << json << std::endl;
+
 	return this->putInColumn(this->columnUsers,username,json);
 }
 User* Database::getUser(string username) {
@@ -171,6 +173,16 @@ Conversation* Database::getConversation(string emisor, string receptor){
 	Json::Value jsonValue = this->stringToJsonValue(json);
 	Conversation* conv = new Conversation(jsonValue);
 	return conv;
+}
+
+
+Match* Database::getMatch(string user1, string user){
+	//TODO terminar esto
+}
+
+bool Database::saveMatch(Match* match){
+	//TODO terminar esto
+
 }
 
 

@@ -26,8 +26,8 @@ TEST(DatabaseTests,TestSaveUser){
 	User* user = new User("User1");
 	user->setPassword("hola");
 	user->setName("Juan");
-	user->setLocationX(20.0);
-	user->setLocationY(40.0);
+	user->setLatitude(20.0);
+	user->setLongitude(40.0);
 	user->setPerfilImage("URL");
 	database->saveUser(user);
 	ASSERT_EQ(user->getName(), database->getUser(user->getUsername())->getName());
@@ -41,8 +41,8 @@ TEST(DatabaseTests,TestSaveAndGetUser){
 	User* user = new User("User1");
 	user->setPassword("hola");
 	user->setName("Juan");
-	user->setLocationX(20.0);
-	user->setLocationY(40.0);
+	user->setLatitude(20.0);
+	user->setLongitude(40.0);
 	user->setPerfilImage("URL");
 	database->saveUser(user);
 	ASSERT_EQ(user->getName(), database->getUser(user->getUsername())->getName());
