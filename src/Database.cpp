@@ -10,70 +10,27 @@
 #include <string>
 
 
-std::string kDBPath = "/tmp/rocksdb814e523453";
+std::string kDBPath = "/tmp/rocksdb";
 
 Database::Database() {
-
-
-/*
-
-	printf("ENTRA ACA1 \n");
-
-	DB* db;
-	  Options options;
-	  // Optimize RocksDB. This is the easiest way to get RocksDB to perform well
-	  // create the DB if it's not already present
-	  options.create_if_missing = true;
-
-	  // open DB
-	  Status s = DB::Open(options, kDBPath, &db);
-		printf("ENTRA ACA2 \n");
-
-	  assert(s.ok());
-		printf("ENTRA ACA3 \n");
-
-	  // Put key-value
-	  s = db->Put(WriteOptions(), "key1", "value");
-	  assert(s.ok());
-	  std::string value;
-	  // get value
-	  s = db->Get(ReadOptions(), "key1", &value);
-	  assert(s.ok());
-	  assert(value == "value");
-
-	  // atomically apply a set of updates
-	  {
-	    WriteBatch batch;
-	    batch.Delete("key1");
-	    batch.Put("key2", value);
-	    s = db->Write(WriteOptions(), &batch);
-	  }
-
-	  s = db->Get(ReadOptions(), "key1", &value);
-	  assert(s.IsNotFound());
-
-	  db->Get(ReadOptions(), "key2", &value);
-	  assert(value == "value");
-
-
-*/
 
 	// open DB
 	Options options;
 	options.create_if_missing = true;
 	Status s = DB::Open(options, kDBPath, &this->database);
-	assert(s.ok());
-	s = database->CreateColumnFamily(ColumnFamilyOptions(), "columnUsers", &this->columnUsers);
-	assert(s.ok());
-	s = database->CreateColumnFamily(ColumnFamilyOptions(), "columnConversations", &this->columnConversations);
-	assert(s.ok());
-	s = database->CreateColumnFamily(ColumnFamilyOptions(), "columnMessages", &this->columnMessages);
-	assert(s.ok());
-	  // close DB
-	delete this->columnUsers;
-	delete this->columnConversations;
-	delete this->columnMessages;
-	delete this->database;
+	if(s.ok()){
+		s = database->CreateColumnFamily(ColumnFamilyOptions(), "columnUsers", &this->columnUsers);
+		assert(s.ok());
+		s = database->CreateColumnFamily(ColumnFamilyOptions(), "columnConversations", &this->columnConversations);
+		assert(s.ok());
+		s = database->CreateColumnFamily(ColumnFamilyOptions(), "columnMessages", &this->columnMessages);
+		assert(s.ok());
+		// close DB
+		delete this->columnUsers;
+		delete this->columnConversations;
+		delete this->columnMessages;
+		delete this->database;
+	}
 	// open DB with 4 column families
 	std::vector<ColumnFamilyDescriptor> column_families;
 	// have to open default column family
@@ -83,7 +40,7 @@ Database::Database() {
 	column_families.push_back(ColumnFamilyDescriptor("columnMessages",ColumnFamilyOptions()));
 	std::vector<ColumnFamilyHandle*> handles;
 
-	Status status = DB::Open(options, kDBPath ,column_families,&handles,&this->database);
+	s = DB::Open(options, kDBPath ,column_families,&handles,&this->database);
 	assert(s.ok());
 
 	this->columnDefault = handles[0];
