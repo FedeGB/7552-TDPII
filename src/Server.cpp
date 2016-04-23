@@ -57,6 +57,9 @@ void Server::handleLogin(struct mg_connection *nc, struct http_message *hm) {
 	//mg_send_http_chunk(nc, "", 0);  /* Send empty chunk, the end of response */
 }
 
+
+
+
 void Server::handleCreateUser(struct mg_connection *nc, struct http_message *hm) {
 	std::cout << hm->body.p << std::endl; // TODO: Add to logging.
 	bool userWasCreated = this->manager->createUser(hm->body.p);
@@ -72,6 +75,15 @@ void Server::handleGetUser(struct mg_connection *nc, struct http_message *hm) {
     mg_get_http_var(&hm->query_string, "username", username, sizeof(username));
     User* user = this->manager->getDatabase()->getUser(username);
     response(nc, 0, user->getJsonString(),"");
+}
+
+void Server::handleGetConversation(struct mg_connection *nc, struct http_message *hm) {
+    char user1[100], user2[100];
+    mg_get_http_var(&hm->query_string, "user1", user1, sizeof(user1));
+    mg_get_http_var(&hm->query_string, "user2", user2, sizeof(user2));
+    Conversation* conver = this->manager->getDatabase()->getConversation(user1,user2);
+    response(nc, 0, conver->getJsonString(),"");
+
 }
 
 /*
@@ -117,7 +129,7 @@ void Server::handleEvent(struct mg_connection* nc, int ev, void* ev_data){
 
 			if (mg_vcmp(&hm->uri, "/conversations/get") == 0) {
 				if(mg_vcmp(&hm->method, "GET") == 0) {
-					handleLogin(nc, hm);                    /* Handle RESTful call */
+					handleGetConversation(nc, hm);                    /* Handle RESTful call */
 				} else {
 					respondNotAllowedMethod(nc);
 				}
