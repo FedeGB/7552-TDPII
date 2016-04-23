@@ -142,10 +142,10 @@ Message* Database::getMessage(string emisor, string receptor, string messageID){
 std::vector<Message*> Database::getMessages(string emisor, string receptor){
 	Message* message;
 	Conversation* conv = this->getConversation(emisor, receptor);
-	string id = conv->getId();
+	int intId = conv->getId();
+	string id = to_string(intId);
 	int numberOfMessages = conv->getNumberMessages();
 	std::vector<Message*> messages;
-	string convId = conv->getId();
 	for ( int i = 0; i < numberOfMessages; i++){
 		std::stringstream result;
 		result << numberOfMessages;
@@ -167,7 +167,7 @@ Conversation* Database::getConversation(string emisor, string receptor){
 		if(json == ""){
 			User* user1 = this->getUser(emisor);
 			User* user2 = this->getUser(receptor);
-			return new Conversation(user1, user2, "0");
+			return new Conversation(user1, user2);
 		}
 	}
 	Json::Value jsonValue = this->stringToJsonValue(json);
@@ -186,8 +186,16 @@ bool Database::saveMatch(Match* match){
 }
 
 
-bool saveConversation(string emisor, string receptor, int numberOfMessages){
-	return true;
+bool Database::saveConversation(Conversation* conversation){
+	string user1 = conversation->getUser1()->getUsername();
+	string user2 = conversation->getUser2()->getUsername();
+	string aux = user1 + user2;
+	string json = conversation->getJsonString();
+	Conversation* conv = this->getConversation(user1, user2);
+	if (!conv){
+		return false;
+	}
+	return this->putInColumn(columnConversations, aux, json);
 }
 
 Json::Value Database::stringToJsonValue(string str) {

@@ -19,12 +19,12 @@ using namespace std;
 class Conversation {
 public:
 	//Conversation(User* user1, User* user2);
-	Conversation(User* user1, User* user2, string id );
+	Conversation(User* user1, User* user2);
 
 	Conversation(Json::Value value);
 	virtual ~Conversation();
-	const string& getId() const;
-	void setId(const string& id);
+	int getId();
+	void setId(int id);
 	int getNumberMessages() const;
 	void setNumberMessages(int numberMessages);
 	User* getUser1();
@@ -33,13 +33,16 @@ public:
 	void setUser2(User* user2);
 	void addOneMessage();
 
+	Json::Value getJson();
+	string getJsonString();
+
 
 private:
-	string id;
+	int id;
 	User* user1;
 	User* user2;
-
 	int numberMessages;
+
 };
 
 #endif /* CONVERSATION_H_ */

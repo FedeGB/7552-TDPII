@@ -17,11 +17,11 @@ Conversation::Conversation(User* user1, User* user2) {
 
 }*/
 
-Conversation::Conversation(User* user1, User* user2, string id ) {
+Conversation::Conversation(User* user1, User* user2) {
 	this->user1 = user1;
 	this->user2 = user2;
 	this->numberMessages = 0;
-	this->id = id;
+	this->id = 0;
 
 }
 
@@ -29,7 +29,7 @@ Conversation::Conversation(Json::Value value) {
 	this->user1 = new User(value.get("user1","").asString());
 	this->user2 = new User(value.get("user2","").asString());
 	this->numberMessages = value.get("numberMessages","").asInt();
-	this->id = value.get("id","").asString();
+	this->id = value.get("id","").asInt();
 }
 
 
@@ -37,11 +37,11 @@ Conversation::~Conversation() {
 	// TODO Auto-generated destructor stub
 }
 
-const string& Conversation::getId() const {
+int Conversation::getId() {
 	return id;
 }
 
-void Conversation::setId(const string& id) {
+void Conversation::setId(int id) {
 	this->id = id;
 }
 
@@ -73,4 +73,18 @@ void Conversation::addOneMessage(){
 	this->numberMessages++;
 }
 
+string Conversation::getJsonString() {
+	Json::StreamWriterBuilder builder;
+	builder.settings_["identation"] = "\t";
+	return Json::writeString(builder,this->getJson());
+}
+
+Json::Value Conversation::getJson() {
+	Json::Value value(Json::objectValue);
+	value["user1"] = this->user1;
+	value["user2"] = this->user2;
+	value["id"] = this->id;
+	value["numberMessages"] = this->numberMessages;
+	return value;
+}
 

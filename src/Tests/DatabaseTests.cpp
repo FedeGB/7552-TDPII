@@ -4,9 +4,6 @@
 #include "../Database.h"
 
 
-
-
-
 TEST(DatabaseTests,TestSaveKeyValue){
 	Database* database = new Database();
 	string key = "key";
@@ -56,11 +53,11 @@ TEST(DatabaseTests,TestSaveAndGetMessage){
 	User* user2 = new User("User2");
 	string data = "hola";
 	Conversation* conv = database->getConversation(user1->getUsername(), user2->getUsername());
-	string id = conv->getId();
+	int id = conv->getId();
 	Message* message = new Message(user1, user2, data);
-	message->setId(id);
+	message->setId(to_string(id));
 	database->saveMessage(message);
-	ASSERT_EQ(data, database->getMessage(user1->getUsername(), user2->getUsername(), id)->getData());
+	ASSERT_EQ(data, database->getMessage(user1->getUsername(), user2->getUsername(), to_string(id))->getData());
 	delete user1;
 	delete user2;
 	delete database;
@@ -75,20 +72,20 @@ TEST(DatabaseTests,TestSaveTwoMessages){
 	string data = "Hi";
 	string dataTwo = "How are you? ";
 	Conversation* conv = database->getConversation(user1->getUsername(), user2->getUsername());
-	string id = conv->getId();
+	int id = conv->getId();
 	Message* message = new Message(user1, user2, data);
-	message->setId(id);
+	message->setId(to_string(id));
 	database->saveMessage(message);
 	Message* messageTwo = new Message(user2, user1, dataTwo);
-	message->setId(id);
+	message->setId(to_string(id));
 	vector<Message*> messages = database->getMessages(user1->getUsername(), user2->getUsername());
 	vector<Message*> originalMessages;
 	originalMessages.push_back(message);
 	originalMessages.push_back(messageTwo);
 	for ( int i = 0 ; i < messages.size(); i++){
-		ASSERT_EQ(data, database->getMessage(user1->getUsername(), user2->getUsername(), id)->getData());
+		ASSERT_EQ(data, database->getMessage(user1->getUsername(), user2->getUsername(), to_string(id))->getData());
 	}
-	ASSERT_EQ(data, database->getMessage(user1->getUsername(), user2->getUsername(), id)->getData());
+	ASSERT_EQ(data, database->getMessage(user1->getUsername(), user2->getUsername(), to_string(id))->getData());
 	delete user1;
 	delete user2;
 	delete database;
