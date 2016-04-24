@@ -90,7 +90,14 @@ string Server::readRequestHeader(mg_connection* conn, string header){
 
 void Server::handleEvent(struct mg_connection* nc, int ev, void* ev_data){
 		struct http_message *hm = (struct http_message *) ev_data;
+		/* Adentro del switch-case
+		EventHandlerFactory* EventHandlerFactory = new EventHandlerFactory();
 
+		EventHandler* ehandler = EventHandlerFactory->getEventHandler(hm, nc);
+		ehandler->handle();
+
+		delete ehandler;
+		*/
 		switch(ev){
 		case MG_EV_HTTP_REQUEST: {
 			printf("Llego un request \n");
