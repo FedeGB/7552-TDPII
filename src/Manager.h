@@ -10,6 +10,8 @@
 
 
 #include <iostream>
+#include "Conversation.h"
+
 
 class Database;
 
@@ -22,10 +24,11 @@ public:
 	Database* getDatabase();
 	void setDatabase(Database* db);
 	bool createUser(string json);
+	User* getUser(std::string);
+	Conversation* getConversation(std::string, std::string);
 	bool saveMessage(string json);
 
-
-		private:
+private:
 	Database* db;
 
 };

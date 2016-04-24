@@ -52,3 +52,11 @@ bool Manager::saveMessage(string json){
 	// TODO logear
 	return this->db->saveMessage(message);
 }
+
+User* Manager::getUser(std::string user) {
+	return this->db->getUser(user);	
+}
+
+Conversation* Manager::getConversation(std::string user1, std::string user2) {
+	return this->db->getConversation(user1, user2);
+}

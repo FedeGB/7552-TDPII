@@ -110,14 +110,10 @@ bool Database::saveUser(User* user) {
 	if(!userload->getUsername().empty()) {
 		return false;
 	}
-	std::cout << "User:"  << username << " Value: " << json << std::endl;
-
 	return this->putInColumn(this->columnUsers,username,json);
 }
 User* Database::getUser(string username) {
 	string json = this->getFromColumn(this->columnUsers, username);
-	//std::cout << "MUESTRO EL JSON" << std::endl;
-	//std::cout << json << std::endl;
 	Json::Value jsonValue = this->stringToJsonValue(json);
 	User* user = new User(username);
 	user->initWithJson(jsonValue);

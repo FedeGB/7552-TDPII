@@ -8,10 +8,11 @@
 #ifndef SERVER_H_
 #define SERVER_H_
 
-#include "mongoose.h"
-#include "json/json.h"
+//#include "mongoose.h"
+//#include "json/json.h"
 
 #include "User.h"
+#include "Factories/EventHandlerFactory.h"
 #include "Database.h"
 
 #include <stdio.h>
@@ -34,19 +35,9 @@ public:
 	void handleEvent(struct mg_connection* nc, int ev, void* ev_data);
 	string loginUser(string, string);
 
-	void createUser(Json::Value json);
-
-	//handlers
-	void handleGetConversation(struct mg_connection *nc, struct http_message *hm);
-	void handleGetUser(struct mg_connection *nc, struct http_message *hm);
-	void handleSaveMessage(struct mg_connection *nc, struct http_message *hm);
-
-	void handleCreateUser(struct mg_connection *nc, struct http_message *hm);
-	void handleLogin(struct mg_connection*, struct http_message*);
-
 	void setManager(Manager* mg);
 
-		Manager* getManager();
+	Manager* getManager();
 
 	void respondNotAllowedMethod(struct mg_connection*);
 	void respondNotFound(struct mg_connection*);
@@ -57,7 +48,7 @@ private:
 	struct mg_mgr mgr;
 	struct mg_connection *nc;
 	char *s_http_port;
-
+	EventHandlerFactory* eventFactory;
 
 };
 

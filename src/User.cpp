@@ -94,13 +94,8 @@ Json::Value User::getJson() {
 
 void User::initWithJson(Json::Value value){
 	this->username = value.get("username","").asString();
-	std::cout << this->username << std::endl;
 	this->password = value.get("password","").asString();
-	std::cout << this->password << std::endl;
-
 	this->name = value.get("name","").asString();
-	std::cout << this->name << std::endl;
-
 	this->token = value.get("token","").asString();
 	this->latitud = atof((value.get("latitud","").asString()).c_str());
 	this->longitude = atof((value.get("longitude","").asString()).c_str());

@@ -6,7 +6,6 @@
  */
 
 #include "Conversation.h"
-#include "User.h"
 
 /*
 Conversation::Conversation(User* user1, User* user2) {

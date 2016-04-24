@@ -10,7 +10,7 @@
 
 #include <string>
 #include "json/json.h"
-
+#include "User.h"
 
 class User;
 
