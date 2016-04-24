@@ -8,11 +8,18 @@
 #include "Message.h"
 #include "User.h"
 
-Message::Message(User* sender, User* receptor, string data ) {
+
+Message::Message(User* sender, User* receptor, string data) {
 	// TODO Auto-generated constructor stub
 	this->sender = sender;
 	this->receptor = receptor;
 	this->data = data;
+	time_t     now = time(0);
+	struct tm  tstruct;
+	char       buf[80];
+	tstruct = *localtime(&now);
+	strftime(buf, sizeof(buf), "%X - %Y/%m/%d.", &tstruct);
+	this->date = buf;
 	this->id = "";
 }
 

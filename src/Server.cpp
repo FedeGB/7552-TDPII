@@ -70,6 +70,16 @@ void Server::handleCreateUser(struct mg_connection *nc, struct http_message *hm)
 	}
 }
 
+void Server::handleSaveMessage(struct mg_connection *nc, struct http_message *hm) {
+    std::cout << hm->body.p << std::endl; // TODO: Add to logging.
+    bool messageWasSaved = this->manager->saveMessage(hm->body.p);
+    if(messageWasSaved) {
+        response(nc, 0, "Message Saved", 0);
+    } else {
+        response(nc, 1, "Couldn't save", 0);
+    }
+}
+
 void Server::handleGetUser(struct mg_connection *nc, struct http_message *hm) {
     char username[100];
     mg_get_http_var(&hm->query_string, "username", username, sizeof(username));
@@ -83,7 +93,6 @@ void Server::handleGetConversation(struct mg_connection *nc, struct http_message
     mg_get_http_var(&hm->query_string, "user2", user2, sizeof(user2));
     Conversation* conver = this->manager->getDatabase()->getConversation(user1,user2);
     response(nc, 0, conver->getJsonString(),"");
-
 }
 
 /*
@@ -111,7 +120,8 @@ void Server::handleEvent(struct mg_connection* nc, int ev, void* ev_data){
 			//HttpRequestHandler requestHandler;
 			//requestHandler.proccesRequest(request);
 			//DEVUELVE TEXTO PLANO!
-			if (mg_vcmp(&hm->uri, "/users/login") == 0) {
+
+            if (mg_vcmp(&hm->uri, "/users/login") == 0) {
 				if(mg_vcmp(&hm->method, "GET") == 0) {
 					handleLogin(nc, hm);                    /* Handle RESTful call */
 				} else {
@@ -127,6 +137,14 @@ void Server::handleEvent(struct mg_connection* nc, int ev, void* ev_data){
 				}
 			}
 
+            if (mg_vcmp(&hm->uri, "/users/create") == 0) {
+                if(mg_vcmp(&hm->method, "POST") == 0) {
+                    handleCreateUser(nc, hm);                /* Handle RESTful call */
+                } else {
+                    respondNotAllowedMethod(nc);
+                }
+            }
+
 			if (mg_vcmp(&hm->uri, "/conversations/get") == 0) {
 				if(mg_vcmp(&hm->method, "GET") == 0) {
 					handleGetConversation(nc, hm);                    /* Handle RESTful call */
@@ -135,13 +153,13 @@ void Server::handleEvent(struct mg_connection* nc, int ev, void* ev_data){
 				}
 			}
 
-			if (mg_vcmp(&hm->uri, "/users/create") == 0) {
-				if(mg_vcmp(&hm->method, "POST") == 0) {
-					handleCreateUser(nc, hm);                /* Handle RESTful call */
-				} else {
-					respondNotAllowedMethod(nc);	
-				}
-			}
+            if (mg_vcmp(&hm->uri, "/message/save") == 0) {
+                if(mg_vcmp(&hm->method, "POST") == 0) {
+                    handleSaveMessage(nc, hm);                    /* Handle RESTful call */
+                } else {
+                    respondNotAllowedMethod(nc);
+                }
+            }
 			
 			respondNotFound(nc);
 			printf("Procesado un request \n");

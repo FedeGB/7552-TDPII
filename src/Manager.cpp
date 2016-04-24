@@ -8,6 +8,7 @@
 #include "Manager.h"
 #include "Database.h"
 #include "Factories/UserFactory.h"
+#include "Factories/MessageFactory.h"
 
 Manager::Manager() {
 	this->db = new Database();
@@ -33,4 +34,21 @@ bool Manager::createUser(string json){
 		return false;
 	}
 	return this->db->saveUser(user);
+}
+
+bool Manager::saveMessage(string json){
+	MessageFactory messageFactory;
+	Message* message = messageFactory.createWithJsonString(json);
+	User* sender = message->getSender();
+	User* receptor = message->getReceptor();
+	Conversation* conv = this->db->getConversation(sender ->getUsername(), receptor->getUsername() );
+	if(!conv){
+		conv = new Conversation(message->getSender(), message->getReceptor());
+	}
+	int messageID = conv->getNumberMessages();
+	message->setId(to_string(messageID));
+	conv->addOneMessage();
+	this->db->saveConversation(conv);
+	// TODO logear
+	return this->db->saveMessage(message);
 }

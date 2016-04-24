@@ -8,8 +8,8 @@
 #include "User.h"
 
 
-User::User(string name) {
-	this->username = name;
+User::User(string username) {
+	this->username = username;
 	this->latitud = 0;
 	this->longitude = 0;
 	this->token = "";

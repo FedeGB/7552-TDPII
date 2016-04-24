@@ -22,8 +22,10 @@ public:
 	Database* getDatabase();
 	void setDatabase(Database* db);
 	bool createUser(string json);
+	bool saveMessage(string json);
 
-private:
+
+		private:
 	Database* db;
 
 };

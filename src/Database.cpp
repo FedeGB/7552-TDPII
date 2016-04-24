@@ -8,9 +8,9 @@
 #include "Database.h"
 #include "User.h"
 #include <string>
+#include <vector>
 
-
-std::string kDBPath = "/tmp/rocksdb2";
+std::string kDBPath = "/tmp/rocksdb6";
 
 Database::Database() {
 
@@ -47,6 +47,18 @@ Database::Database() {
 	this->columnUsers = handles[1];
 	this->columnConversations = handles[2];
 	this->columnMessages = handles[3];
+
+	std::vector<Iterator*> iterators;
+	Status status = database->NewIterators(rocksdb::ReadOptions(), handles, &iterators);
+
+	// shows all the values of the database
+	for(int i = 0 ; i < iterators.size() ; i++){
+		rocksdb::Iterator* it =  iterators.at(i);
+		for (it->SeekToFirst(); it->Valid(); it->Next()) {
+			cout << it->key().ToString() << ": " << it->value().ToString() << endl;
+		}
+		assert(it->status().ok()); // Check for any errors found during the scan
+	}
 
 }
 
@@ -118,7 +130,6 @@ bool Database::saveMessage(Message* message) {
 	aux += message->getSender()->getUsername();
 	aux += message->getReceptor()->getUsername();
 	return this->putInColumn(this->columnMessages,aux,json);
-	return true;
 }
 
 Message* Database::getMessage(string emisor, string receptor, string messageID){
@@ -165,9 +176,9 @@ Conversation* Database::getConversation(string emisor, string receptor){
 		aux=receptor+emisor;
 		json = this->getFromColumn(this->columnConversations, aux);
 		if(json == ""){
-			User* user1 = this->getUser(emisor);
-			User* user2 = this->getUser(receptor);
-			return new Conversation(user1, user2);
+			//User* user1 = this->getUser(emisor);
+			//User* user2 = this->getUser(receptor);
+			return NULL;
 		}
 	}
 	Json::Value jsonValue = this->stringToJsonValue(json);
@@ -191,10 +202,10 @@ bool Database::saveConversation(Conversation* conversation){
 	string user2 = conversation->getUser2()->getUsername();
 	string aux = user1 + user2;
 	string json = conversation->getJsonString();
-	Conversation* conv = this->getConversation(user1, user2);
-	if (!conv){
-		return false;
-	}
+	//Conversation* conv = this->getConversation(user1, user2);
+	//if (!conv){
+	//	return false;
+	//}
 	return this->putInColumn(columnConversations, aux, json);
 }
 

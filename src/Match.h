@@ -18,6 +18,7 @@ public:
     User* getUser2();
 
 private:
+    User* matches[];
     User* user1;
     User* user2;
     bool result;

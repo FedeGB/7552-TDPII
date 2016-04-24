@@ -39,6 +39,7 @@ public:
 	//handlers
 	void handleGetConversation(struct mg_connection *nc, struct http_message *hm);
 	void handleGetUser(struct mg_connection *nc, struct http_message *hm);
+	void handleSaveMessage(struct mg_connection *nc, struct http_message *hm);
 
 	void handleCreateUser(struct mg_connection *nc, struct http_message *hm);
 	void handleLogin(struct mg_connection*, struct http_message*);

@@ -21,7 +21,7 @@ using namespace std;
 
 class Message {
 public:
-	Message(User* sender, User* receptor, string data );
+	Message(User* sender, User* receptor, string data);
 	Message(Json::Value value );
 	virtual ~Message();
 	string getJsonString();

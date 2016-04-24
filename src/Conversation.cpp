@@ -81,8 +81,8 @@ string Conversation::getJsonString() {
 
 Json::Value Conversation::getJson() {
 	Json::Value value(Json::objectValue);
-	value["user1"] = this->user1;
-	value["user2"] = this->user2;
+	value["user1"] = this->user1->getUsername();
+	value["user2"] = this->user2->getUsername();
 	value["id"] = this->id;
 	value["numberMessages"] = this->numberMessages;
 	return value;
