@@ -7,11 +7,12 @@
 class CreateUserEvent: public EventHandler {
 
 public:
+	CreateUserEvent();
 	CreateUserEvent(struct mg_connection*, struct http_message*);
 	virtual ~CreateUserEvent();
 
 	bool validateInput();
-	void handle();
+	void handle(Manager*);
 
 };
 

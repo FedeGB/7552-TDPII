@@ -1,13 +1,20 @@
 #include "CreateUserEvent.h"
 
+CreateUserEvent::CreateUserEvent() {
+}
+
 CreateUserEvent::CreateUserEvent(struct mg_connection* nco, struct http_message* hme) {
 	this->nc = nco;	
 	this->hm = hme;
 	this->methodType = "POST";
 }
 
+CreateUserEvent::~CreateUserEvent() {
+
+}
+
 bool CreateUserEvent::validateInput() {
-	if(mg_vcmp(&hm->method, this->methodType) != 0) {
+	if(mg_vcmp(&hm->method, this->methodType.c_str()) != 0) {
 		this->respondNotAllowedMethod();
 		return false;
 	}
@@ -15,33 +22,32 @@ bool CreateUserEvent::validateInput() {
 
 	Json::Reader r = Json::Reader();
 	Json::Value val = Json::Value();
-	r.parse(this->hm->body.p.c_str(),val);
-	if(val.get("username", "").asString().compare("")) {
-		this->response(nc, 2, "Missing parameters", 0);
+	r.parse(hm->body.p,val);
+	//std::cout << val.get("password", "").asString() << std::endl;
+	if(val.get("username", "").asString().compare("") == 0) {
+		this->response(2, "Missing parameters", (Json::Value)0);
 		return false;
 	}
-	if(val.get("name", "").asString().compare("")) {
-		this->response(nc, 2, "Missing parameters", 0);
+	if(val.get("name", "").asString().compare("") == 0) {
+		this->response(2, "Missing parameters", (Json::Value)0);
 		return false;
 	}
-	if(val.get("password", "").asString().compare("")) {
-		this->response(nc, 2, "Missing parameters", 0);
+	if(val.get("password", "").asString().compare("") == 0) {
+		this->response(2, "Missing parameters", (Json::Value)0);
 		return false;
 	}
 
 	return true;
 }
 
-void CreateUserEvent::handle() {
+void CreateUserEvent::handle(Manager* manager) {
 	bool validation = this->validateInput();
 	if(validation) {
-		Manager* manager = new Manager();
 		bool userWasCreated = manager->createUser(hm->body.p);
-		delete manager;
 		if(userWasCreated) {
-			this->response(nc, 0, "Registered", 0);
+			this->response(0, "Registered", (Json::Value)0);
 		} else {
-			this->response(nc, 1, "Already Registered", 0);
+			this->response(1, "Already Registered", (Json::Value)0);
 		}
 	}
 }

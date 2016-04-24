@@ -14,11 +14,14 @@
 Server::Server() {
 	//this->s_http_port = "8000";
 	this->manager = new Manager();
+	this->eventFactory = new EventHandlerFactory();
 	//this->mgr.user_data = this;
 }
 
 Server::~Server() {
 	  mg_mgr_free(&mgr);
+	  delete manager;
+	  delete eventFactory;
 }
 
 
@@ -112,7 +115,9 @@ void Server::handleEvent(struct mg_connection* nc, int ev, void* ev_data){
 		*/
 		switch(ev){
 		case MG_EV_HTTP_REQUEST: {
-			printf("Llego un request \n");
+			EventHandler* ehandler = eventFactory->getEventHandler(nc, hm);
+			ehandler->handle(this->manager);
+/*			printf("Llego un request \n");
 
 			//HttpRequest request(hm);s
 			//HttpRequestHandler requestHandler;
@@ -121,7 +126,7 @@ void Server::handleEvent(struct mg_connection* nc, int ev, void* ev_data){
 			if (mg_vcmp(&hm->uri, "/users/login") == 0) {
 				if(mg_vcmp(&hm->method, "GET") == 0) {
 					handleLogin(nc, hm);                    /* Handle RESTful call */
-				} else {
+/*				} else {
 					respondNotAllowedMethod(nc);
 				}
 			}
@@ -129,7 +134,7 @@ void Server::handleEvent(struct mg_connection* nc, int ev, void* ev_data){
 			if (mg_vcmp(&hm->uri, "/users/get") == 0) {
 				if(mg_vcmp(&hm->method, "GET") == 0) {
 					handleGetUser(nc, hm);                    /* Handle RESTful call */
-				} else {
+/*				} else {
 					respondNotAllowedMethod(nc);
 				}
 			}
@@ -137,7 +142,7 @@ void Server::handleEvent(struct mg_connection* nc, int ev, void* ev_data){
 			if (mg_vcmp(&hm->uri, "/conversations/get") == 0) {
 				if(mg_vcmp(&hm->method, "GET") == 0) {
 					handleGetConversation(nc, hm);                    /* Handle RESTful call */
-				} else {
+/*				} else {
 					respondNotAllowedMethod(nc);
 				}
 			}
@@ -145,14 +150,14 @@ void Server::handleEvent(struct mg_connection* nc, int ev, void* ev_data){
 			if (mg_vcmp(&hm->uri, "/users/create") == 0) {
 				if(mg_vcmp(&hm->method, "POST") == 0) {
 					handleCreateUser(nc, hm);                /* Handle RESTful call */
-				} else {
+/*				} else {
 					respondNotAllowedMethod(nc);	
 				}
 			}
 			
 			respondNotFound(nc);
 			printf("Procesado un request \n");
-
+*/
 			break;
 			}
 		default:

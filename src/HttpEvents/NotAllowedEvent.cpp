@@ -1,13 +1,13 @@
 #include "NotAllowedEvent.h"
 
-void NotAllowedEvent::NotAllowedEvent() {
+NotAllowedEvent::NotAllowedEvent() {
 
 }
 
-void NotAllowedEvent::~NotAllowedEvent() {
+NotAllowedEvent::~NotAllowedEvent() {
 
 }
 
-void NotAllowedEvent::handle() {
+void NotAllowedEvent::handle(Manager* manager) {
 	this->respondNotFound();
 }

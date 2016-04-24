@@ -1,10 +1,11 @@
 #ifndef EVENTHANDLERFACTORY_H_
 #define EVENTHANDLERFACTORY_H_
 
-#include <string>
+#include "Factory.h"
 #include "../HttpEvents/CreateUserEvent.h"
+#include "../HttpEvents/NotAllowedEvent.h"
 
-class EventHandlerFactory {
+class EventHandlerFactory: public Factory {
 
 public:
 	EventHandlerFactory();
@@ -12,4 +13,4 @@ public:
 	EventHandler* getEventHandler(struct mg_connection*, struct http_message*);
 };
 
-#endif /*EVENTHANDLERFACTORY_H_*/
+#endif /* EVENTHANDLERFACTORY_H_*/

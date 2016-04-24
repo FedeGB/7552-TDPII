@@ -8,10 +8,11 @@
 #ifndef SERVER_H_
 #define SERVER_H_
 
-// #include "mongoose.h"
-// #include "json/json.h"
+//#include "mongoose.h"
+//#include "json/json.h"
 
 #include "User.h"
+#include "Factories/EventHandlerFactory.h"
 #include "Database.h"
 
 #include <stdio.h>
@@ -56,7 +57,7 @@ private:
 	struct mg_mgr mgr;
 	struct mg_connection *nc;
 	char *s_http_port;
-
+	EventHandlerFactory* eventFactory;
 
 };
 

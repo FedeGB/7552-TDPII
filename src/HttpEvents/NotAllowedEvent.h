@@ -7,8 +7,8 @@ class NotAllowedEvent: public EventHandler {
 	
 public:
 	NotAllowedEvent();
-	virtual void ~NotAllowedEvent();
-	virtual void handle();
+	virtual ~NotAllowedEvent();
+	virtual void handle(Manager*);
 
 };
 

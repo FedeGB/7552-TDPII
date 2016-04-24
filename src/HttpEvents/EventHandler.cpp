@@ -1,8 +1,24 @@
 #include "EventHandler.h"
 
-void EventHandler::EventHandler(struct mg_connection *nco, struct http_message *hme) {
+EventHandler::EventHandler(struct mg_connection *nco, struct http_message *hme) {
 	this->nc = nco;
 	this->hm = hme;
+}
+
+EventHandler::EventHandler() {
+
+}
+
+EventHandler::~EventHandler() {
+
+}
+
+void EventHandler::handle(Manager* manager) {
+
+}
+
+bool EventHandler::validateInput() {
+
 }
 
 void EventHandler::respondNotAllowedMethod() {
@@ -13,7 +29,7 @@ void EventHandler::respondNotFound() {
 	mg_printf(nc, "HTTP/1.1 404 %s\r\n", "Not Found");			
 }
 
-void EventHandler::response(int errorNum, string message, Json::Value payload) {
+void EventHandler::response(int errorNum, std::string message, Json::Value payload) {
 	/* Compute the result and send it back as a JSON object */
 	Json::Value json = Json::Value();
 	json["errorNum"] = errorNum;
