@@ -44,7 +44,9 @@ public:
 
 	bool saveUser(User* user);
 	bool saveMessage(Message* message);
-	//bool saveConversation(string emisor, string receptor, int numberOfMessages); // TODO ver que onda esto
+	bool saveConversation(Conversation* conversation);
+
+		//bool saveConversation(string emisor, string receptor, int numberOfMessages); // TODO ver que onda esto
 
 	bool saveMatch(Match* match);
 

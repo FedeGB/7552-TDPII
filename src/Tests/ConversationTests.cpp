@@ -8,9 +8,9 @@
 TEST(ConversationTests,TestNewConversation){
 	User* user1 = new User("Juan");
 	User* user2 = new User("Carlos");
-	Conversation* conv = new Conversation(user1,user2, "0");
-	conv->setId("0");
-	ASSERT_EQ("0", conv->getId());
+	Conversation* conv = new Conversation(user1,user2);
+	conv->setId(0);
+	ASSERT_EQ(0, conv->getId());
 	ASSERT_EQ(0, conv->getNumberMessages());
 	ASSERT_EQ(user1, conv->getUser1());
 	ASSERT_EQ(user2, conv->getUser2());
