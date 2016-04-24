@@ -18,15 +18,21 @@ void EventHandler::handle(Manager* manager) {
 }
 
 bool EventHandler::validateInput() {
-
+	if(mg_vcmp(&hm->method, this->methodType.c_str()) != 0) {
+		this->respondNotAllowedMethod();
+		return false;
+	}
+	return true;
 }
 
 void EventHandler::respondNotAllowedMethod() {
-	mg_printf(nc, "HTTP/1.1 405 %s\r\n", "Method Not Allowed");		
+	//mg_printf(nc, "HTTP/1.1 405 %s\r\n", "Method Not Allowed");	
+	mg_send_response_line(nc, 405, NULL);
 }
 
 void EventHandler::respondNotFound() {
-	mg_printf(nc, "HTTP/1.1 404 %s\r\n", "Not Found");			
+	//mg_printf(nc, "HTTP/1.1 404 %s\r\n", "Not Found");
+	mg_send_response_line(nc, 404, NULL);
 }
 
 void EventHandler::response(int errorNum, std::string message, Json::Value payload) {
@@ -39,6 +45,9 @@ void EventHandler::response(int errorNum, std::string message, Json::Value paylo
 	} else {
 		json["payload"] = payload;
 	}
+	Json::Value metadata = Json::Value();
+	metadata["size"] = (int)json["payload"].size();
+	json["metadata"] = metadata;
 	Json::FastWriter fastWriter;
 	mg_printf(nc, "%s", "HTTP/1.1 200 OK\r\nTransfer-Encoding: chunked\r\n\r\n");
 	mg_printf_http_chunk(nc, fastWriter.write(json).c_str());

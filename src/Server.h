@@ -35,13 +35,11 @@ public:
 	void handleEvent(struct mg_connection* nc, int ev, void* ev_data);
 	string loginUser(string, string);
 
-	void createUser(Json::Value json);
-
 	//handlers
 	void handleGetConversation(struct mg_connection *nc, struct http_message *hm);
 	void handleGetUser(struct mg_connection *nc, struct http_message *hm);
 
-	void handleCreateUser(struct mg_connection *nc, struct http_message *hm);
+	//void handleCreateUser(struct mg_connection *nc, struct http_message *hm);
 	void handleLogin(struct mg_connection*, struct http_message*);
 
 	void setManager(Manager* mg);

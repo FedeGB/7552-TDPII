@@ -4,6 +4,9 @@
 #include "Factory.h"
 #include "../HttpEvents/CreateUserEvent.h"
 #include "../HttpEvents/NotAllowedEvent.h"
+#include "../HttpEvents/LoginUserEvent.h"
+#include "../HttpEvents/GetUserDataEvent.h"
+#include "../HttpEvents/GetConversationEvent.h"
 
 class EventHandlerFactory: public Factory {
 

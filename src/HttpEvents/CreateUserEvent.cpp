@@ -14,10 +14,8 @@ CreateUserEvent::~CreateUserEvent() {
 }
 
 bool CreateUserEvent::validateInput() {
-	if(mg_vcmp(&hm->method, this->methodType.c_str()) != 0) {
-		this->respondNotAllowedMethod();
-		return false;
-	}
+	bool parentValidation = EventHandler::validateInput();
+	if(!parentValidation) return parentValidation;
 	// TODO: Validate content type header is application/json
 
 	Json::Reader r = Json::Reader();
