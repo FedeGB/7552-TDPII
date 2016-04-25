@@ -48,8 +48,8 @@ string Message::getJsonString() {
 
 Json::Value Message::getJson() {
 	Json::Value value(Json::objectValue);
-	value["sender"] = this->sender;
-	value["receptor"] = this->receptor;
+	value["sender"] = this->sender->getUsername();
+	value["receptor"] = this->receptor->getUsername();
 	value["id"] = this->id;
 	value["data"] = this->data;
 	value["date"] = this->date;

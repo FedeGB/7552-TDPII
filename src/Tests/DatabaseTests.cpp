@@ -53,7 +53,12 @@ TEST(DatabaseTests,TestSaveAndGetMessage){
 	User* user2 = new User("User2");
 	string data = "hola";
 	Conversation* conv = database->getConversation(user1->getUsername(), user2->getUsername());
-	int id = conv->getId();
+	int id;
+	if(conv){
+		conv->getId();
+	}else{
+		id = 0;
+	}
 	Message* message = new Message(user1, user2, data);
 	message->setId(to_string(id));
 	database->saveMessage(message);
@@ -72,20 +77,22 @@ TEST(DatabaseTests,TestSaveTwoMessages){
 	string data = "Hi";
 	string dataTwo = "How are you? ";
 	Conversation* conv = database->getConversation(user1->getUsername(), user2->getUsername());
-	int id = conv->getId();
 	Message* message = new Message(user1, user2, data);
-	message->setId(to_string(id));
+	message->setId("0");
 	database->saveMessage(message);
 	Message* messageTwo = new Message(user2, user1, dataTwo);
-	message->setId(to_string(id));
+	messageTwo->setId("1");
+	database->saveMessage(messageTwo);
+
 	vector<Message*> messages = database->getMessages(user1->getUsername(), user2->getUsername());
 	vector<Message*> originalMessages;
 	originalMessages.push_back(message);
 	originalMessages.push_back(messageTwo);
-	for ( int i = 0 ; i < messages.size(); i++){
-		ASSERT_EQ(data, database->getMessage(user1->getUsername(), user2->getUsername(), to_string(id))->getData());
-	}
-	ASSERT_EQ(data, database->getMessage(user1->getUsername(), user2->getUsername(), to_string(id))->getData());
+//	for ( int i = 0 ; i < messages.size(); i++){
+//		ASSERT_EQ(data, database->getMessage(user1->getUsername(), user2->getUsername(), "0")->getData());
+//	}
+	ASSERT_EQ(data, database->getMessage(user1->getUsername(), user2->getUsername(), "0")->getData());
+	ASSERT_EQ(dataTwo, database->getMessage(user2->getUsername(), user1->getUsername(), "1")->getData());
 	delete user1;
 	delete user2;
 	delete database;

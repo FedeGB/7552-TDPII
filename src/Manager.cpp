@@ -42,9 +42,9 @@ bool Manager::saveMessage(string json){
 	User* sender = message->getSender();
 	User* receptor = message->getReceptor();
 	Conversation* conv = this->db->getConversation(sender ->getUsername(), receptor->getUsername() );
-	if(!conv){
-		conv = new Conversation(message->getSender(), message->getReceptor());
-	}
+//	if(!conv){
+//		conv = new Conversation(message->getSender(), message->getReceptor());
+//	}
 	int messageID = conv->getNumberMessages();
 	message->setId(to_string(messageID));
 	conv->addOneMessage();
@@ -60,3 +60,9 @@ User* Manager::getUser(std::string user) {
 Conversation* Manager::getConversation(std::string user1, std::string user2) {
 	return this->db->getConversation(user1, user2);
 }
+
+vector<Message*> Manager::getMessages(string user1, string user2){
+	return this->db->getMessages(user1, user2);
+}
+
+

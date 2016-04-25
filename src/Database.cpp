@@ -10,7 +10,7 @@
 #include <string>
 #include <vector>
 
-std::string kDBPath = "/tmp/rocksdb6";
+std::string kDBPath = "/tmp/rocksdb7";
 
 Database::Database() {
 
@@ -131,17 +131,22 @@ bool Database::saveMessage(Message* message) {
 Message* Database::getMessage(string emisor, string receptor, string messageID){
 	Message* message;
 	//Conversation* conv = this->getConversation(emisor, receptor);
-	string aux = messageID;
-	aux+=emisor;
-	aux+=receptor;
+	string aux = messageID+emisor+receptor;
+	//aux+=emisor+receptor;
+	//aux+=receptor;
 	//if (conv->getNumberMessages() == 0){
 	//	return NULL;
 	//}
 	//else{
-		string json = this->getFromColumn(this->columnMessages, aux);
-		Json::Value jsonValue = this->stringToJsonValue(json);
-		//message->initWithJson(jsonValue);
-		message = new Message(jsonValue);
+	string json = this->getFromColumn(this->columnMessages, aux);
+	if(json == ""){
+		aux = messageID+receptor+emisor;
+		json = this->getFromColumn(this->columnMessages, aux);
+
+	}
+	Json::Value jsonValue = this->stringToJsonValue(json);
+	//message->initWithJson(jsonValue);
+	message = new Message(jsonValue);
 	//}
 	return message;
 }
@@ -156,8 +161,10 @@ std::vector<Message*> Database::getMessages(string emisor, string receptor){
 	for ( int i = 0; i < numberOfMessages; i++){
 		std::stringstream result;
 		result << numberOfMessages;
-		string aux = result.str()+emisor+receptor;
-		message = this->getMessage(emisor, receptor, aux);
+		string aux = to_string(intId)+emisor+receptor;
+		message = this->getMessage(emisor, receptor, to_string(intId));
+		//if(message)
+		intId++;
 		messages.push_back(message);
 	}
 	return messages;
@@ -174,7 +181,8 @@ Conversation* Database::getConversation(string emisor, string receptor){
 		if(json == ""){
 			//User* user1 = this->getUser(emisor);
 			//User* user2 = this->getUser(receptor);
-			return NULL;
+
+			return new Conversation(new User(emisor), new User(receptor));
 		}
 	}
 	Json::Value jsonValue = this->stringToJsonValue(json);

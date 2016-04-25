@@ -38,6 +38,19 @@ void GetConversationEvent::handle(Manager* manager) {
 	    std::string user1Str(user1);
 	    std::string user2Str(user2);
 	    Conversation* conver = manager->getConversation(user1Str, user2Str);
-	    this->response(0, "", conver->getJson());
+		vector<Message*> messages = manager->getMessages(user1Str, user2Str);
+
+		Json::Value event;
+		Json::Value vec(Json::arrayValue);
+		for (int i = 0 ; i < messages.size() ; i++){
+			vec.append(messages.at(i)->getJson());
+		}
+		//vec.append(Json::Value(2));
+		//vec.append(Json::Value(3));
+
+		event["messages"] = vec;
+		std::cout << event << std::endl;
+
+	    this->response(0, "", event);
 	}
 }

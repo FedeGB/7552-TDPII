@@ -4,6 +4,7 @@
 #include "../mongoose.h"
 #include "../json/json.h"
 #include "../Manager.h"
+#include "../Message.h"
 #include <string>
 
 class EventHandler {

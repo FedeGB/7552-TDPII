@@ -11,6 +11,7 @@
 #include <string>
 #include "json/json.h"
 #include "User.h"
+#include "Message.h"
 
 class User;
 
