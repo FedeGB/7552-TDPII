@@ -28,6 +28,7 @@ public:
 	Conversation* getConversation(std::string, std::string);
 	vector<Message*> getMessages(string user1, string user2);
 	bool saveMessage(string json);
+	bool saveLike(string json);
 
 
 private:

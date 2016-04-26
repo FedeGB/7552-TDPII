@@ -17,6 +17,8 @@ EventHandler* EventHandlerFactory::getEventHandler(struct mg_connection* nc, str
 		handler = new LoginUserEvent(nc, hm);
 	} else if(mg_vcmp(&hm->uri, "/users/get") == 0) {
 		handler = new GetUserDataEvent(nc, hm);
+	} else if(mg_vcmp(&hm->uri, "/users/like") == 0) {
+		handler = new SaveUserLike(nc, hm);
 	} else if(mg_vcmp(&hm->uri, "/conversations/get") == 0) {
 		handler = new GetConversationEvent(nc, hm);
 	} else if(mg_vcmp(&hm->uri, "/message/save") == 0) {

@@ -16,7 +16,7 @@
 #include "User.h"
 #include "Conversation.h"
 #include "Match.h"
-
+#include "Like.h"
 #include <iostream>
 
 
@@ -35,34 +35,32 @@ public:
 	string get(string key, string value);
 	string getFromColumn(ColumnFamilyHandle* tableHandler, string key);
 
+//gets
 	User* getUser(string key);
 	Message* getMessage(string emisor, string receptor, string messageID);
 	std::vector<Message*> getMessages(string emisor, string receptor);
 	Conversation* getConversation(string emisor, string receptor);
 	Match* getMatch(string user1, string user2);
 
-
+// saves
 	bool saveUser(User* user);
 	bool saveMessage(Message* message);
 	bool saveConversation(Conversation* conversation);
-
-		//bool saveConversation(string emisor, string receptor, int numberOfMessages); // TODO ver que onda esto
-
+	bool saveLike(Like* like);
 	bool saveMatch(Match* match);
 
 	Json::Value stringToJsonValue(string str);
 	string JsonValueToSting(Json::Value  json);
 
+private:
 
-
-
-		private:
 	DB* database;
-
 	ColumnFamilyHandle* columnDefault;
 	ColumnFamilyHandle* columnUsers;
 	ColumnFamilyHandle* columnConversations;
 	ColumnFamilyHandle* columnMessages;
+	ColumnFamilyHandle* columnLikes;
+
 
 
 };

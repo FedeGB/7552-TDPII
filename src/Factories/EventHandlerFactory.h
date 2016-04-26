@@ -8,6 +8,8 @@
 #include "../HttpEvents/GetUserDataEvent.h"
 #include "../HttpEvents/GetConversationEvent.h"
 #include "../HttpEvents/SaveMessageEvent.h"
+#include "../HttpEvents/SaveUserLike.h"
+
 
 
 class EventHandlerFactory: public Factory {

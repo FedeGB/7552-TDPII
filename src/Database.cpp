@@ -25,10 +25,13 @@ Database::Database() {
 		assert(s.ok());
 		s = database->CreateColumnFamily(ColumnFamilyOptions(), "columnMessages", &this->columnMessages);
 		assert(s.ok());
+		s = database->CreateColumnFamily(ColumnFamilyOptions(), "columnLikes", &this->columnMessages);
+		assert(s.ok());
 		// close DB
 		delete this->columnUsers;
 		delete this->columnConversations;
 		delete this->columnMessages;
+		delete this->columnLikes;
 		delete this->database;
 	}
 	// open DB with 4 column families
@@ -47,6 +50,8 @@ Database::Database() {
 	this->columnUsers = handles[1];
 	this->columnConversations = handles[2];
 	this->columnMessages = handles[3];
+	this->columnLikes = handles[4];
+
 
 	std::vector<Iterator*> iterators;
 	Status status = database->NewIterators(rocksdb::ReadOptions(), handles, &iterators);
@@ -75,6 +80,9 @@ Database::~Database() {
 	s = database->DropColumnFamily(columnConversations);
 	  assert(s.ok());
 	delete this->columnConversations;
+	s = database->DropColumnFamily(columnLikes);
+	assert(s.ok());
+	delete this->columnLikes;
 	delete this->database; // TODO agregar las columns
 
 
@@ -200,6 +208,14 @@ bool Database::saveMatch(Match* match){
 
 }
 
+
+bool Database::saveLike(Like* like){
+	string user1 = like->getUser1()->getUsername();
+	string user2 = like->getUser2()->getUsername();
+	string aux = user1 + user2;
+	string json = like->getJsonString();
+	return this->putInColumn(columnLikes, aux, json);
+}
 
 bool Database::saveConversation(Conversation* conversation){
 	string user1 = conversation->getUser1()->getUsername();

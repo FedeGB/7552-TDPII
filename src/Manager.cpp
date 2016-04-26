@@ -9,6 +9,8 @@
 #include "Database.h"
 #include "Factories/UserFactory.h"
 #include "Factories/MessageFactory.h"
+#include "Factories/LikeFactory.h"
+
 
 Manager::Manager() {
 	this->db = new Database();
@@ -52,6 +54,17 @@ bool Manager::saveMessage(string json){
 	// TODO logear
 	return this->db->saveMessage(message);
 }
+
+
+bool Manager::saveLike(string json){
+	LikeFactory likeFactory;
+	Like* like = likeFactory.createWithJsonString(json);
+	// TODO logear
+	return 	this->db->saveLike(like);
+	;
+}
+
+
 
 User* Manager::getUser(std::string user) {
 	return this->db->getUser(user);	
