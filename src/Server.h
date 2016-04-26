@@ -33,15 +33,10 @@ public:
 	void update();
 	//string readRequestHeader(mg_connection* conn, string header);
 	void handleEvent(struct mg_connection* nc, int ev, void* ev_data);
-	string loginUser(string, string);
 
 	void setManager(Manager* mg);
 
 	Manager* getManager();
-
-	void respondNotAllowedMethod(struct mg_connection*);
-	void respondNotFound(struct mg_connection*);
-	void response(struct mg_connection*, int, string, Json::Value);
 
 private:
 	Manager* manager;

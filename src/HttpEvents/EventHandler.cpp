@@ -26,13 +26,15 @@ bool EventHandler::validateInput() {
 }
 
 void EventHandler::respondNotAllowedMethod() {
-	//mg_printf(nc, "HTTP/1.1 405 %s\r\n", "Method Not Allowed");	
-	mg_send_response_line(nc, 405, NULL);
+	mg_printf(nc, "HTTP/1.1 405 %s\r\nTransfer-Encoding: chunked\r\n\r\n", "Method Not Allowed");
+	mg_printf_http_chunk(nc, "");
+	mg_send_http_chunk(nc, "", 0);
 }
 
 void EventHandler::respondNotFound() {
-	//mg_printf(nc, "HTTP/1.1 404 %s\r\n", "Not Found");
-	mg_send_response_line(nc, 404, NULL);
+	mg_printf(nc, "HTTP/1.1 404 %s\r\nTransfer-Encoding: chunked\r\n\r\n", "Not Found");
+	mg_printf_http_chunk(nc, "");
+	mg_send_http_chunk(nc, "", 0);
 }
 
 void EventHandler::response(int errorNum, std::string message, Json::Value payload) {

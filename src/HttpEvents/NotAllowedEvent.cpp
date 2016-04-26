@@ -4,6 +4,12 @@ NotAllowedEvent::NotAllowedEvent() {
 
 }
 
+NotAllowedEvent::NotAllowedEvent(struct mg_connection* nco, struct http_message* hme) {
+    this->nc = nco;
+    this->hm = hme;
+    this->methodType = "";
+}
+
 NotAllowedEvent::~NotAllowedEvent() {
 
 }

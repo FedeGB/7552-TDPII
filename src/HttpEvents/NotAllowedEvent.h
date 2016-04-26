@@ -7,8 +7,9 @@ class NotAllowedEvent: public EventHandler {
 	
 public:
 	NotAllowedEvent();
+	NotAllowedEvent(struct mg_connection*, struct http_message*);
 	virtual ~NotAllowedEvent();
-	virtual void handle(Manager*);
+	void handle(Manager*);
 
 };
 

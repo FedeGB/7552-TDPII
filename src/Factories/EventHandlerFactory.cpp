@@ -22,7 +22,7 @@ EventHandler* EventHandlerFactory::getEventHandler(struct mg_connection* nc, str
 	} else if(mg_vcmp(&hm->uri, "/message/save") == 0) {
 		handler = new SaveMessageEvent(nc, hm);
 	} else {
-		handler = new NotAllowedEvent();
+		handler = new NotAllowedEvent(nc, hm);
 	}
 	return handler;
 }
