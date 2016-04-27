@@ -57,6 +57,11 @@ public:
 	void initWithJson(Json::Value value);
 	void loginNow();
 
+	vector<string> getMatches();
+	void setMatches(vector<string> vector);
+	void addMatch(string user);
+
+
 private:
 	string username;
 	string name;
@@ -67,6 +72,7 @@ private:
 	string perfilImage;
 	string token;
 	time_t lastTimeConnected;
+	vector<string> matches;
 
 };
 

@@ -89,6 +89,14 @@ Json::Value User::getJson() {
 	value["latitud"] = this->latitud;
 	value["longitude"] = this->longitude;
 	value["perfilImage"] = this->perfilImage;
+	//Json::Value event;
+	Json::Value vec(Json::arrayValue);
+	for (int i = 0 ; i < this->matches.size() ; i++){
+		vec.append(this->matches.at(i));
+	//	value["matches"].append(this->matches.at(i));
+	}
+	value["matches"] = vec;
+
 	return value;
 }
 
@@ -100,6 +108,11 @@ void User::initWithJson(Json::Value value){
 	this->latitud = atof((value.get("latitud","").asString()).c_str());
 	this->longitude = atof((value.get("longitude","").asString()).c_str());
 	this->perfilImage = value.get("perfilImage","").asString();
+	Json::Value vec = value.get("matches","");
+	for(Json::ValueConstIterator it = vec.begin(); it != vec.end(); ++it){
+		Json::Value actual = *it;
+		this->matches.push_back(actual.asString());
+	}
 }
 
 void User::loginNow(){
@@ -114,4 +127,14 @@ string User::getName(){
 	return this->name;
 }
 
+vector<string> User::getMatches(){
+	return this->matches;
+}
 
+void User::setMatches(vector<string> vector){
+	this->matches = vector;
+}
+
+void User::addMatch(string user){
+	this->matches.push_back(user);
+}

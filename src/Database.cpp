@@ -10,7 +10,7 @@
 #include <string>
 #include <vector>
 
-std::string kDBPath = "/tmp/rocksdb7";
+std::string kDBPath = "/tmp/rocksdb";
 
 Database::Database() {
 
@@ -25,7 +25,7 @@ Database::Database() {
 		assert(s.ok());
 		s = database->CreateColumnFamily(ColumnFamilyOptions(), "columnMessages", &this->columnMessages);
 		assert(s.ok());
-		s = database->CreateColumnFamily(ColumnFamilyOptions(), "columnLikes", &this->columnMessages);
+		s = database->CreateColumnFamily(ColumnFamilyOptions(), "columnLikes", &this->columnLikes);
 		assert(s.ok());
 		// close DB
 		delete this->columnUsers;
@@ -41,6 +41,8 @@ Database::Database() {
 	column_families.push_back(ColumnFamilyDescriptor("columnUsers",ColumnFamilyOptions()));
 	column_families.push_back(ColumnFamilyDescriptor("columnConversations",ColumnFamilyOptions()));
 	column_families.push_back(ColumnFamilyDescriptor("columnMessages",ColumnFamilyOptions()));
+	column_families.push_back(ColumnFamilyDescriptor("columnLikes",ColumnFamilyOptions()));
+
 	std::vector<ColumnFamilyHandle*> handles;
 
 	s = DB::Open(options, kDBPath ,column_families,&handles,&this->database);
@@ -120,12 +122,28 @@ bool Database::saveUser(User* user) {
 	}
 	return this->putInColumn(this->columnUsers,username,json);
 }
+
+bool Database::updateUser(User* user){
+	string username = user->getUsername();
+	string json = user->getJsonString();
+	return this->putInColumn(this->columnUsers,username,json);
+}
+
+
 User* Database::getUser(string username) {
 	string json = this->getFromColumn(this->columnUsers, username);
 	Json::Value jsonValue = this->stringToJsonValue(json);
 	User* user = new User(username);
 	user->initWithJson(jsonValue);
 	return user;
+}
+
+
+Like* Database::getLike(string searchString) {
+	string json = this->getFromColumn(this->columnLikes, searchString);
+	Json::Value jsonValue = this->stringToJsonValue(json);
+	Like* like = new Like(jsonValue);
+	return like;
 }
 
 bool Database::saveMessage(Message* message) {
@@ -199,14 +217,6 @@ Conversation* Database::getConversation(string emisor, string receptor){
 }
 
 
-Match* Database::getMatch(string user1, string user){
-	//TODO terminar esto
-}
-
-bool Database::saveMatch(Match* match){
-	//TODO terminar esto
-
-}
 
 
 bool Database::saveLike(Like* like){

@@ -10,6 +10,7 @@
 class Like {
 public:
     Like(User* user1, User* user2, bool like);
+    Like(Json::Value value );
     ~Like();
     User* getUser1();
     User* getUser2();

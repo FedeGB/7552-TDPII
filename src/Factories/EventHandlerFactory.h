@@ -9,6 +9,7 @@
 #include "../HttpEvents/GetConversationEvent.h"
 #include "../HttpEvents/SaveMessageEvent.h"
 #include "../HttpEvents/SaveUserLike.h"
+#include "../HttpEvents/GetUserMatches.h"
 
 
 

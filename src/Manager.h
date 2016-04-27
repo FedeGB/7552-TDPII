@@ -11,6 +11,7 @@
 
 #include <iostream>
 #include "Conversation.h"
+#include "Like.h"
 
 
 class Database;
@@ -29,7 +30,9 @@ public:
 	vector<Message*> getMessages(string user1, string user2);
 	bool saveMessage(string json);
 	bool saveLike(string json);
-
+	bool thereIsMatch(Like* like);
+	Like* getLike(string user);
+	vector<string> getMatches(string user);
 
 private:
 	Database* db;

@@ -21,8 +21,8 @@ Like* LikeFactory::createWithJsonValue(Json::Value value) {
     bool data = value.get("like", "").asBool();
     User* usr1 = new User(user1);
     User* usr2 = new User(user2);
-    Like* msg = new Like(usr1, usr2, data);
-    return msg;
+    Like* like = new Like(usr1, usr2, data);
+    return like;
 }
 
 Like* LikeFactory::createWithJsonString(string json) {

@@ -40,14 +40,15 @@ public:
 	Message* getMessage(string emisor, string receptor, string messageID);
 	std::vector<Message*> getMessages(string emisor, string receptor);
 	Conversation* getConversation(string emisor, string receptor);
-	Match* getMatch(string user1, string user2);
+	Like* getLike(string searchString);
+
 
 // saves
 	bool saveUser(User* user);
+	bool updateUser(User* user);
 	bool saveMessage(Message* message);
 	bool saveConversation(Conversation* conversation);
 	bool saveLike(Like* like);
-	bool saveMatch(Match* match);
 
 	Json::Value stringToJsonValue(string str);
 	string JsonValueToSting(Json::Value  json);
