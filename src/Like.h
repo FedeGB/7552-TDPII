@@ -5,7 +5,7 @@
 #ifndef TINDER_LIKE_H
 #define TINDER_LIKE_H
 
-#import "User.h"
+#include "User.h"
 
 class Like {
 public:

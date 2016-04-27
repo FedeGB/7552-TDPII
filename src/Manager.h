@@ -10,8 +10,10 @@
 
 
 #include <iostream>
-#include "Conversation.h"
-#include "Like.h"
+#include "Database.h"
+#include "Factories/UserFactory.h"
+#include "Factories/MessageFactory.h"
+#include "Factories/LikeFactory.h"
 
 
 class Database;

@@ -51,7 +51,7 @@ void EventHandler::response(int errorNum, std::string message, Json::Value paylo
 	metadata["size"] = (int)json["payload"].size();
 	json["metadata"] = metadata;
 	Json::FastWriter fastWriter;
-	mg_printf(nc, "%s", "HTTP/1.1 200 OK\r\nTransfer-Encoding: chunked\r\n\r\n");
+	mg_printf(nc, "%s", "HTTP/1.1 200 OK\r\nTransfer-Encoding: chunked\r\nContent-Type: application/json\r\n\r\n");
 	mg_printf_http_chunk(nc, fastWriter.write(json).c_str());
 	mg_send_http_chunk(nc, "", 0);  /* Send empty chunk, the end of response */	
 }
