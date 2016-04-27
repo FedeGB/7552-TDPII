@@ -6,6 +6,7 @@
  */
 
 #include "Server.h"
+#include "Resources/Logger.h"
 #include "Manager.h"
 #include "json/json.h"
 
@@ -60,8 +61,10 @@ void Server::handleEvent(struct mg_connection* nc, int ev, void* ev_data){
 		switch(ev) {
 			case MG_EV_HTTP_REQUEST: {
 				printf("Llego un request \n");
+				LoggerManager::getInstance()->log(LoggerManager::logInfo, " Request arrived to the Server ");
 				EventHandler* ehandler = eventFactory->getEventHandler(nc, hm);
 				ehandler->handle(this->manager);
+				LoggerManager::getInstance()->log(LoggerManager::logInfo, " Request processed");
 				printf("Procesado un request \n");
 				break;
 			}

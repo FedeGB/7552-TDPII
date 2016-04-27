@@ -6,6 +6,7 @@
  */
 
 #include "Database.h"
+#include "Resources/Logger.h"
 #include "User.h"
 #include <string>
 #include <vector>
@@ -54,6 +55,7 @@ Database::Database() {
 	this->columnMessages = handles[3];
 	this->columnLikes = handles[4];
 
+	LoggerManager::getInstance()->log(LoggerManager::logInfo, " Database Opened ");
 
 	std::vector<Iterator*> iterators;
 	Status status = database->NewIterators(rocksdb::ReadOptions(), handles, &iterators);
