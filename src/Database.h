@@ -49,6 +49,8 @@ public:
 	bool saveConversation(Conversation* conversation);
 	bool saveLike(Like* like);
 
+//deletes
+	bool deleteUser(User* user);
 	Json::Value stringToJsonValue(string str);
 	string JsonValueToSting(Json::Value  json);
 

@@ -55,7 +55,7 @@ string Server::readRequestHeader(mg_connection* conn, string header){
 	return h;
 }
 */
-
+//
 void Server::handleEvent(struct mg_connection* nc, int ev, void* ev_data){
 		struct http_message *hm = (struct http_message *) ev_data;
 		switch(ev) {

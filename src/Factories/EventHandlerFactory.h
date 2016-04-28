@@ -10,6 +10,7 @@
 #include "../HttpEvents/SaveMessageEvent.h"
 #include "../HttpEvents/SaveUserLike.h"
 #include "../HttpEvents/GetUserMatches.h"
+#include "../HttpEvents/DeleteUserEvent.h"
 
 
 

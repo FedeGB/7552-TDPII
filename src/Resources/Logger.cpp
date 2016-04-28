@@ -13,7 +13,7 @@ const string LoggerManager::logWarn = "WARN";
 LoggerManager* LoggerManager::m_pInstance= NULL;
 
 
-LoggerManager* LoggerManager::getInstance() {
+LoggerManager* LoggerManager::  getInstance() {
     if(!m_pInstance){
         m_pInstance = new LoggerManager();
     }

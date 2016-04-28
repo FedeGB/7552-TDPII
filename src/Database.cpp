@@ -254,6 +254,10 @@ string JsonValueToSting(Json::Value  json){
 	return Json::writeString(builder,json);
 }
 
+bool Database::deleteUser(User *user) {
+	Status s = database->Delete(rocksdb::WriteOptions(), this->columnUsers, user->getUsername());
+	return s.ok();
+}
 
 
 

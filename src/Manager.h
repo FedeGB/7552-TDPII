@@ -35,6 +35,8 @@ public:
 	bool thereIsMatch(Like* like);
 	Like* getLike(string user);
 	vector<string> getMatches(string user);
+	bool deleteUser(string username);
+
 
 private:
 	Database* db;

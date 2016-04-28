@@ -20,6 +20,9 @@ EventHandler* EventHandlerFactory::getEventHandler(struct mg_connection* nc, str
 	} else if(mg_vcmp(&hm->uri, "/users/get") == 0) {
 		LoggerManager::getInstance()->log(LoggerManager::logInfo, "/users/get Request Received");
 		handler = new GetUserDataEvent(nc, hm);
+	}else if(mg_vcmp(&hm->uri, "/users/delete") == 0) {
+		LoggerManager::getInstance()->log(LoggerManager::logInfo, "/users/delete Request Received");
+		handler = new DeleteUserEvent(nc, hm);
 	} else if(mg_vcmp(&hm->uri, "/users/like") == 0) {
 		LoggerManager::getInstance()->log(LoggerManager::logInfo, "/users/like Request Received");
 		handler = new SaveUserLike(nc, hm);
