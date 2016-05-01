@@ -61,7 +61,6 @@ Instalar las siguientes librerias tambien:
 
 4 - Bajar dependecia de CURL y  curlpp
 	- sudo apt-get install libcurl4-openssl-dev
-	- sudo apt-get install libcurlpp-dev
 
  
 
