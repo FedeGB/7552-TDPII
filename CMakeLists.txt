@@ -9,15 +9,15 @@ option(CHECK_COVERAGE "Activa flags para checkear test coverage" ON)
 set (CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11 -LDFLAGS= -pthread -DMONGOOSE_ENABLE_THREADS --coverage")
 
 link_directories("${PROJECT_SOURCE_DIR}/lib")
-include_directories ("${PROJECT_SOURCE_DIR}/include")
+#include_directories ("${PROJECT_SOURCE_DIR}/include")
 
 enable_testing()
 find_package(GTest REQUIRED)
 
 set(TEST_LINK_LIBS libjsoncpp.a z pthread rt)
 
-file( GLOB FILES src/Conversation.cpp src/Database.cpp src/Manager.cpp src/Message.cpp src/Server.cpp src/User.cpp src/mongoose.c src/Factories/* src/HttpEvents/*)
-
+#file( GLOB FILES src/Like.cpp src/Resources/* src/Conversation.cpp src/Database.cpp src/Manager.cpp src/Message.cpp src/Server.cpp src/User.cpp src/mongoose.c src/Factories/* src/HttpEvents/*)
+file( GLOB FILES src/* src/*/*)
 file( GLOB TESTS src/Tests/*)
 
 set(SOURCE_FILES ${FILES} ${TESTS})
