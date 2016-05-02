@@ -1,22 +1,14 @@
 #ifndef SHAREDMANAGER_H_
 #define SHAREDMANAGER_H_
 
-#include <string>
-#include <curl/curl.h>
-#include "json/json.h"
-
-
+#include "CurlManager.h"
 
 class SharedManager {
-
-private:
-	std::string url;
-
 public:
 	SharedManager();
 	virtual ~SharedManager();
 
-	Json::Value getUser(std::string id);
+	Json::Value getUsers();
 
 };
 

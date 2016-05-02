@@ -1,8 +1,9 @@
 #include <gtest/gtest.h>
-#include "../SharedManager.h"
+#include "../SharedClient/SharedManager.h"
+#include "json/json.h"
 
 
 TEST(SharedGetUser,TestGetUser) {
-	SharedManager sManager;
-	sManager.getUser("1");
+	SharedManager* sManager = new SharedManager();
+	sManager->getUsers();
 }
