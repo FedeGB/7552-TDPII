@@ -25,7 +25,7 @@ Json::Value SharedManager::getUser(std::string id) {
 	return resp["user"];	
 }
 
-bool SharedManager::postUser(User* user) {7
+bool SharedManager::postUser(User* user) {
 	// TODO TODO TODO TODOOO
 	CurlManager* curl = new CurlManager();
 	curl->setUri("users");
