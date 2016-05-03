@@ -14,23 +14,24 @@ CurlManager::~CurlManager() {
 }
 
 
-void CurlManager::init_string(struct string *s) {
-  s->len = 0;
-  s->ptr = (char*)malloc(s->len+1);
-  if (s->ptr == NULL) {
-    fprintf(stderr, "malloc() failed\n");
-    exit(EXIT_FAILURE);
-  }
-  s->ptr[0] = '\0';
+bool CurlManager::init_string(struct cstring *s) {
+	s->len = 0;
+	s->ptr = (char*)malloc(s->len+1);
+	if (s->ptr == NULL) {
+		LoggerManager::getInstance()->log(LoggerManager::logError, "struct cstring malloc() failed");
+		return false;
+	}
+	s->ptr[0] = '\0';
+	return true;
 }
 
-size_t writefunc(void *ptr, size_t size, size_t nmemb, struct string *s)
+size_t writefunc(void *ptr, size_t size, size_t nmemb, struct cstring *s)
 {
 	size_t new_len = s->len + size*nmemb;
 	s->ptr = (char*)realloc(s->ptr, new_len+1);
 	if (s->ptr == NULL) {
-		fprintf(stderr, "realloc() failed\n");
-		exit(EXIT_FAILURE);
+		LoggerManager::getInstance()->log(LoggerManager::logError, "struct cstring realloc() failed");
+		return 0;
 	}
 	memcpy(s->ptr+s->len, ptr, size*nmemb);
 	s->ptr[new_len] = '\0';
@@ -58,30 +59,65 @@ void CurlManager::setUri(std::string uri) {
 	this->uri = uri;
 }
 
+void CurlManager::addUriParameter(std::string param) {
+	params.push_back(param);
+}
+
+void CurlManager::addParameter(std::string key, std::string value) {
+	this->bodyParams.push_back(key + "=" + value);
+}
+
 Json::Value CurlManager::execute() {
+	if(!curl) {
+		return 0;
+	}
 	if(this->headers) {
 		curl_easy_setopt(curl, CURLOPT_HTTPHEADER, this->headers);
 	}
 	std::string URL = this->url + "/" + this->uri;
-	if(params.size()) {
-		// TODO: Añadir parametros	
+	std::vector<std::string>::iterator it = params.begin();
+	std::string parameters = "";
+	while(it != params.end()) {
+		parameters += *it + "&";
+		++it;	
+	}
+	if(parameters.length()) {
+		parameters.pop_back();
+		URL += "/" + parameters;
 	}
 	curl_easy_setopt(curl, CURLOPT_URL, URL.c_str());
-	struct string s;
-    this->init_string(&s);
-    curl_easy_setopt(curl, CURLOPT_WRITEFUNCTION, writefunc);
-    curl_easy_setopt(curl, CURLOPT_WRITEDATA, &s);
-	CURLcode res;
-	res = curl_easy_perform(curl);
+	std::vector<std::string>::iterator itBod = bodyParams.begin();
+	std::string body = "";
+	while(itBod != bodyParams.end()) {
+		body += *it + "&";
+		std::cout << body << std::endl;
+		++itBod;
+	}
+	if(body.length()) {
+		body.pop_back();
+	    curl_easy_setopt(curl, CURLOPT_POSTFIELDS, body.c_str());
+	    curl_easy_setopt(curl, CURLOPT_POSTFIELDSIZE, (long)strlen(body.c_str()));
+	}
+	struct cstring s;
 	Json::Value val = Json::Value();
-	if(res != CURLE_OK) { 
-		val["errorNum"] = (int)res;
-		val["message"] = std::string(curl_easy_strerror(res));
+    if(this->init_string(&s)) {
+	    curl_easy_setopt(curl, CURLOPT_WRITEFUNCTION, writefunc);
+	    curl_easy_setopt(curl, CURLOPT_WRITEDATA, &s);
+		CURLcode res;
+		res = curl_easy_perform(curl);
+		if(res != CURLE_OK) { 
+			val["status"] = (int)res;
+			std::cout << res << std::endl;
+			val["message"] = std::string(curl_easy_strerror(res));
+		} else {
+			std::string response(s.ptr);
+		    free(s.ptr);
+		    Json::Reader r = Json::Reader();
+			r.parse(response.c_str(), val);
+		}
 	} else {
-		std::string response(s.ptr);
-	    free(s.ptr);
-	    Json::Reader r = Json::Reader();
-		r.parse(response.c_str(), val);
+		val["status"] = 500;
+		val["message"] = "Internal Error";
 	}
 	return val;
 }
