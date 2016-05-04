@@ -59,5 +59,8 @@ Instalar las siguientes librerias tambien:
 
 	- Ejecutar el comando: cp -a libjsoncpp.a /usr/local/lib
 
+4 - Bajar dependecia de CURL y  curlpp
+	- sudo apt-get install libcurl4-openssl-dev
+
  
 

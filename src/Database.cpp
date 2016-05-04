@@ -67,6 +67,7 @@ Database::Database() {
 			cout << it->key().ToString() << ": " << it->value().ToString() << endl;
 		}
 		assert(it->status().ok()); // Check for any errors found during the scan
+		delete it;
 	}
 
 }

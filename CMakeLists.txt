@@ -9,21 +9,22 @@ option(CHECK_COVERAGE "Activa flags para checkear test coverage" ON)
 set (CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11 -LDFLAGS= -pthread -DMONGOOSE_ENABLE_THREADS --coverage")
 
 link_directories("${PROJECT_SOURCE_DIR}/lib")
-include_directories ("${PROJECT_SOURCE_DIR}/include")
+#include_directories ("${PROJECT_SOURCE_DIR}/include")
 
 enable_testing()
 find_package(GTest REQUIRED)
 
 set(TEST_LINK_LIBS libjsoncpp.a z pthread rt)
 
-file( GLOB FILES src/Conversation.cpp src/Database.cpp src/Manager.cpp src/Message.cpp src/Server.cpp src/User.cpp src/mongoose.c src/Factories/* src/HttpEvents/*)
-
+#file( GLOB FILES src/Like.cpp src/Resources/* src/Conversation.cpp src/Database.cpp src/Manager.cpp src/Message.cpp src/Server.cpp src/User.cpp src/mongoose.c src/Factories/* src/HttpEvents/*)
+file( GLOB FILES src/* src/*/*)
 file( GLOB TESTS src/Tests/*)
 
 set(SOURCE_FILES ${FILES} ${TESTS})
 
-add_executable (tests test/googleTest.cpp ${TESTS} ${SOURCE_FILES} )
 add_executable (main src/main.cpp ${SOURCE_FILES})
+list(REMOVE_ITEM SOURCE_FILES ${CMAKE_CURRENT_SOURCE_DIR}/src/main.cpp)
+add_executable (tests test/googleTest.cpp ${TESTS} ${SOURCE_FILES} )
 
 find_package(RocksDB)
 if(ROCKSDB_FOUND)
@@ -43,8 +44,17 @@ if(CHECK_COVERAGE)
 	target_link_libraries(main "-fprofile-arcs -ftest-coverage")
 endif()
 
+find_package(CURL)
+
+if(CURL_FOUND)
+	target_link_libraries(tests ${CURL_LIBRARIES})
+	target_link_libraries(main ${CURL_LIBRARIES})
+else()
+	message(FATAL_ERROR "No se encuentra CURL")
+endif()
+
 target_link_libraries(tests ${GTEST_BOTH_LIBRARIES} ${TEST_LINK_LIBS})
-target_link_libraries(main ${GTEST_BOTH_LIBRARIES} ${TEST_LINK_LIBS})
+target_link_libraries(main ${GTEST_BOTH_LIBRARIES} ${TEST_LINK_LIBS} ${CURL_LIBRARIES})
 
 
 
