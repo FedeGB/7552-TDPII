@@ -16,6 +16,8 @@ RUN apt-get install -y libbz2-dev
 RUN apt-get install -y zlib1g-dev
 RUN apt-get install -y unzip
 RUN apt-get install -y lcov
+RUN apt-get install -y curl
+RUN apt-get install -y debhelper cmake bison flex libgtk2.0-dev libltdl3-dev libncurses-dev libnet1-dev libpcap-dev libpcre3-dev libssl-dev libcurl4-openssl-dev ghostscript
 
 
 #Jsoncpp
@@ -23,7 +25,7 @@ RUN wget https://github.com/open-source-parsers/jsoncpp/archive/master.zip && un
 
 # Gtests
 RUN wget https://github.com/google/googletest/archive/release-1.7.0.tar.gz && tar xf release-1.7.0.tar.gz && cd googletest-release-1.7.0 && cmake -DBUILD_SHARED_LIBS=ON . && make && cp -a include/gtest /usr/include && cp -a libgtest_main.so libgtest.so /usr/lib/ && cd -
-RUN ldconfig
+#RUN ldconfig
 
 # Rocksdb
 RUN wget https://github.com/facebook/rocksdb/archive/v4.3.1.tar.gz -O rocksdb.tar.gz && tar xfv rocksdb.tar.gz && cd rocksdb* && make shared_lib && make install-static && cd -
@@ -32,7 +34,8 @@ RUN wget https://github.com/facebook/rocksdb/archive/v4.3.1.tar.gz -O rocksdb.ta
 COPY docker-entrypoint.sh /
 
 # El entry point lo que hace es git clone
-ENTRYPOINT [“./docker-entrypoint.sh"]
+ENTRYPOINT ["./docker-entrypoint.sh"]
+
 
 # Ejecuta compilacion y test
-CMD
+CMD 
