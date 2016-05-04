@@ -4,9 +4,10 @@ CreateUserEvent::CreateUserEvent() {
 }
 
 CreateUserEvent::CreateUserEvent(struct mg_connection* nco, struct http_message* hme) {
-	this->nc = nco;	
+	this->nc = nco;
 	this->hm = hme;
 	this->methodType = "POST";
+
 }
 
 CreateUserEvent::~CreateUserEvent() {

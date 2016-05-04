@@ -109,4 +109,9 @@ vector<string> Manager::getMatches(string user){
 	return this->db->getUser(user)->getMatches();
 }
 
+vector<Json::Value> Manager::getAllUsers(){
+	return this->db->getUsers();
+}
+
+
 

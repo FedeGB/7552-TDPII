@@ -141,6 +141,21 @@ User* Database::getUser(string username) {
 }
 
 
+vector<Json::Value> Database::getUsers(){
+	vector<Json::Value> users;
+	rocksdb::Iterator* it = this->database->NewIterator(rocksdb::ReadOptions(), this->columnUsers);
+	for (it->SeekToFirst(); it->Valid(); it->Next()) {
+			string key = it->key().ToString();
+			User* userActual = this->getUser(key);
+			Json::Value val =  userActual->getJson();
+			users.push_back(val);
+			//cout << it->key().ToString() << ": " << it->value().ToString() << endl;
+	}
+	assert(it->status().ok()); // Check for any errors found during the scan
+	delete it;
+	return users;
+}
+
 Like* Database::getLike(string searchString) {
 	string json = this->getFromColumn(this->columnLikes, searchString);
 	Json::Value jsonValue = this->stringToJsonValue(json);

@@ -10,7 +10,7 @@
 
 User::User(string username) {
 	this->username = username;
-	this->latitud = 0;
+	this->latitude = 0;
 	this->longitude = 0;
 	this->token = "";
 	this->password = "";
@@ -27,11 +27,11 @@ User::~User() {
 }
 
 double User::getLatitude() const {
-	return latitud;
+	return latitude;
 }
 
 void User::setLatitude(double latitud) {
-	this->latitud = latitud;
+	this->latitude = latitud;
 }
 
 double User::getLongitude() const {
@@ -86,7 +86,7 @@ Json::Value User::getJson() {
 	value["password"] = this->password;
 	value["name"] = this->name;
 	value["token"] = this->token;
-	value["latitud"] = this->latitud;
+	value["latitude"] = this->latitude;
 	value["longitude"] = this->longitude;
 	value["perfilImage"] = this->perfilImage;
 	//Json::Value event;
@@ -105,7 +105,7 @@ void User::initWithJson(Json::Value value){
 	this->password = value.get("password","").asString();
 	this->name = value.get("name","").asString();
 	this->token = value.get("token","").asString();
-	this->latitud = atof((value.get("latitud","").asString()).c_str());
+	this->latitude = atof((value.get("latitud","").asString()).c_str());
 	this->longitude = atof((value.get("longitude","").asString()).c_str());
 	this->perfilImage = value.get("perfilImage","").asString();
 	Json::Value vec = value.get("matches","");

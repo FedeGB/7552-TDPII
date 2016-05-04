@@ -36,6 +36,7 @@ public:
 	Like* getLike(string user);
 	vector<string> getMatches(string user);
 	bool deleteUser(string username);
+	vector<Json::Value> getAllUsers();
 
 
 private:

@@ -11,7 +11,8 @@
 #include "../HttpEvents/SaveUserLike.h"
 #include "../HttpEvents/GetUserMatches.h"
 #include "../HttpEvents/DeleteUserEvent.h"
-
+#include "../HttpEvents/GetUsers.h"
+#include "../HttpEvents/UpdateUserData.h"
 
 
 class EventHandlerFactory: public Factory {

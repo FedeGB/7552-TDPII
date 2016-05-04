@@ -67,7 +67,7 @@ private:
 	string name;
 	string email;
 	string password;
-	double latitud;
+	double latitude;
 	double longitude;
 	string perfilImage;
 	string token;

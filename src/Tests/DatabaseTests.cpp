@@ -2,6 +2,7 @@
 #include "../User.h"
 #include "../Message.h"
 #include "../Database.h"
+#include "../Like.h"
 
 
 TEST(DatabaseTests,TestSaveKeyValue){
@@ -46,6 +47,38 @@ TEST(DatabaseTests,TestSaveAndGetUser){
 	delete user;
 	delete database;
 }
+
+
+TEST(DatabaseTests,TestSaveAndGetConversation){
+	Database* database = new Database();
+	User* user1 = new User("User1");
+	User* user2 = new User("User2");
+	database->saveUser(user1);
+	database->saveUser(user2);
+	Conversation* conversation = new Conversation(user1, user2);
+	ASSERT_EQ(conversation->getJsonString(), database->getConversation(user1->getUsername(), user2->getUsername())->getJsonString());
+	delete user1;
+	delete user2;
+	delete conversation;
+	delete database;
+}
+
+
+TEST(DatabaseTests,TestSaveAndGetLike) {
+	Database* database = new Database();
+	User* user1 = new User("User1");
+	User* user2 = new User("User2");
+	database->saveUser(user1);
+	database->saveUser(user2);
+	Like* like = new Like(user1, user2, true);
+	database->saveLike(like);
+	ASSERT_EQ(like->getJsonString(), database->getLike(user1->getUsername()+user2->getUsername())->getJsonString());
+	delete user1;
+	delete user2;
+	delete like;
+	delete database;
+}
+
 
 TEST(DatabaseTests,TestSaveAndGetMessage){
 	Database* database = new Database();

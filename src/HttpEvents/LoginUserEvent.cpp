@@ -16,6 +16,7 @@ LoginUserEvent::~LoginUserEvent() {
 }
 
 
+
 void LoginUserEvent::handle(Manager* manager) {
 	bool validation = this->validateInput();
 	if(validation) {
