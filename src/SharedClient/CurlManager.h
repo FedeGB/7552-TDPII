@@ -6,7 +6,7 @@
 #include <cstring>
 #include <string>
 #include <curl/curl.h>
-#include "json/json.h"
+#include "../json/json.h"
 #include <vector>
 #include "../Resources/Logger.h"
 
