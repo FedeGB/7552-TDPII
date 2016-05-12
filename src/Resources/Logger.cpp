@@ -21,11 +21,12 @@ LoggerManager* LoggerManager::  getInstance() {
 }
 
 LoggerManager::LoggerManager(){
-
+    if(outputStream.is_open()) {
+        outputStream.close();
+    }
 }
 
 LoggerManager::~LoggerManager() {
-    outputStream.close();
 }
 
 string getTime() {
@@ -49,6 +50,7 @@ int LoggerManager::log(string type, string message) {
     if(outputStream.is_open()){
         outputStream << getTime() << " - " << LoggerManager::logInfo << " - " << message << endl;
         outputStream << "." << "\n";
+        outputStream.close();
     }
     else{
         cout << "No se pudo abrir el archivo de log." << endl;

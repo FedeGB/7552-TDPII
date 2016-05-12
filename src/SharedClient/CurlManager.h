@@ -41,9 +41,13 @@ public:
 	// Por ej: puede ir value sola 10 o key=value id=10
 	void addUriParameter(std::string);
 
-	// Agrega el parametro del "body" para las REQUEST
+	// Agrega un parametro unico al "body" para las REQUEST
 	// que usen (vease POST, PUT)
-	void addParameter(std::string, std::string);
+	void addUniqueParameter(std::string, std::string);
+
+	// Agrega un parametro con Json::Value al "body" para las REQUEST
+	// que usen (vease POST, PUT)
+	void addJsonParameter(std::string, Json::Value);
 
 	// Ejecuta la llamada de curl y devuevel un Json con la respuesta
 	// Si el Json contiene el parametro errorNum y message quiere decir
@@ -55,7 +59,7 @@ private:
 	struct curl_slist *headers;
 	std::string uri;
 	std::vector<std::string> params;
-	std::vector<std::string> bodyParams;
+	Json::Value bodyParams;
 	std::string url;
 
 	bool init_string(struct cstring *);
