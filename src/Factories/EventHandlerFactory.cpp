@@ -18,9 +18,7 @@ string getParameter(string url){
 	string delimiter1 = "/";
 	int positionSpace = url.find(" ");
 	int positionSlash = url.find("/");
-	int closer = positionSpace;
 	if(positionSpace < positionSlash && positionSpace > 0){
-		closer = positionSlash;
 		return "";
 	}
 	int positionDelimiter = url.find(delimiter1);

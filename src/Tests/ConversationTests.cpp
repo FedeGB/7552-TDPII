@@ -22,10 +22,21 @@ TEST(ConversationTests,TestNewConversation){
 	ASSERT_EQ(1, conv->getNumberMessages());
 	conv->setNumberMessages(2);
 	ASSERT_EQ(2, conv->getNumberMessages());
-
 	delete user1;
 	delete user2;
 	delete conv;
 
+}
+
+TEST(ConversationTests,TestWithJsonValue){
+	string json = "{\"user1\":\"juan\",\"user2\":\"carlos\",\"numberMessages\":1,\"id\":2}";
+	Json::Value root;
+	Json::Reader reader;
+	bool parsingSuccessful = reader.parse( json.c_str(), root );
+	Conversation* conv = new Conversation(root);
+	ASSERT_EQ(2, conv->getId());
+	ASSERT_EQ(1, conv->getNumberMessages());
+
+	delete conv;
 
 }
