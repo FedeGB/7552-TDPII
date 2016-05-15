@@ -80,21 +80,24 @@ string User::getJsonString() {
 	return Json::writeString(builder,this->getJson());
 }
 
+Json::Value User::getJson(bool withMatches) {
+	if(withMatches) return this->getJson();
+	Json::Value previous = this->getJson();
+	previous.removeMember("matches");
+	return previous;
+}
+
 Json::Value User::getJson() {
 	Json::Value value(Json::objectValue);
-	value["username"] = this->username;
-	//value["password"] = this->password;
+	value["alias"] = this->username;
 	value["name"] = this->name;
 	value["email"] = this->email;
-	value["token"] = this->token;
 	value["latitude"] = this->latitude;
 	value["longitude"] = this->longitude;
-	value["perfilImage"] = this->perfilImage;
-	//Json::Value event;
+	value["photoProfile"] = this->perfilImage;
 	Json::Value vec(Json::arrayValue);
 	for (int i = 0 ; i < this->matches.size() ; i++){
 		vec.append(this->matches.at(i));
-	//	value["matches"].append(this->matches.at(i));
 	}
 	value["matches"] = vec;
 

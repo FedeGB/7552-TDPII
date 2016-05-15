@@ -18,17 +18,19 @@ public:
 	Json::Value getUser(std::string);
 
 	// Da de alta un usuario en el Shared Server
-	// Pre: User con datos basicos en App Server del usuario (valido)
-	// Y un parametro con extras en un Json. Estos extras deberian ser
-	// los parametros que no corresponden a data del App Server y que necesita el Shared.
-	// Ej: alias, sex, interests
+	// Pre: User con datos del usuario (valido) para enviar al Shared Server
+	// Requiere: name, alias, email, sex, photoProfile, interests, location
 	// Devuelve el id en el Shared Server en caso satisfactorio
 	// Si hubo algun error el numero de id devuelto es 0
-	long postUser(User*, Json::Value);
+	long postUser(Json::Value);
 
 	// Ejecuta un request de delete hacia el Shared Server del id de usuario pasado
 	// Devuelve true en caso satisfactorio o flase en caso contrario
 	bool deleteUser(int);
+
+	Json::Value putUser(Json::Value) {
+
+	}
 };
 
 #endif /*SHAREDMANAGER_H_*/

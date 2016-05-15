@@ -56,7 +56,14 @@ public:
 	void setEmail(string);
 
 	string getJsonString();
+	
+	// Devuelve los datos del usuario en un Json
+	// No se devuelve Password ni token
+	// El que recibe un booleano se le puede indicar si
+	// Se quiere que se devuelva la data del usuario sin Matches
 	Json::Value getJson();
+	Json::Value getJson(bool);
+
 	void initWithJson(Json::Value value);
 	void loginNow();
 

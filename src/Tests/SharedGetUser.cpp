@@ -53,9 +53,9 @@ TEST(SharedGetUser, TestPostAndDeleteUser) {
 	char* email = new char[10]();
 	get_random(email, 9);
 	user->setEmail(std::string(email));
-	Json::Value extra = Json::Value();
-	extra["sex"] = "M";
-	long id = sManager->postUser(user, extra);
+	Json::Value userJson = user->getJson(false);
+	userJson["sex"] = "M";
+	long id = sManager->postUser(userJson);
 	delete[] username;
 	delete[] name;
 	delete[] email;
