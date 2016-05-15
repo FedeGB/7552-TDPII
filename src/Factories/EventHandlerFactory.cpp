@@ -10,7 +10,7 @@ EventHandlerFactory::~EventHandlerFactory() {
 }
 
 static int has_prefix(const struct mg_str *uri, const struct mg_str *prefix) {
-	return uri->len > prefix->len && memcmp(uri->p, prefix->p, prefix->len) == 0;
+	return uri->len >= prefix->len && memcmp(uri->p, prefix->p, prefix->len) == 0;
 }
 
 string getParameter(string url){
@@ -19,8 +19,9 @@ string getParameter(string url){
 	int positionSpace = url.find(" ");
 	int positionSlash = url.find("/");
 	int closer = positionSpace;
-	if(positionSpace > positionSlash){
+	if(positionSpace < positionSlash){
 		closer = positionSlash;
+		return "";
 	}
 	int positionDelimiter = url.find(delimiter1);
 	string token = url.substr(positionDelimiter, positionSpace-positionDelimiter);
@@ -32,6 +33,7 @@ EventHandler* EventHandlerFactory::getEventHandler(struct mg_connection* nc, str
 	EventHandler* handler = NULL;
 	static const struct mg_str usersPrefix = MG_MK_STR("/users");
 	static const struct mg_str matchesPrefix = MG_MK_STR("/matches");
+	static const struct mg_str messagesPrefix = MG_MK_STR("/messages");
 
 	if(mg_vcmp(&hm->uri, "/users/login") == 0) {
 		LoggerManager::getInstance()->log(LoggerManager::logInfo, "/users/login Request Received");
@@ -49,7 +51,7 @@ EventHandler* EventHandlerFactory::getEventHandler(struct mg_connection* nc, str
 				LoggerManager::getInstance()->log(LoggerManager::logInfo, logString);
 				handler = new GetUserDataEvent(nc, hm, parameter);
 			}
-		}else if( mg_vcmp(&hm->method, "POST")) { // POST
+		}else if( mg_vcmp(&hm->method, "POST") == 0) { // POST
 			LoggerManager::getInstance()->log(LoggerManager::logInfo, "/users POST Request Received");
 			handler = new CreateUserEvent(nc, hm);
 		}
@@ -62,26 +64,34 @@ EventHandler* EventHandlerFactory::getEventHandler(struct mg_connection* nc, str
 			handler = new DeleteUserEvent(nc, hm);
 		}
 		string restOfUrl = url.substr(parameter.length());
+		if(parameter.length() > 0){
+			if( getParameter(parameter) == "matches"){
+				string secondParameter = getParameter(restOfUrl);
+				LoggerManager::getInstance()->log(LoggerManager::logInfo, "/users/getMatches Request Received");
+				handler = new GetUserMatches(nc, hm);
+			}
 
-		if(getParameter(parameter) == "matches"){
-			string secondParameter = getParameter(restOfUrl);
-			LoggerManager::getInstance()->log(LoggerManager::logInfo, "/users/getMatches Request Received");
-			handler = new GetUserMatches(nc, hm);
-		}
-
-		if(getParameter(parameter) == "like"){ // /users/.../like
-			if( mg_vcmp(&hm->method, "POST")) { // new Like
-				LoggerManager::getInstance()->log(LoggerManager::logInfo, "/users/like Request Received");
-				handler = new SaveUserLike(nc, hm);
+			if(getParameter(parameter) == "like"){ // /users/.../like
+				if( mg_vcmp(&hm->method, "POST")) { // new Like
+					LoggerManager::getInstance()->log(LoggerManager::logInfo, "/users/like Request Received");
+					handler = new SaveUserLike(nc, hm);
+				}
 			}
 		}
+
 
 	} else if(mg_vcmp(&hm->uri, "/conversations/get") == 0) {
 		LoggerManager::getInstance()->log(LoggerManager::logInfo, "/conversations/get Request Received");
 		handler = new GetConversationEvent(nc, hm);
-	} else if(mg_vcmp(&hm->uri, "/message/save") == 0) {
-		LoggerManager::getInstance()->log(LoggerManager::logInfo, "/message/save Request Received");
-		handler = new SaveMessageEvent(nc, hm);
+	} else if(has_prefix(&hm->uri, &messagesPrefix)) { //    /messages
+		if(mg_vcmp(&hm->method, "GET") == 0) { // GET all messages
+
+		}
+		if(mg_vcmp(&hm->method, "POST") == 0) { // POST create a new message
+			LoggerManager::getInstance()->log(LoggerManager::logInfo, "/message/save Request Received");
+			handler = new SaveMessageEvent(nc, hm);
+		}
+
 	} else {
 		LoggerManager::getInstance()->log(LoggerManager::logError, " Handler not Allow");
 		handler = new NotAllowedEvent(nc, hm);
