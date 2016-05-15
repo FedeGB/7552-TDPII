@@ -37,8 +37,9 @@ public:
 //gets
 	User* getUser(string key);
 	vector<Json::Value> getUsers();
+	vector<Json::Value> getAllMessages();
+	vector<Message*> getMessages(string emisor, string receptor);
 	Message* getMessage(string emisor, string receptor, string messageID);
-	std::vector<Message*> getMessages(string emisor, string receptor);
 	Conversation* getConversation(string emisor, string receptor);
 	Like* getLike(string searchString);
 

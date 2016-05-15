@@ -12,7 +12,6 @@ Like::Like(User *user1, User *user2, bool answer) {
 }
 
 Like::Like(Json::Value value ) {
-    // TODO Auto-generated constructor stub
     User* user1 = new User(value.get("user1","").asString());
     this->user1 = user1;
     User* user2 = new User(value.get("user2","").asString());

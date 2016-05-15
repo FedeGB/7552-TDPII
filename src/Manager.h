@@ -37,9 +37,11 @@ public:
 	vector<string> getMatches(string user);
 	bool deleteUser(string username);
 	vector<Json::Value> getAllUsers();
+	vector<Json::Value> getAllMessages();
 
 
-private:
+
+		private:
 	Database* db;
 
 };
