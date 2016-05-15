@@ -28,9 +28,7 @@ public:
 	// Devuelve true en caso satisfactorio o flase en caso contrario
 	bool deleteUser(int);
 
-	Json::Value putUser(Json::Value) {
-
-	}
+	int putUser(Json::Value);
 };
 
 #endif /*SHAREDMANAGER_H_*/

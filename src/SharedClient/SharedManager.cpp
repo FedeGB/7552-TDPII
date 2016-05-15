@@ -31,48 +31,36 @@ long SharedManager::postUser(Json::Value user) {
 	curl->setUri("users");
 	curl->setMethodType(curl->POST);
 	curl->addHeader("content-type: application/json");
-	Json::Value userReq = Json::Value();
-	userReq["alias"] = user.isMember("alias") ? user.get("alias", "").asString() : user.get("name", "").asString();
-	userReq["name"] = user.get("name", "").asString();
-	userReq["email"] = user.get("email", "").asString();
-	userReq["sex"] = user.isMember("sex") ? user.get("sex", "").asString() : "";
-	if(user.isMember("photoProfile")) {
-		userReq["photoProfile"] = user.get("photoProfile", "").asString();
-	} else {
+	if(!user.isMember("photoProfile")) {
 		Json::Value photo; // null value
-		userReq["photoProfile"] = photo;
+		user["photoProfile"] = photo;
 	}
-    if(user.isMember("location")) {
-    	userReq["location"] = user.get("location", "");	
-    } else {
+    if(!user.isMember("location")) {
 	    Json::Value location = Json::Value();
 	    location["longitude"] = 0;
 	    location["latitude"] = 0;
-		userReq["location"] = location;
+		user["location"] = location;
     }
-    if(user.isMember("interests")) {
-    	userReq["interests"] = user.get("interests", "");
-    } else{
+    if(!user.isMember("interests")) {
     	Json::Value interests = Json::Value(Json::arrayValue);
 	    Json::Value defInterest = Json::Value();
 	    defInterest["category"] = "sex";
-	    defInterest["value"] = userReq.get("sex", "").asString().compare("M") == 0 ? "Woman" : "Man";
+	    defInterest["value"] = user.get("sex", "").asString().compare("M") == 0 ? "Woman" : "Man";
 	    interests[0] = defInterest;
-		userReq["interests"] = interests;
+		user["interests"] = interests;
     }
-	curl->addJsonParameter("user", userReq);
+	curl->addJsonParameter("user", user);
 	Json::Value resp = curl->execute();
 	LoggerManager::getInstance()->log(LoggerManager::logInfo, "Post request of user " + user.get("alias", "").asString()
 		+ ". Response status: " + resp.get("status", "").asString());
+	delete curl;
 	if(resp.isMember("error", "")) {
 		std::string logMessage = "Post request of user " + user.get("alias", "").asString()
 		+ ". Response status: " + resp.get("status", "").asString() 
 		+ ". With error: " + resp.get("error", "").asString();
 		LoggerManager::getInstance()->log(LoggerManager::logInfo, logMessage);
-		delete curl;
 		return 0;
 	}
-	delete curl;
 	return (long)std::stol(resp.get("id", 0).asString());
 }
 
@@ -104,4 +92,25 @@ bool SharedManager::deleteUser(int id) {
 		LoggerManager::getInstance()->log(LoggerManager::logInfo, logMessage);
 		return false;
 	}
+}
+
+int SharedManager::putUser(Json::Value userWithDiffs) {
+	LoggerManager::getInstance()->log(LoggerManager::logInfo, "Put request of user " + userWithDiffs.get("id", "").asString());
+	CurlManager* curl = new CurlManager();
+	curl->setUri("users");
+	curl->setMethodType(curl->PUT);
+	curl->addUriParameter(userWithDiffs.get("id", "").asString());
+	curl->addJsonParameter("user", userWithDiffs);
+	Json::Value resp = curl->execute();
+	delete curl;
+	LoggerManager::getInstance()->log(LoggerManager::logInfo, "Put request of user " + userWithDiffs.get("id", "").asString()
+		+ ". Response status: " + resp.get("status", "").asString());
+	if(resp.isMember("error", "")) {
+		std::string logMessage = "Put request of user " + userWithDiffs.get("id", "").asString()
+		+ ". Response status: " + resp.get("status", "").asString() 
+		+ ". With error: " + resp.get("error", "").asString();
+		LoggerManager::getInstance()->log(LoggerManager::logInfo, logMessage);
+		return 0;
+	}
+	return (long)std::stol(resp.get("id", 0).asString());
 }
