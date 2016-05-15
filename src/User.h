@@ -16,10 +16,6 @@
 #include <iostream>
 #include <string>
 
-
-
-
-
 using namespace std;
 using namespace Json;
 
@@ -27,36 +23,35 @@ using namespace Json;
 class User {
 public:
 	User(string username);
-	//User(Json::Value value);
 	virtual ~User();
 
-	void setName(const string& name);
+	void setName(string name);
 	string getName();
 
 	string getPassword();
 
-	double getLatitude() const;
+	double getLatitude();
 	void setLatitude(double locationX);
 
-	double getLongitude() const;
+	double getLongitude();
 	void setLongitude(double locationY);
 
-	void setPassword(const string& password);
+	void setPassword(string password);
 
-	const string& getPerfilImage() const;
-	void setPerfilImage(const string& perfilImage);
+	string getPerfilImage();
+	void setPerfilImage(string perfilImage);
 
-	const string& getToken() const;
-	void setToken(const string& token);
+	string getToken();
+	void setToken(string token);
 
-	const string& getUsername() const;
-	void setUsername(const string& username);
+	string getUsername();
+	void setUsername(string username);
 
-	const string& getEmail();
+	string getEmail();
 	void setEmail(string);
 
 	string getJsonString();
-	
+
 	// Devuelve los datos del usuario en un Json
 	// No se devuelve Password ni token
 	// El que recibe un booleano se le puede indicar si

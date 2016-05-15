@@ -18,15 +18,13 @@ User::User(string username) {
 	this->name = "";
 }
 
-//User::User(Json::Value value){
-//	this->initWithJson(value);
-//}
+
 
 User::~User() {
 	// TODO Auto-generated destructor stub
 }
 
-double User::getLatitude() const {
+double User::getLatitude() {
 	return latitude;
 }
 
@@ -34,7 +32,7 @@ void User::setLatitude(double latitud) {
 	this->latitude = latitud;
 }
 
-double User::getLongitude() const {
+double User::getLongitude() {
 	return longitude;
 }
 
@@ -42,34 +40,34 @@ void User::setLongitude(double locationY) {
 	this->longitude = locationY;
 }
 
-void User::setPassword(const string& password) {
+void User::setPassword(string password) {
 	this->password = password;
 }
 string User::getPassword() {
 	return this->password;
 }
 
-const string& User::getPerfilImage() const {
+string User::getPerfilImage() {
 	return perfilImage;
 }
 
-void User::setPerfilImage(const string& perfilImage) {
+void User::setPerfilImage(string perfilImage) {
 	this->perfilImage = perfilImage;
 }
 
-const string& User::getToken() const {
+string User::getToken() {
 	return token;
 }
 
-void User::setToken(const string& token) {
+void User::setToken(string token) {
 	this->token = token;
 }
 
-const string& User::getUsername() const {
+string User::getUsername() {
 	return username;
 }
 
-void User::setUsername(const string& username) {
+void User::setUsername(string username) {
 	this->username = username;
 }
 
@@ -107,13 +105,13 @@ Json::Value User::getJson() {
 }
 
 void User::initWithJson(Json::Value value){
-	this->username = value.get("username","").asString();
+	this->username = value.get("alias","").asString();
 	this->password = value.get("password","").asString();
 	this->name = value.get("name","").asString();
 	this->token = value.get("token","").asString();
 	this->latitude = atof((value.get("latitud","").asString()).c_str());
 	this->longitude = atof((value.get("longitude","").asString()).c_str());
-	this->perfilImage = value.get("perfilImage","").asString();
+	this->perfilImage = value.get("photoProfile","").asString();
 	this->email = value.get("email", "").asString();
 	Json::Value vec = value.get("matches","");
 	for(Json::ValueConstIterator it = vec.begin(); it != vec.end(); ++it){
@@ -126,7 +124,7 @@ void User::loginNow(){
 	this->lastTimeConnected = time(0);
 }
 
-void User::setName(const string& name){
+void User::setName(string name){
 	this->name = name;
 }
 
@@ -150,6 +148,6 @@ void User::setEmail(string email) {
 	this->email = email;
 }
 
-const string& User::getEmail() {
+string User::getEmail() {
 	return this->email;
 }

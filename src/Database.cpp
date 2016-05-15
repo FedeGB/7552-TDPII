@@ -73,7 +73,6 @@ Database::Database() {
 }
 
 Database::~Database() {
-
 	Status s;
 	delete this->columnDefault;
 	s = database->DropColumnFamily(columnUsers);
@@ -89,15 +88,11 @@ Database::~Database() {
 	assert(s.ok());
 	delete this->columnLikes;
 	delete this->database; // TODO agregar las columns
-
-
 }
 
 bool Database::put(string key, string value){
 	Status  s = database->Put(WriteOptions(), key, value);
-	//bool s = this->putInColumn(this->columnDefault, key, value);
 	return s.ok();
-
 }
 
 string Database::get(string key, string value){
@@ -174,19 +169,11 @@ bool Database::saveMessage(Message* message) {
 
 Message* Database::getMessage(string emisor, string receptor, string messageID){
 	Message* message;
-	//Conversation* conv = this->getConversation(emisor, receptor);
 	string aux = messageID+emisor+receptor;
-	//aux+=emisor+receptor;
-	//aux+=receptor;
-	//if (conv->getNumberMessages() == 0){
-	//	return NULL;
-	//}
-	//else{
 	string json = this->getFromColumn(this->columnMessages, aux);
 	if(json == ""){
 		aux = messageID+receptor+emisor;
 		json = this->getFromColumn(this->columnMessages, aux);
-
 	}
 	Json::Value jsonValue = this->stringToJsonValue(json);
 	//message->initWithJson(jsonValue);
@@ -237,7 +224,6 @@ Conversation* Database::getConversation(string emisor, string receptor){
 		if(json == ""){
 			//User* user1 = this->getUser(emisor);
 			//User* user2 = this->getUser(receptor);
-
 			return new Conversation(new User(emisor), new User(receptor));
 		}
 	}
@@ -274,12 +260,6 @@ Json::Value Database::stringToJsonValue(string str) {
 	Json::Value val = Json::Value();
 	r.parse(str,val,false);
 	return val;
-}
-
-string JsonValueToSting(Json::Value  json){
-	Json::StreamWriterBuilder builder;
-	builder.settings_["identation"] = "\t";
-	return Json::writeString(builder,json);
 }
 
 bool Database::deleteUser(User *user) {
