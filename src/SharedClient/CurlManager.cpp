@@ -77,7 +77,7 @@ void CurlManager::setMethodType(std::string method) {
 	if(method.compare(POST) == 0) {
 		curl_easy_setopt(this->curl, CURLOPT_CUSTOMREQUEST, "POST");
 	} else if(method.compare(PUT) == 0) {
-		curl_easy_setopt(this->curl, CURLOPT_PUT, 1L);
+		curl_easy_setopt(this->curl, CURLOPT_CUSTOMREQUEST, "PUT");
 	} else if(method.compare(DELETE) == 0) {
 		curl_easy_setopt(this->curl, CURLOPT_CUSTOMREQUEST, "DELETE");
 	}
@@ -159,7 +159,7 @@ Json::Value CurlManager::execute() {
 		}
 	} else {
 		val["status"] = 500;
-		val["error"] = "Internal Error";
+		val["error"] = "Internal Error with cstring struct init";
 	}
 	return val;
 }

@@ -92,8 +92,10 @@ Json::Value User::getJson() {
 	value["alias"] = this->username;
 	value["name"] = this->name;
 	value["email"] = this->email;
-	value["latitude"] = this->latitude;
-	value["longitude"] = this->longitude;
+	Json::Value location = Json::Value();
+    location["longitude"] = this->longitude;
+    location["latitude"] = this->latitude;
+	value["location"] = location;
 	value["photoProfile"] = this->perfilImage;
 	Json::Value vec(Json::arrayValue);
 	for (int i = 0 ; i < this->matches.size() ; i++){
