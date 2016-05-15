@@ -18,9 +18,17 @@ public:
 	Json::Value getUser(std::string);
 
 	// Da de alta un usuario en el Shared Server
-	// Devuelve true en caso satisfactorio
-	// false en caso de algun error
-	bool postUser(User*);
+	// Pre: User con datos del usuario (valido) para enviar al Shared Server
+	// Requiere: name, alias, email, sex, photoProfile, interests, location
+	// Devuelve el id en el Shared Server en caso satisfactorio
+	// Si hubo algun error el numero de id devuelto es 0
+	long postUser(Json::Value);
+
+	// Ejecuta un request de delete hacia el Shared Server del id de usuario pasado
+	// Devuelve true en caso satisfactorio o flase en caso contrario
+	bool deleteUser(int);
+
+	int putUser(Json::Value);
 };
 
 #endif /*SHAREDMANAGER_H_*/

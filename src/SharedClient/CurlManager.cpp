@@ -5,9 +5,13 @@ CurlManager::CurlManager() {
 	this->curl = curl_easy_init();
 	this->headers = NULL;
 	this->url = "http://tp-7552-g05-sharedserver.herokuapp.com";
+	this->bodyParams = Json::Value();
 }
 
 CurlManager::~CurlManager() {
+	if(this->headers) {
+		curl_slist_free_all(this->headers);
+	}
 	if(this->curl) {
 		curl_easy_cleanup(this->curl);
 	}
@@ -23,6 +27,35 @@ bool CurlManager::init_string(struct cstring *s) {
 	}
 	s->ptr[0] = '\0';
 	return true;
+}
+
+void EscapeJSON(const std::string& sSrc, std::string& sDest) {
+	size_t sz = sSrc.length();
+	sDest.erase();
+	for (size_t i = 0; i < sz; ++i) {
+		string sTmp;
+		switch(sSrc[i]) {
+			case '\"':
+				sTmp = '\"';
+				break;
+/*			case '\\':
+				sTmp = "\\\\";
+				break;
+			case '\r':
+				sTmp = "\\r";
+				break;
+			case '\t':
+				sTmp = "\\t";*/
+				break;
+			/*case '\n':
+				sTmp = "\\n";
+				break;*/
+			default:
+				sTmp = sSrc[i];
+				break;
+		};
+		sDest += sTmp;
+	}
 }
 
 size_t writefunc(void *ptr, size_t size, size_t nmemb, struct cstring *s)
@@ -42,12 +75,11 @@ size_t writefunc(void *ptr, size_t size, size_t nmemb, struct cstring *s)
 
 void CurlManager::setMethodType(std::string method) {
 	if(method.compare(POST) == 0) {
-		curl_easy_setopt(this->curl, CURLOPT_POST, true);
+		curl_easy_setopt(this->curl, CURLOPT_CUSTOMREQUEST, "POST");
 	} else if(method.compare(PUT) == 0) {
-		curl_easy_setopt(this->curl, CURLOPT_PUT, true);
+		curl_easy_setopt(this->curl, CURLOPT_CUSTOMREQUEST, "PUT");
 	} else if(method.compare(DELETE) == 0) {
-		//curl_easy_setopt(this->curl, CURLOPT_DELETE);
-		// How to perform a delete?
+		curl_easy_setopt(this->curl, CURLOPT_CUSTOMREQUEST, "DELETE");
 	}
 }
 
@@ -63,16 +95,20 @@ void CurlManager::addUriParameter(std::string param) {
 	params.push_back(param);
 }
 
-void CurlManager::addParameter(std::string key, std::string value) {
-	this->bodyParams.push_back(key + "=" + value);
+void CurlManager::addUniqueParameter(std::string key, std::string value) {
+	bodyParams[key.c_str()] = value;
+}
+
+void CurlManager::addJsonParameter(std::string key, Json::Value value) {
+	bodyParams[key.c_str()] = value;
 }
 
 Json::Value CurlManager::execute() {
-	if(!curl) {
+	if(!this->curl) {
 		return 0;
 	}
 	if(this->headers) {
-		curl_easy_setopt(curl, CURLOPT_HTTPHEADER, this->headers);
+		curl_easy_setopt(this->curl, CURLOPT_HTTPHEADER, this->headers);
 	}
 	std::string URL = this->url + "/" + this->uri;
 	std::vector<std::string>::iterator it = params.begin();
@@ -85,18 +121,15 @@ Json::Value CurlManager::execute() {
 		parameters.pop_back();
 		URL += "/" + parameters;
 	}
-	curl_easy_setopt(curl, CURLOPT_URL, URL.c_str());
-	std::vector<std::string>::iterator itBod = bodyParams.begin();
-	std::string body = "";
-	while(itBod != bodyParams.end()) {
-		body += *it + "&";
-		std::cout << body << std::endl;
-		++itBod;
-	}
-	if(body.length()) {
-		body.pop_back();
-	    curl_easy_setopt(curl, CURLOPT_POSTFIELDS, body.c_str());
-	    curl_easy_setopt(curl, CURLOPT_POSTFIELDSIZE, (long)strlen(body.c_str()));
+	curl_easy_setopt(this->curl, CURLOPT_URL, URL.c_str());
+	//curl_easy_setopt(this->curl, CURLOPT_VERBOSE, 1L);
+	if(!bodyParams .empty()) {
+		Json::FastWriter fast;
+		std::string body = fast.write(this->bodyParams);
+		static std::string bodySender;
+		EscapeJSON(body, bodySender);
+		static const char* postData = bodySender.c_str();
+	    curl_easy_setopt(this->curl, CURLOPT_POSTFIELDS, postData);
 	}
 	struct cstring s;
 	Json::Value val = Json::Value();
@@ -104,20 +137,29 @@ Json::Value CurlManager::execute() {
 	    curl_easy_setopt(curl, CURLOPT_WRITEFUNCTION, writefunc);
 	    curl_easy_setopt(curl, CURLOPT_WRITEDATA, &s);
 		CURLcode res;
-		res = curl_easy_perform(curl);
-		if(res != CURLE_OK) { 
-			val["status"] = (int)res;
-			std::cout << res << std::endl;
-			val["message"] = std::string(curl_easy_strerror(res));
+		res = curl_easy_perform(this->curl);
+		long responseCode;
+		CURLcode info = curl_easy_getinfo(curl, CURLINFO_RESPONSE_CODE, &responseCode);
+		if(res != CURLE_OK) {
+			val["error"] = std::string(curl_easy_strerror(res));
 		} else {
 			std::string response(s.ptr);
 		    free(s.ptr);
-		    Json::Reader r = Json::Reader();
-			r.parse(response.c_str(), val);
+			if(responseCode == 200 || responseCode == 201) {
+			    Json::Reader r = Json::Reader();
+				r.parse(response.c_str(), val);
+			} else {
+				val["error"] = response;
+			}
+		}
+		if(info == CURLE_OK) {
+			val["status"] = (int)responseCode;
+		} else {
+			val["status"] = 500;
 		}
 	} else {
 		val["status"] = 500;
-		val["message"] = "Internal Error";
+		val["error"] = "Internal Error with cstring struct init";
 	}
 	return val;
 }

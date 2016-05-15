@@ -80,20 +80,26 @@ string User::getJsonString() {
 	return Json::writeString(builder,this->getJson());
 }
 
+Json::Value User::getJson(bool withMatches) {
+	if(withMatches) return this->getJson();
+	Json::Value previous = this->getJson();
+	previous.removeMember("matches");
+	return previous;
+}
+
 Json::Value User::getJson() {
 	Json::Value value(Json::objectValue);
-	value["username"] = this->username;
-	value["password"] = this->password;
+	value["alias"] = this->username;
 	value["name"] = this->name;
-	value["token"] = this->token;
-	value["latitude"] = this->latitude;
-	value["longitude"] = this->longitude;
-	value["perfilImage"] = this->perfilImage;
-	//Json::Value event;
+	value["email"] = this->email;
+	Json::Value location = Json::Value();
+    location["longitude"] = this->longitude;
+    location["latitude"] = this->latitude;
+	value["location"] = location;
+	value["photoProfile"] = this->perfilImage;
 	Json::Value vec(Json::arrayValue);
 	for (int i = 0 ; i < this->matches.size() ; i++){
 		vec.append(this->matches.at(i));
-	//	value["matches"].append(this->matches.at(i));
 	}
 	value["matches"] = vec;
 
@@ -108,6 +114,7 @@ void User::initWithJson(Json::Value value){
 	this->latitude = atof((value.get("latitud","").asString()).c_str());
 	this->longitude = atof((value.get("longitude","").asString()).c_str());
 	this->perfilImage = value.get("perfilImage","").asString();
+	this->email = value.get("email", "").asString();
 	Json::Value vec = value.get("matches","");
 	for(Json::ValueConstIterator it = vec.begin(); it != vec.end(); ++it){
 		Json::Value actual = *it;
@@ -137,4 +144,12 @@ void User::setMatches(vector<string> vector){
 
 void User::addMatch(string user){
 	this->matches.push_back(user);
+}
+
+void User::setEmail(string email) {
+	this->email = email;
+}
+
+const string& User::getEmail() {
+	return this->email;
 }
