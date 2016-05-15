@@ -6,10 +6,7 @@
  */
 
 #include "Manager.h"
-#include "Database.h"
-#include "Factories/UserFactory.h"
-#include "Factories/MessageFactory.h"
-#include "Factories/LikeFactory.h"
+#include "Resources/Logger.h"
 
 
 Manager::Manager() {
@@ -49,14 +46,12 @@ bool Manager::saveMessage(string json){
 	User* sender = message->getSender();
 	User* receptor = message->getReceptor();
 	Conversation* conv = this->db->getConversation(sender ->getUsername(), receptor->getUsername() );
-//	if(!conv){
-//		conv = new Conversation(message->getSender(), message->getReceptor());
-//	}
+
 	int messageID = conv->getNumberMessages();
 	message->setId(to_string(messageID));
 	conv->addOneMessage();
 	this->db->saveConversation(conv);
-	// TODO logear
+	LoggerManager::getInstance()->log(LoggerManager::logInfo, "New Message created");
 	return this->db->saveMessage(message);
 }
 
@@ -72,7 +67,6 @@ bool Manager::saveLike(string json){
 	}
 	// TODO logear
 	return 	this->db->saveLike(like);
-	;
 }
 
 bool Manager::thereIsMatch(Like* like){
@@ -113,5 +107,7 @@ vector<Json::Value> Manager::getAllUsers(){
 	return this->db->getUsers();
 }
 
-
+vector<Json::Value> Manager::getAllMessages(){
+	return this->db->getAllMessages();
+}
 

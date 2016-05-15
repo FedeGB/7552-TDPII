@@ -214,6 +214,18 @@ std::vector<Message*> Database::getMessages(string emisor, string receptor){
 	return messages;
 }
 
+vector<Json::Value> Database::getAllMessages(){
+	vector<Json::Value> messages;
+	rocksdb::Iterator* it = this->database->NewIterator(rocksdb::ReadOptions(), this->columnMessages);
+	for (it->SeekToFirst(); it->Valid(); it->Next()) {
+		string key = it->key().ToString();
+		Json::Value actualMessage = Json::Value(stringToJsonValue(it->value().ToString()));
+		messages.push_back(actualMessage);
+	}
+	assert(it->status().ok()); // Check for any errors found during the scan
+	delete it;
+	return messages;
+}
 
 Conversation* Database::getConversation(string emisor, string receptor){
 	string aux = emisor;

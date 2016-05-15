@@ -12,6 +12,7 @@
 #include "../HttpEvents/GetUserMatches.h"
 #include "../HttpEvents/DeleteUserEvent.h"
 #include "../HttpEvents/GetUsers.h"
+#include "../HttpEvents/GetMessages.h"
 #include "../HttpEvents/UpdateUserData.h"
 
 

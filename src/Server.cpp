@@ -7,10 +7,6 @@
 
 #include "Server.h"
 #include "Resources/Logger.h"
-#include "Manager.h"
-#include "json/json.h"
-
-//static struct mg_serve_http_opts s_http_server_opts;
 
 Server::Server() {
 	//this->s_http_port = "8000";
