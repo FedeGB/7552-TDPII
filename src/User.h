@@ -52,6 +52,9 @@ public:
 	const string& getUsername() const;
 	void setUsername(const string& username);
 
+	const string& getEmail();
+	void setEmail(string);
+
 	string getJsonString();
 	Json::Value getJson();
 	void initWithJson(Json::Value value);

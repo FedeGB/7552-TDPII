@@ -83,8 +83,9 @@ string User::getJsonString() {
 Json::Value User::getJson() {
 	Json::Value value(Json::objectValue);
 	value["username"] = this->username;
-	value["password"] = this->password;
+	//value["password"] = this->password;
 	value["name"] = this->name;
+	value["email"] = this->email;
 	value["token"] = this->token;
 	value["latitude"] = this->latitude;
 	value["longitude"] = this->longitude;
@@ -108,6 +109,7 @@ void User::initWithJson(Json::Value value){
 	this->latitude = atof((value.get("latitud","").asString()).c_str());
 	this->longitude = atof((value.get("longitude","").asString()).c_str());
 	this->perfilImage = value.get("perfilImage","").asString();
+	this->email = value.get("email", "").asString();
 	Json::Value vec = value.get("matches","");
 	for(Json::ValueConstIterator it = vec.begin(); it != vec.end(); ++it){
 		Json::Value actual = *it;
@@ -137,4 +139,12 @@ void User::setMatches(vector<string> vector){
 
 void User::addMatch(string user){
 	this->matches.push_back(user);
+}
+
+void User::setEmail(string email) {
+	this->email = email;
+}
+
+const string& User::getEmail() {
+	return this->email;
 }

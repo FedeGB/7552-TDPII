@@ -79,9 +79,7 @@ void CurlManager::setMethodType(std::string method) {
 	} else if(method.compare(PUT) == 0) {
 		curl_easy_setopt(this->curl, CURLOPT_PUT, 1L);
 	} else if(method.compare(DELETE) == 0) {
-		//curl_easy_setopt(this->curl, CURLOPT_DELETE);
-		// How to perform a delete?
-		// Creo que es ocn CUSTOMOPT
+		curl_easy_setopt(this->curl, CURLOPT_CUSTOMREQUEST, "DELETE");
 	}
 }
 
@@ -124,7 +122,7 @@ Json::Value CurlManager::execute() {
 		URL += "/" + parameters;
 	}
 	curl_easy_setopt(this->curl, CURLOPT_URL, URL.c_str());
-	curl_easy_setopt(this->curl, CURLOPT_VERBOSE, 1L);
+	//curl_easy_setopt(this->curl, CURLOPT_VERBOSE, 1L);
 	if(!bodyParams .empty()) {
 		Json::FastWriter fast;
 		std::string body = fast.write(this->bodyParams);
@@ -140,22 +138,28 @@ Json::Value CurlManager::execute() {
 	    curl_easy_setopt(curl, CURLOPT_WRITEDATA, &s);
 		CURLcode res;
 		res = curl_easy_perform(this->curl);
-		if(res != CURLE_OK) { 
-			val["status"] = (int)res;
-			val["message"] = std::string(curl_easy_strerror(res));
+		long responseCode;
+		CURLcode info = curl_easy_getinfo(curl, CURLINFO_RESPONSE_CODE, &responseCode);
+		if(res != CURLE_OK) {
+			val["error"] = std::string(curl_easy_strerror(res));
 		} else {
 			std::string response(s.ptr);
 		    free(s.ptr);
-		    Json::Reader r = Json::Reader();
-			r.parse(response.c_str(), val);
-			if(val.empty()) {
-				val["message"] = response.c_str();
+			if(responseCode == 200 || responseCode == 201) {
+			    Json::Reader r = Json::Reader();
+				r.parse(response.c_str(), val);
+			} else {
+				val["error"] = response;
 			}
-			val["status"] = (int) res;
+		}
+		if(info == CURLE_OK) {
+			val["status"] = (int)responseCode;
+		} else {
+			val["status"] = 500;
 		}
 	} else {
 		val["status"] = 500;
-		val["message"] = "Internal Error";
+		val["error"] = "Internal Error";
 	}
 	return val;
 }

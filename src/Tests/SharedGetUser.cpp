@@ -1,6 +1,7 @@
 #include <gtest/gtest.h>
 #include "../SharedClient/SharedManager.h"
 #include "../json/json.h"
+#include <time.h>
 
 
 TEST(SharedGetUser,TestGetUsers) {
@@ -27,26 +28,40 @@ TEST(SharedGetUser,TestGetSpecificUser) {
 	EXPECT_STREQ(user.get("alias", "").asString().c_str(), "janedoe");
 }
 
-TEST(SharedGetUser, TestPostUser) {
-	/*CURL *hnd = curl_easy_init();
+void get_random(char *s, const int len) {
+    static const char alphanum[] =
+        "0123456789"
+        "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
+        "abcdefghijklmnopqrstuvwxyz";
 
-	curl_easy_setopt(hnd, CURLOPT_CUSTOMREQUEST, "POST");
-	curl_easy_setopt(hnd, CURLOPT_URL, "http://tp-7552-g05-sharedserver.herokuapp.com/users");
+	srand(time(NULL));
+    for (int i = 0; i < len; ++i) {
+        s[i] = alphanum[rand() % (sizeof(alphanum) - 1)];
+    }
 
-	struct curl_slist *headers = NULL;
-	curl_easy_setopt(hnd, CURLOPT_VERBOSE, 1L);
-	// headers = curl_slist_append(headers, "postman-token: 370eced7-a7ff-7f6b-cd2a-f7b907c9cb2c");
-	// headers = curl_slist_append(headers, "cache-control: no-cache");
-	headers = curl_slist_append(headers, "content-type: application/json");
-	curl_easy_setopt(hnd, CURLOPT_HTTPHEADER, headers);
+    s[len] = 0;
+}
 
-	curl_easy_setopt(hnd, CURLOPT_POSTFIELDS, "{\"user\":{\"alias\":\"username\",\"email\":\"aasda@sdasa.com\",\"interests\":[{\"category\":\"music/band\",\"value\":\"radiohead\"}],\"location\":{\"latitude\":23.199999999999999,\"longitude\":32.100000000000001},\"name\":\"hello there\",\"photoProfile\":null,\"sex\":\"M\"}}");
-
-	CURLcode ret = curl_easy_perform(hnd);*/
+TEST(SharedGetUser, TestPostAndDeleteUser) {
 	SharedManager* sManager = new SharedManager();
-	User* user = new User("username");
-	bool status = sManager->postUser(user);
+	char* username = new char[10]();
+	get_random(username, 9);
+	User* user = new User(std::string(username));
+	char* name = new char[10]();
+	get_random(name, 9);
+	user->setName(std::string(name));
+	char* email = new char[10]();
+	get_random(email, 9);
+	user->setEmail(std::string(email));
+	Json::Value extra = Json::Value();
+	extra["sex"] = "M";
+	long id = sManager->postUser(user, extra);
+	delete[] username;
+	delete[] name;
+	delete[] email;
 	delete user;
+	ASSERT_TRUE(id != 0);
+	bool wasDeleted = sManager->deleteUser((int)id);
 	delete sManager;
-	ASSERT_TRUE(status == 0);
+	ASSERT_TRUE(wasDeleted);
 }
