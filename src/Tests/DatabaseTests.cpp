@@ -2,6 +2,8 @@
 #include "../User.h"
 #include "../Message.h"
 #include "../Database.h"
+#include "../Manager.h"
+
 #include "../Like.h"
 
 
@@ -44,6 +46,24 @@ TEST(DatabaseTests,TestSaveAndGetUser){
 	user->setPerfilImage("URL");
 	database->saveUser(user);
 	ASSERT_EQ(user->getName(), database->getUser(user->getUsername())->getName());
+	database->deleteUser(user);
+	delete user;
+	delete database;
+}
+
+
+TEST(DatabaseTests,TestSaveAndGetAllUsers){
+	Database* database = new Database();
+	User* user = new User("User1");
+	user->setPassword("hola");
+	user->setName("Juan");
+	user->setLatitude(20.0);
+	user->setLongitude(40.0);
+	user->setPerfilImage("URL");
+	database->saveUser(user);
+	User* user2 = new User("User2");
+	database->saveUser(user2);
+	ASSERT_EQ(2, database->getUsers().size());
 	delete user;
 	delete database;
 }
@@ -96,11 +116,32 @@ TEST(DatabaseTests,TestSaveAndGetMessage){
 	message->setId(to_string(id));
 	database->saveMessage(message);
 	ASSERT_EQ(data, database->getMessage(user1->getUsername(), user2->getUsername(), to_string(id))->getData());
+	ASSERT_EQ(data, database->getMessage(user2->getUsername(), user1->getUsername(), to_string(id))->getData());
+
 	delete user1;
 	delete user2;
 	delete database;
 	delete conv;
 	delete message;
+}
+
+TEST(DatabaseTests,TestUpdateUser){
+	Database* database = new Database();
+	User* user = new User("User1");
+	user->setPassword("hola");
+	user->setName("Juan");
+	user->setLatitude(20.0);
+	user->setLongitude(40.0);
+	user->setPerfilImage("URL");
+	database->saveUser(user);
+	std::cout << database->getUser(user->getUsername())->getPerfilImage() << std::endl;
+	ASSERT_EQ(user->getName(), database->getUser(user->getUsername())->getName());
+	ASSERT_EQ("URL", database->getUser(user->getUsername())->getPerfilImage());
+	user->setPerfilImage("URL2");
+	database->updateUser(user);
+	ASSERT_EQ("URL2", database->getUser(user->getUsername())->getPerfilImage());
+	delete user;
+	delete database;
 }
 
 TEST(DatabaseTests,TestSaveTwoMessages){
@@ -110,12 +151,16 @@ TEST(DatabaseTests,TestSaveTwoMessages){
 	string data = "Hi";
 	string dataTwo = "How are you? ";
 	Conversation* conv = database->getConversation(user1->getUsername(), user2->getUsername());
+	conv->addOneMessage();
+	conv->addOneMessage();
+	database->saveConversation(conv);
 	Message* message = new Message(user1, user2, data);
 	message->setId("0");
 	database->saveMessage(message);
 	Message* messageTwo = new Message(user2, user1, dataTwo);
 	messageTwo->setId("1");
 	database->saveMessage(messageTwo);
+
 
 	vector<Message*> messages = database->getMessages(user1->getUsername(), user2->getUsername());
 	vector<Message*> originalMessages;
@@ -126,16 +171,10 @@ TEST(DatabaseTests,TestSaveTwoMessages){
 //	}
 	ASSERT_EQ(data, database->getMessage(user1->getUsername(), user2->getUsername(), "0")->getData());
 	ASSERT_EQ(dataTwo, database->getMessage(user2->getUsername(), user1->getUsername(), "1")->getData());
+	ASSERT_EQ(2, database->getAllMessages().size());
 	delete user1;
 	delete user2;
 	delete database;
 	delete conv;
 	delete message;
 }
-
-
-
-
-
-
-
