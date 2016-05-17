@@ -91,12 +91,14 @@ Json::Value User::getJson() {
 	Json::Value value(Json::objectValue);
 	value["alias"] = this->username;
 	value["name"] = this->name;
+	value["password"] = this->password;
 	value["email"] = this->email;
 	Json::Value location = Json::Value();
     location["longitude"] = this->longitude;
     location["latitude"] = this->latitude;
 	value["location"] = location;
 	value["photoProfile"] = this->perfilImage;
+
 	Json::Value vec(Json::arrayValue);
 	for (int i = 0 ; i < this->matches.size() ; i++){
 		vec.append(this->matches.at(i));
@@ -107,7 +109,7 @@ Json::Value User::getJson() {
 }
 
 void User::initWithJson(Json::Value value){
-	this->username = value.get("username","").asString();
+	this->username = value.get("alias","").asString();
 	this->password = value.get("password","").asString();
 	this->name = value.get("name","").asString();
 	this->token = value.get("token","").asString();
