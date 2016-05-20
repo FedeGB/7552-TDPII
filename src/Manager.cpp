@@ -37,6 +37,7 @@ bool Manager::createUser(string json){
 
 bool Manager::deleteUser(string username){
 	User* userToDelete = this->getDatabase()->getUser(username);
+	if(!userToDelete) return false;
 	return this->db->deleteUser(userToDelete);
 }
 

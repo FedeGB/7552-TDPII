@@ -62,11 +62,11 @@ EventHandler* EventHandlerFactory::getEventHandler(struct mg_connection* nc, str
 			LoggerManager::getInstance()->log(LoggerManager::logInfo, "/users POST Request Received");
 			handler = new CreateUserEvent(nc, hm);
 		}
-		else if( mg_vcmp(&hm->method, "PUT")) { // PUT
+		else if( mg_vcmp(&hm->method, "PUT") == 0) { // PUT
 			LoggerManager::getInstance()->log(LoggerManager::logInfo, "/users PUT Request Received");
 			handler = new UpdateUserData(nc, hm, parameter);
 		}
-		else if( mg_vcmp(&hm->method, "DELETE")) { // DELETE
+		else if( mg_vcmp(&hm->method, "DELETE") == 0) { // DELETE
 			LoggerManager::getInstance()->log(LoggerManager::logInfo, "/users DELETE Request Received");
 			handler = new DeleteUserEvent(nc, hm);
 		}

@@ -60,6 +60,7 @@ public:
 	Json::Value getJson(bool);
 
 	void initWithJson(Json::Value value);
+	void updateWithJson(Json::Value value);
 	void loginNow();
 
 	vector<string> getMatches();

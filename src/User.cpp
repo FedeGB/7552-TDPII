@@ -122,6 +122,35 @@ void User::initWithJson(Json::Value value){
 	}
 }
 
+void User::updateWithJson(Json::Value value){
+	if(value.isMember("alias"))
+		this->username = value.get("alias","").asString();
+	if(value.isMember("password"))
+		this->password = value.get("password","").asString();
+	if(value.isMember("name"))
+		this->name = value.get("name","").asString();
+	if(value.isMember("token"))
+		this->token = value.get("token","").asString();
+	if(value.isMember("location")){
+		if(value.get("location","").isMember("latitude")){
+			this->latitude = value.get("location","").get("latitude","").asDouble();
+		}
+		if(value.get("location","").isMember("longitude")){
+			this->longitude = value.get("location","").get("longitude","").asDouble();
+		}
+
+	}
+	if(value.isMember("photoProfile"))
+		this->perfilImage = value.get("perfilImage","").asString();
+
+	if(value.isMember("email"))
+		this->email = value.get("email","").asString();
+}
+
+
+
+
+
 void User::loginNow(){
 	this->lastTimeConnected = time(0);
 }
