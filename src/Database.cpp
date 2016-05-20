@@ -115,7 +115,7 @@ bool Database::saveUser(User* user) {
 	string username = user->getUsername();
 	string json = user->getJsonString();
 	User* userload = this->getUser(username);
-	if(!userload->getUsername().empty()) {
+	if(userload) {
 		return false;
 	}
 	return this->putInColumn(this->columnUsers,username,json);
@@ -130,6 +130,7 @@ bool Database::updateUser(User* user){
 
 User* Database::getUser(string username) {
 	string json = this->getFromColumn(this->columnUsers, username);
+	if(json.empty()) return NULL;
 	Json::Value jsonValue = this->stringToJsonValue(json);
 	User* user = new User(username);
 	user->initWithJson(jsonValue);

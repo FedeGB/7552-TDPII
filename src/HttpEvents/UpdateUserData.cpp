@@ -41,7 +41,7 @@ void UpdateUserData::handle(Manager* manager) {
     Json::Value value = Json::Value();
     r.parse(hm->body.p,value);
 
-    User* user = manager->getUser(this->parameter);
+    User* user = manager->getUser(value.get("username","").asString());
     user->updateWithJson(value);
 
 //  Json::Value value2(hm->body.p);

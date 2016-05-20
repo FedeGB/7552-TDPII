@@ -10,28 +10,37 @@ class TestAPI(unittest.TestCase):
 
 
     def test_login(self):
-        dict = {'user' : "gustavito", 'password' : "hola"}
+        dict = "{\"username\" : \"juanma\", \"password\" : \"hola\", \"name\" : \"juanma\" }"
+        r = requests.post(self.apiURL+self.usersURL, data=dict)
+        dict = {'user' : "juanma", 'password' : "hola"}
         r = requests.get(self.apiURL + self.loginURL, params=dict)
         json = r.json()
         self.assertEqual("OK" , json["payload"]["result"])
 
     def test_createUser(self):
-        dict = "{\"username\" : \"juanmita\", \"password\" : \"hola\", \"name\" : \"juanmita\" }"
+        dict = "{\"username\":\"juanma\"}"
+        r = requests.delete(self.apiURL+self.usersURL, data=dict)
+        dict = "{\"username\" : \"juanma\", \"password\" : \"hola\", \"name\" : \"juanma\" }"
         r = requests.post(self.apiURL+self.usersURL, data=dict)
         json = r.json()
         self.assertEqual("Registered" , json["message"])
+        r = requests.delete(self.apiURL+self.usersURL, data=dict)
+        json = r.json()
 
     def test_updateUser(self):
-        dict = "{\"username\" : \"juanmita\", \"password\" : \"hola\", \"name\" : \"juanmita\" }"
+        dict = "{\"username\" : \"juanma\", \"password\" : \"hola\", \"name\" : \"juanma\" }"
         r = requests.post(self.apiURL+self.usersURL, data=dict)
         json = r.json()
-        dict = "{\"password\" : \"holaa\"}"
+        dict = "{\"username\": \"juanma\", \"password\" : \"holaa\"}"
         r = requests.put(self.apiURL+self.usersURL, data=dict)
         json = r.json()
         self.assertEqual("Modified" , json["message"])
 
     def test_deleteUser(self):
-        dict = "{\"username\":\"juanmita\"}"
+        dict = "{\"username\" : \"juanma\", \"password\" : \"hola\", \"name\" : \"juanma\" }"
+        r = requests.post(self.apiURL+self.usersURL, data=dict)
+        json = r.json()
+        dict = "{\"username\":\"juanma\"}"
         r = requests.delete(self.apiURL+self.usersURL, data=dict)
         json = r.json()
         self.assertEqual("Deleted" , json["message"])
