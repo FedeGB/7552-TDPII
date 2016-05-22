@@ -1,11 +1,10 @@
 #include <gtest/gtest.h>
 #include "../SharedClient/SharedManager.h"
 #include "../json/json.h"
-#include <time.h>
 #include <fstream>
 
 
-TEST(SharedGetUser,TestGetUsers) {
+TEST(SharedUserTests,TestGetUsers) {
 	SharedManager* sManager = new SharedManager();
 	const Json::Value& users = sManager->getUsers();
 	Json::ValueConstIterator it = users.begin();
@@ -20,7 +19,7 @@ TEST(SharedGetUser,TestGetUsers) {
 	delete sManager;
 }
 
-TEST(SharedGetUser,TestGetSpecificUser) {
+TEST(SharedUserTests,TestGetSpecificUser) {
 	SharedManager* sManager = new SharedManager();
 	Json::Value user = sManager->getUser("224");
 	delete sManager;
@@ -43,7 +42,7 @@ void get_random(char *s, const int len) {
     s[len] = 0;
 }
 
-TEST(SharedGetUser, TestPostAndDeleteUser) {
+TEST(SharedUserTests, TestPostAndDeleteUser) {
 	SharedManager* sManager = new SharedManager();
 	char* username = new char[10]();
 	get_random(username, 9);
@@ -68,7 +67,7 @@ TEST(SharedGetUser, TestPostAndDeleteUser) {
 }
 
 
-TEST(SharedGetUser, TestPostPutDeleteUser) {
+TEST(SharedUserTests, TestPostPutDeleteUser) {
 	SharedManager* sManager = new SharedManager();
 	char* username = new char[10]();
 	get_random(username, 9);
@@ -148,7 +147,7 @@ std::string base64_encode(unsigned char const* bytes_to_encode, unsigned int in_
 }
 
 
-TEST(SharedGetUser, TestPostPutPhotoAndDeleteUser) {
+TEST(SharedUserTests, TestPostPutPhotoAndDeleteUser) {
 	SharedManager* sManager = new SharedManager();
 	char* username = new char[10]();
 	get_random(username, 9);

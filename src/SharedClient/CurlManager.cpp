@@ -17,7 +17,6 @@ CurlManager::~CurlManager() {
 	}
 }
 
-
 bool CurlManager::init_string(struct cstring *s) {
 	s->len = 0;
 	s->ptr = (char*)malloc(s->len+1);

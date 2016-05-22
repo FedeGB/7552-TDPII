@@ -41,6 +41,15 @@ public:
 	// Pre: Recibe un Json::Value que debe tener un "id", del usuario a aplicar el put en Shared Server
 	// y "photo", que es la foto a subir en base64. 
 	int putUserPhoto(Json::Value);
+
+	// Obtiene el listado de los intereses del Shared Server
+	// Devuelve un Json Array con cada interes
+	Json::Value getInterests();
+
+	// Da de alta un interest en el Shared Server
+	// Pre: Interes con "category" y "value"
+	// Devuelve true en caso satisfactorio, false en caso contrario
+	bool postInterest(Json::Value);
 };
 
 #endif /*SHAREDMANAGER_H_*/

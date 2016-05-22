@@ -9,6 +9,7 @@
 #include "../json/json.h"
 #include <vector>
 #include "../Resources/Logger.h"
+#include <time.h>
 
 struct cstring {
 	char *ptr;

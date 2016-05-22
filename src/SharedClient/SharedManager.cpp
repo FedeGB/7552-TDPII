@@ -143,3 +143,37 @@ int SharedManager::putUserPhoto(Json::Value data) {
 	}
 	return (long)std::stol(resp.get("id", 0).asString());
 }
+
+Json::Value SharedManager::getInterests() {
+	CurlManager* curl = new CurlManager();
+	curl->setUri("interests");
+	Json::Value resp = curl->execute();
+	delete curl;
+	return resp["interests"];
+}
+
+bool SharedManager::postInterest(Json::Value interest) {
+	LoggerManager::getInstance()->log(LoggerManager::logInfo, 
+		"Post request of interest " + interest.get("category", "").asString()
+		+ " - " + interest.get("value", "").asString());
+	CurlManager* curl = new CurlManager();
+	curl->setUri("interests");
+	curl->setMethodType(curl->POST);
+	curl->addHeader("content-type: application/json");
+	curl->addJsonParameter("interest", interest);
+	Json::Value resp = curl->execute();
+	LoggerManager::getInstance()->log(LoggerManager::logInfo,
+	 	"Post request of interest " + interest.get("category", "").asString()
+		+ " - " + interest.get("value", "").asString()
+		+ ". Response status: " + resp.get("status", "").asString());
+	delete curl;
+	if(resp.isMember("error", "")) {
+		std::string logMessage = "Post request of interest " + interest.get("category", "").asString()
+		+ " - " + interest.get("value", "").asString()
+		+ ". Response status: " + resp.get("status", "").asString() 
+		+ ". With error: " + resp.get("error", "").asString();
+		LoggerManager::getInstance()->log(LoggerManager::logInfo, logMessage);
+		return false;
+	}
+	return true;
+}
