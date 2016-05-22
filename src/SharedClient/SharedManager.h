@@ -19,7 +19,7 @@ public:
 
 	// Da de alta un usuario en el Shared Server
 	// Pre: User con datos del usuario (valido) para enviar al Shared Server
-	// Requiere: name, alias, email, sex, photoProfile, interests, location
+	// Requiere en el Json::Value: name, alias, email, sex, photoProfile, interests, location
 	// Devuelve el id en el Shared Server en caso satisfactorio
 	// Si hubo algun error el numero de id devuelto es 0
 	long postUser(Json::Value);
@@ -28,7 +28,19 @@ public:
 	// Devuelve true en caso satisfactorio o flase en caso contrario
 	bool deleteUser(int);
 
+	// Ejecuta un request de put para modificaciones en un usuario.
+	// La información que se pasa debe ser completa con diferencias en los cambios que se quiera
+	// realizar. 
+	// Pre: Recibe un Json::Value con toda la data del usuario. En principio se puede hacer un put
+	// de la misma información que ya se tiene del usuario, no se veria ningun cambio reflejado
+	// Requiere en el Json::Value: id, name, alias, email, sex, photoProfile, interests, location
+	// Post: 1 en caso satisfactorio, 0 en caso erroneo.
 	int putUser(Json::Value);
+
+	// Ejecuta request para hacer put modificación de únicamente la imagen del usuario que se pase.
+	// Pre: Recibe un Json::Value que debe tener un "id", del usuario a aplicar el put en Shared Server
+	// y "photo", que es la foto a subir en base64. 
+	int putUserPhoto(Json::Value);
 };
 
 #endif /*SHAREDMANAGER_H_*/

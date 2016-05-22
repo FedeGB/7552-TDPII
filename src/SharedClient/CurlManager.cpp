@@ -38,18 +38,18 @@ void EscapeJSON(const std::string& sSrc, std::string& sDest) {
 			case '\"':
 				sTmp = '\"';
 				break;
-/*			case '\\':
-				sTmp = "\\\\";
+			case '\\':
+				sTmp = "\\";
 				break;
 			case '\r':
-				sTmp = "\\r";
+				sTmp = "\r";
 				break;
 			case '\t':
-				sTmp = "\\t";*/
+				sTmp = "\t";
 				break;
-			/*case '\n':
-				sTmp = "\\n";
-				break;*/
+			case '\n':
+				sTmp = "\n";
+				break;
 			default:
 				sTmp = sSrc[i];
 				break;
@@ -123,13 +123,15 @@ Json::Value CurlManager::execute() {
 	}
 	curl_easy_setopt(this->curl, CURLOPT_URL, URL.c_str());
 	//curl_easy_setopt(this->curl, CURLOPT_VERBOSE, 1L);
+	char* postData = NULL;
 	if(!bodyParams .empty()) {
 		Json::FastWriter fast;
 		std::string body = fast.write(this->bodyParams);
 		static std::string bodySender;
 		EscapeJSON(body, bodySender);
-		static const char* postData = bodySender.c_str();
-	    curl_easy_setopt(this->curl, CURLOPT_POSTFIELDS, postData);
+		postData = new char[bodySender.length()]();
+		strcpy(postData, bodySender.c_str());
+    	curl_easy_setopt(this->curl, CURLOPT_POSTFIELDS, postData);
 	}
 	struct cstring s;
 	Json::Value val = Json::Value();
@@ -160,6 +162,9 @@ Json::Value CurlManager::execute() {
 	} else {
 		val["status"] = 500;
 		val["error"] = "Internal Error with cstring struct init";
+	}
+	if(postData != NULL) {
+		delete[] postData;
 	}
 	return val;
 }

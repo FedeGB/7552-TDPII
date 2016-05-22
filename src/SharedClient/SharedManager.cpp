@@ -121,3 +121,25 @@ int SharedManager::putUser(Json::Value userWithDiffs) {
 	}
 	return (long)std::stol(resp.get("id", 0).asString());
 }
+
+int SharedManager::putUserPhoto(Json::Value data) {
+	LoggerManager::getInstance()->log(LoggerManager::logInfo, "Put request of user photo " + data.get("id", "").asString());
+	CurlManager* curl = new CurlManager();
+	curl->setUri("users");
+	curl->setMethodType(curl->PUT);
+	curl->addHeader("content-type: application/json");
+	curl->addUriParameter(data.get("id", "").asString() + "/photo");
+	curl->addUniqueParameter("photo", data.get("photo","").asString());
+	Json::Value resp = curl->execute();
+	delete curl;
+	LoggerManager::getInstance()->log(LoggerManager::logInfo, "Put request of user photo " + data.get("id", "").asString()
+		+ ". Response status: " + resp.get("status", "").asString());
+	if(resp.isMember("error", "")) {
+		std::string logMessage = "Put request of user photo " + data.get("id", "").asString()
+		+ ". Response status: " + resp.get("status", "").asString() 
+		+ ". With error: " + resp.get("error", "").asString();
+		LoggerManager::getInstance()->log(LoggerManager::logInfo, logMessage);
+		return 0;
+	}
+	return (long)std::stol(resp.get("id", 0).asString());
+}
