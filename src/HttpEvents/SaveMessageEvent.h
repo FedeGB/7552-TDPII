@@ -13,7 +13,7 @@ public:
     SaveMessageEvent();
     SaveMessageEvent(struct mg_connection*, struct http_message*);
     ~SaveMessageEvent();
-    void handle(Manager*);
+    void handle(Manager*, SharedManager*);
 
 protected:
     bool validateInput();

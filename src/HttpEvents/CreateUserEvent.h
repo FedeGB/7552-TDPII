@@ -9,7 +9,7 @@ public:
 	CreateUserEvent();
 	CreateUserEvent(struct mg_connection*, struct http_message*);
 	virtual ~CreateUserEvent();
-	void handle(Manager*);
+	void handle(Manager*, SharedManager*);
 
 protected:
 	bool validateInput();

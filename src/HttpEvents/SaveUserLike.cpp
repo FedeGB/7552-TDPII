@@ -27,7 +27,7 @@ bool SaveUserLike::validateInput() {
     return true;
 }
 
-void SaveUserLike::handle(Manager* manager) {
+void SaveUserLike::handle(Manager* manager, SharedManager* sManager) {
     if(this->validateInput()) {
         bool likeWasSaved = manager->saveLike(hm->body.p);
         if(likeWasSaved) {

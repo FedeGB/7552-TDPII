@@ -8,7 +8,7 @@ public:
 	LoginUserEvent();
 	LoginUserEvent(struct mg_connection*, struct http_message*);
 	~LoginUserEvent();
-	void handle(Manager*);
+	void handle(Manager*, SharedManager*);
 
 protected:
 	bool validateInput();

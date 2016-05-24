@@ -37,7 +37,7 @@ string getUserFromURL(string url){
     return token;
 }
 
-void GetUserMatches::handle(Manager* manager) {
+void GetUserMatches::handle(Manager* manager, SharedManager* sManager) {
     if(this->validateInput()) {
         char user[100];
         mg_get_http_var(&hm->query_string, "user", user, sizeof(user));

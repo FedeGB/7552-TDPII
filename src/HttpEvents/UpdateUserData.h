@@ -13,7 +13,7 @@ public:
     UpdateUserData();
     UpdateUserData(struct mg_connection*, struct http_message*, string parameter);
     ~UpdateUserData();
-    void handle(Manager*);
+    void handle(Manager*, SharedManager*);
 
 protected:
     bool validateInput();

@@ -26,7 +26,7 @@ bool GetMessages::validateInput() {
     return true;
 }
 
-void GetMessages::handle(Manager* manager) {
+void GetMessages::handle(Manager* manager, SharedManager* sManager) {
     if(this->validateInput()) { // users/    GET all users
         vector<Json::Value> messages = manager->getAllMessages();
         Json::Value event;

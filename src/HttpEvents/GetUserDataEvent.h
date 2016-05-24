@@ -8,7 +8,7 @@ public:
 	GetUserDataEvent();
 	GetUserDataEvent(struct mg_connection*, struct http_message*, string parameter);
 	~GetUserDataEvent();
-	void handle(Manager*);
+	void handle(Manager*, SharedManager*);
 
 protected:
 	bool validateInput();

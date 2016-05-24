@@ -14,7 +14,7 @@ public:
     GetUserMatches();
     GetUserMatches(struct mg_connection*, struct http_message*);
     ~GetUserMatches();
-    void handle(Manager*);
+    void handle(Manager*, SharedManager*);
 
 protected:
     bool validateInput();

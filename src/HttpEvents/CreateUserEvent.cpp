@@ -39,7 +39,7 @@ bool CreateUserEvent::validateInput() {
 	return true;
 }
 
-void CreateUserEvent::handle(Manager* manager) {
+void CreateUserEvent::handle(Manager* manager, SharedManager* sManager) {
 	bool validation = this->validateInput();
 	if(validation) {
 		bool userWasCreated = manager->createUser(hm->body.p);

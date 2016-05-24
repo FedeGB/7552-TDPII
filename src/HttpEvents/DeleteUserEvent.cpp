@@ -32,7 +32,7 @@ bool DeleteUserEvent::validateInput() {
     return true;
 }
 
-void DeleteUserEvent::handle(Manager* manager) {
+void DeleteUserEvent::handle(Manager* manager, SharedManager* sManager) {
     //bool validation = this->validateInput();
     //if(validation) { // TODO add validation
     Json::Reader r = Json::Reader();

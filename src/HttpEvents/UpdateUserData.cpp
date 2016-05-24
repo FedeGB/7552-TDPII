@@ -34,7 +34,7 @@ bool UpdateUserData::validateInput() {
     return true;
 }
 
-void UpdateUserData::handle(Manager* manager) {
+void UpdateUserData::handle(Manager* manager, SharedManager* sManager) {
     //bool validation = this->validateInput();
     //if(validation) {
     Json::Reader r = Json::Reader();

@@ -13,7 +13,7 @@ public:
 	DeleteUserEvent();
 	DeleteUserEvent(struct mg_connection*, struct http_message*);
 	virtual ~DeleteUserEvent();
-	void handle(Manager*);
+	void handle(Manager*, SharedManager*);
 
 protected:
 	bool validateInput();

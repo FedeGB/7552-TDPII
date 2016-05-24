@@ -13,7 +13,7 @@ EventHandler::~EventHandler() {
 
 }
 
-void EventHandler::handle(Manager* manager) {
+void EventHandler::handle(Manager* manager, SharedManager* sManager) {
 
 }
 

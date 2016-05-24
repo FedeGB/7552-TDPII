@@ -14,6 +14,7 @@
 #include "../HttpEvents/GetUsers.h"
 #include "../HttpEvents/GetMessages.h"
 #include "../HttpEvents/UpdateUserData.h"
+#include "../HttpEvents/GetCandidateEvent.h"
 
 
 class EventHandlerFactory: public Factory {

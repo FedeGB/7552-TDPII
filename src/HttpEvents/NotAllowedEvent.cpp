@@ -14,6 +14,6 @@ NotAllowedEvent::~NotAllowedEvent() {
 
 }
 
-void NotAllowedEvent::handle(Manager* manager) {
+void NotAllowedEvent::handle(Manager* manager, SharedManager* sManager) {
 	this->respondNotFound();
 }

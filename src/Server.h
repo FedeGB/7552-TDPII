@@ -38,8 +38,13 @@ public:
 
 	Manager* getManager();
 
+	void setSharedManager(SharedManager*);
+
+	SharedManager* getSharedManager();
+
 private:
 	Manager* manager;
+	SharedManager* sManager;
 	struct mg_mgr mgr;
 	struct mg_connection *nc;
 	char *s_http_port;

@@ -12,7 +12,7 @@ public:
     GetUsers();
     GetUsers(struct mg_connection*, struct http_message*);
     ~GetUsers();
-    void handle(Manager*);
+    void handle(Manager*, SharedManager*);
 
 protected:
     bool validateInput();

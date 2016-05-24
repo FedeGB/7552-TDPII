@@ -37,7 +37,7 @@ bool GetUsers::validateInput() {
     return true;
 }
 
-void GetUsers::handle(Manager* manager) {
+void GetUsers::handle(Manager* manager, SharedManager* sManager) {
     if(this->validateInput()) { // users/    GET all users
 //        if(this->parameter == "") {
             vector<Json::Value> users = manager->getAllUsers();

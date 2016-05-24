@@ -12,6 +12,7 @@ Server::Server() {
 	//this->s_http_port = "8000";
 	this->manager = new Manager();
 	this->eventFactory = new EventHandlerFactory();
+	this->sManager = new SharedManager();
 	//this->mgr.user_data = this;
 }
 
@@ -19,6 +20,7 @@ Server::~Server() {
 	  mg_mgr_free(&mgr);
 	  delete manager;
 	  delete eventFactory;
+	  delete sManager;
 }
 
 
@@ -59,7 +61,7 @@ void Server::handleEvent(struct mg_connection* nc, int ev, void* ev_data){
 				printf("Llego un request \n");
 				LoggerManager::getInstance()->log(LoggerManager::logInfo, " Request arrived to the Server ");
 				EventHandler* ehandler = eventFactory->getEventHandler(nc, hm);
-				ehandler->handle(this->manager);
+				ehandler->handle(this->manager, this->sManager);
 				LoggerManager::getInstance()->log(LoggerManager::logInfo, " Request processed");
 				printf("Procesado un request \n");
 				break;
@@ -75,4 +77,13 @@ void Server::setManager(Manager* mg){
 
 Manager* Server::getManager(){
 	return manager;
+}
+
+void Server::setSharedManager(SharedManager* sm) {
+	this->sManager = sm;
+}
+
+
+SharedManager* Server::getSharedManager() {
+	return this->sManager;
 }

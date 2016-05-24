@@ -34,6 +34,7 @@ EventHandler* EventHandlerFactory::getEventHandler(struct mg_connection* nc, str
 	static const struct mg_str messagesPrefix = MG_MK_STR("/messages");
 	static const struct mg_str conversationPrefix = MG_MK_STR("/conversations");
 	static const struct mg_str likesPrefix = MG_MK_STR("/likes");
+	static const struct mg_str candidatePrefix = MG_MK_STR("/candidate");
 
 
 
@@ -131,6 +132,14 @@ EventHandler* EventHandlerFactory::getEventHandler(struct mg_connection* nc, str
 		}
 	}
 
+	else if(has_prefix(&hm->uri, &candidatePrefix)) { // candidates
+		if(mg_vcmp(&hm->method, "GET") == 0) { // GET candidates
+			string parameter = getParameter(hm->uri.p);
+			LoggerManager::getInstance()->log(LoggerManager::logInfo,
+			 "/candidates/" + parameter + " GET Request Received");
+			handler = new GetCandidateEvent(nc, hm, parameter);
+		}
+	}
 
 	else {
 		LoggerManager::getInstance()->log(LoggerManager::logError, " Handler not Allow");

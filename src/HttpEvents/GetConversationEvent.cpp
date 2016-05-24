@@ -30,7 +30,7 @@ bool GetConversationEvent::validateInput() {
 	return true;
 }
 
-void GetConversationEvent::handle(Manager* manager) {
+void GetConversationEvent::handle(Manager* manager, SharedManager* sManager) {
 	if(this->validateInput()) {
 	    char user1[100], user2[100];
 	    mg_get_http_var(&hm->query_string, "user1", user1, sizeof(user1));

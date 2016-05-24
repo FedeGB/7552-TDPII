@@ -26,7 +26,7 @@ bool SaveMessageEvent::validateInput() {
     return true;
 }
 
-void SaveMessageEvent::handle(Manager* manager) {
+void SaveMessageEvent::handle(Manager* manager, SharedManager* sManager) {
     if(this->validateInput()) {
         bool messageWasSaved = manager->saveMessage(hm->body.p);
         if(messageWasSaved) {

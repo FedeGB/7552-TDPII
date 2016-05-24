@@ -30,7 +30,7 @@ bool GetUserDataEvent::validateInput() {
 	return true;
 }
 
-void GetUserDataEvent::handle(Manager* manager) {
+void GetUserDataEvent::handle(Manager* manager, SharedManager* sManager) {
 	//bool validation = this->validateInput();
 	//if(validation) {
 	    //char username[100];

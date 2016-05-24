@@ -17,7 +17,7 @@ LoginUserEvent::~LoginUserEvent() {
 
 
 
-void LoginUserEvent::handle(Manager* manager) {
+void LoginUserEvent::handle(Manager* manager, SharedManager* sManager) {
 	bool validation = this->validateInput();
 	if(validation) {
 		char user[100], password[100];

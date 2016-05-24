@@ -8,7 +8,7 @@ public:
 	GetConversationEvent();
 	GetConversationEvent(struct mg_connection*, struct http_message*);
 	~GetConversationEvent();
-	void handle(Manager*);
+	void handle(Manager*, SharedManager*);
 
 protected:
 	bool validateInput();

@@ -13,7 +13,7 @@ public:
     GetMessages();
     GetMessages(struct mg_connection*, struct http_message*);
     ~GetMessages();
-    void handle(Manager*);
+    void handle(Manager*, SharedManager*);
 
 protected:
     bool validateInput();

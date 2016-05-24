@@ -4,6 +4,7 @@
 #include "../mongoose.h"
 #include "../json/json.h"
 #include "../Manager.h"
+#include "../SharedClient/SharedManager.h"
 #include "../Message.h"
 #include <string>
 
@@ -12,7 +13,7 @@ public:
 	EventHandler(struct mg_connection*, struct http_message*);
 	EventHandler();
 	virtual ~EventHandler();
-	virtual void handle(Manager*);
+	virtual void handle(Manager*, SharedManager*);
 
 protected:
 	std::string methodType;

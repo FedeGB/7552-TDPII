@@ -9,7 +9,7 @@ public:
 	NotAllowedEvent();
 	NotAllowedEvent(struct mg_connection*, struct http_message*);
 	virtual ~NotAllowedEvent();
-	void handle(Manager*);
+	void handle(Manager*, SharedManager*);
 
 };
 
