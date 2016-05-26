@@ -34,7 +34,7 @@ void LoginUserEvent::handle(Manager* manager, SharedManager* sManager) {
 				userFound->loginNow();
 				jsonValue["result"] = "OK";
 				// jsonValue["data"] = userFound->getJson(); Quizas pasarle mas data
-				token = userFound->getToken();  // TODO fixear esto
+				token = "hola";  // TODO fixear esto
 			} else {
 				jsonValue["result"] = "FAIL";
 			}

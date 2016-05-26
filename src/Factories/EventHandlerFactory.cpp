@@ -29,6 +29,7 @@ string getParameter(string url){
 
 EventHandler* EventHandlerFactory::getEventHandler(struct mg_connection* nc, struct http_message* hm) {
 	EventHandler* handler = NULL;
+	static const struct mg_str loginPrefix = MG_MK_STR("/login");
 	static const struct mg_str usersPrefix = MG_MK_STR("/users");
 	static const struct mg_str matchesPrefix = MG_MK_STR("/matches");
 	static const struct mg_str messagesPrefix = MG_MK_STR("/messages");
@@ -38,7 +39,7 @@ EventHandler* EventHandlerFactory::getEventHandler(struct mg_connection* nc, str
 
 
 
-	if(mg_vcmp(&hm->uri, "/login") == 0) {
+	if(has_prefix(&hm->uri, &loginPrefix) == 0) {
 		LoggerManager::getInstance()->log(LoggerManager::logInfo, "/users/login Request Received");
 		handler = new LoginUserEvent(nc, hm);
 	}
