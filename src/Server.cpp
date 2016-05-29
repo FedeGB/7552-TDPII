@@ -60,6 +60,7 @@ void Server::handleEvent(struct mg_connection* nc, int ev, void* ev_data){
 			case MG_EV_HTTP_REQUEST: {
 				printf("Llego un request \n");
 				LoggerManager::getInstance()->log(LoggerManager::logInfo, " Request arrived to the Server ");
+				LoggerManager::getInstance()->log(LoggerManager::logDebug, "Request Body: " + std::string(hm->body.p));
 				EventHandler* ehandler = eventFactory->getEventHandler(nc, hm);
 				ehandler->handle(this->manager, this->sManager);
 				LoggerManager::getInstance()->log(LoggerManager::logInfo, " Request processed");

@@ -29,21 +29,22 @@ string getParameter(string url){
 
 EventHandler* EventHandlerFactory::getEventHandler(struct mg_connection* nc, struct http_message* hm) {
 	EventHandler* handler = NULL;
-	static const struct mg_str loginPrefix = MG_MK_STR("/login");
 	static const struct mg_str usersPrefix = MG_MK_STR("/users");
 	static const struct mg_str matchesPrefix = MG_MK_STR("/matches");
 	static const struct mg_str messagesPrefix = MG_MK_STR("/messages");
 	static const struct mg_str conversationPrefix = MG_MK_STR("/conversations");
 	static const struct mg_str likesPrefix = MG_MK_STR("/likes");
 	static const struct mg_str candidatePrefix = MG_MK_STR("/candidate");
+	static const struct mg_str loginPrefix = MG_MK_STR("/users/login");
+	{
+		
+	};
 
 
-
-	if(has_prefix(&hm->uri, &loginPrefix) == 0) {
+	if(has_prefix(&hm->uri, &loginPrefix)) {
 		LoggerManager::getInstance()->log(LoggerManager::logInfo, "/users/login Request Received");
 		handler = new LoginUserEvent(nc, hm);
 	}
-
 	else if(has_prefix(&hm->uri, &usersPrefix)) { // /users
 		string url = hm->uri.p;
 		string parameter = getParameter(hm->uri.p);
