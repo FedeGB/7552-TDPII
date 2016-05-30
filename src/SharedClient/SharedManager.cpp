@@ -31,6 +31,9 @@ long SharedManager::postUser(Json::Value user) {
 	curl->setUri("users");
 	curl->setMethodType(curl->POST);
 	curl->addHeader("content-type: application/json");
+	// if(!user.get("email", "").asString().compare("") == 0 && user.isMember("username")) {
+		user["email"] = user.get("username", "").asString();
+	// }
 	if(!user.isMember("photoProfile")) {
 		Json::Value photo; // null value
 		user["photoProfile"] = photo;
