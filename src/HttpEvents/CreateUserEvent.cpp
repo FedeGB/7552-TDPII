@@ -51,14 +51,15 @@ void CreateUserEvent::handle(Manager* manager, SharedManager* sManager) {
 			Json::Value userJson = user->getJson(false);
 			userJson["sex"] = val.get("sex", "").asString();
 			long id = sManager->postUser(userJson);
-			delete user;
 			if(id) {
-				// TODO: Add id to User created on DB
+				user->setId((int)id);
+				manager->updateUser(user);
 				this->response(0, "Registered", (Json::Value)0);
 			} else {
 				manager->deleteUser(val.get("username", "").asString());
 				this->response(1, "Already Registered", (Json::Value)0);	
 			}
+			delete user;
 		} else {
 			this->response(1, "Already Registered", (Json::Value)0);
 		}

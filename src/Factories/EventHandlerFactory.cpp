@@ -22,6 +22,7 @@ string getParameter(string url){
 		return "";
 	}
 	int positionDelimiter = url.find(delimiter1);
+	if(positionDelimiter == std::string::npos) return "";
 	string token = url.substr(positionDelimiter, positionSpace-positionDelimiter);
 	token = token.substr(1);
 	return token;
@@ -49,27 +50,24 @@ EventHandler* EventHandlerFactory::getEventHandler(struct mg_connection* nc, str
 		string url = hm->uri.p;
 		string parameter = getParameter(hm->uri.p);
 		if(mg_vcmp(&hm->method, "GET") == 0){ // GET
-			if(parameter == "") { // GET all users
+			if(parameter.compare("") == 0) { // GET all users
 				LoggerManager::getInstance()->log(LoggerManager::logInfo, " /users GET all users Request Received");
 				handler = new GetUsers(nc, hm);
-			}else if(getParameter(parameter) == "matches"){
+			} else if(getParameter(parameter).compare("matches") == 0){
 				LoggerManager::getInstance()->log(LoggerManager::logInfo, "/users/getMatches Request Received");
 				handler = new GetUserMatches(nc, hm);
-			}
-			else{ // GET specific USER
+			} else{ // GET specific USER
 				string logString = "/users/" + parameter + " Request received";
 				LoggerManager::getInstance()->log(LoggerManager::logInfo, logString);
 				handler = new GetUserDataEvent(nc, hm, parameter);
 			}
-		}else if( mg_vcmp(&hm->method, "POST") == 0) { // POST
+		} else if( mg_vcmp(&hm->method, "POST") == 0) { // POST
 			LoggerManager::getInstance()->log(LoggerManager::logInfo, "/users POST Request Received");
 			handler = new CreateUserEvent(nc, hm);
-		}
-		else if( mg_vcmp(&hm->method, "PUT") == 0) { // PUT
+		} else if( mg_vcmp(&hm->method, "PUT") == 0) { // PUT
 			LoggerManager::getInstance()->log(LoggerManager::logInfo, "/users PUT Request Received");
 			handler = new UpdateUserData(nc, hm, parameter);
-		}
-		else if( mg_vcmp(&hm->method, "DELETE") == 0) { // DELETE
+		} else if( mg_vcmp(&hm->method, "DELETE") == 0) { // DELETE
 			LoggerManager::getInstance()->log(LoggerManager::logInfo, "/users DELETE Request Received");
 			handler = new DeleteUserEvent(nc, hm);
 		}

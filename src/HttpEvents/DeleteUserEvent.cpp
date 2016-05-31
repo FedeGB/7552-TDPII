@@ -38,9 +38,17 @@ void DeleteUserEvent::handle(Manager* manager, SharedManager* sManager) {
     Json::Reader r = Json::Reader();
     Json::Value val = Json::Value();
     r.parse(hm->body.p,val);
+    User* userToDelete = manager->getUser(val.get("username", "").asString());
+    int sharedId = userToDelete->getId();
     bool userWasDeleted = manager->deleteUser(val.get("username", "").asString());
+    delete userToDelete;
     if(userWasDeleted) {
-        this->response(0, "Deleted", (Json::Value)0);
+        bool userSharedDeleted = sManager->deleteUser(sharedId);
+        if(userSharedDeleted) {
+            this->response(0, "Deleted", (Json::Value)0);
+        } else {
+            this->response(1, "Deletion was partially done", (Json::Value)0);    
+        }
     } else {
         this->response(1, "Couldnt delete user", (Json::Value)0);
     }

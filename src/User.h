@@ -44,6 +44,9 @@ public:
 	string getToken();
 	void setToken(string token);
 
+	void setId(int);
+	int getId();
+
 	string getUsername();
 	void setUsername(string username);
 
@@ -69,6 +72,7 @@ public:
 
 
 private:
+	int id;
 	string username;
 	string name;
 	string email;

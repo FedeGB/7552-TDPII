@@ -33,12 +33,12 @@ bool GetUserDataEvent::validateInput() {
 void GetUserDataEvent::handle(Manager* manager, SharedManager* sManager) {
 	//bool validation = this->validateInput();
 	//if(validation) {
-	    //char username[100];
-	    //mg_get_http_var(&hm->query_string, "username", username, sizeof(username));
 	    User* user = manager->getUser(this->parameter);
-	    this->response(0, "", user->getJson()); 
-	    // Si es el API call que se usa para obtener toda la info del usuario,
-		// quedaria agergarle la info que se traiga del shared server en el get json o
-		// hacer otro getJson con toda la data en si y no solo la del app server
+	    Json::Value sharedUserData = sManager->getUser(std::to_string(user->getId()));
+	    sharedUserData["username"] = user->getJson().get("username", "").asString();
+	    user->updateWithJson(sharedUserData); // Update de lo que viene de Shared
+	    manager->updateUser(user);
+	    this->response(0, "", sharedUserData); 
+	    delete user;
 	//}
 }

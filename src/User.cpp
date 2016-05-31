@@ -16,6 +16,7 @@ User::User(string username) {
 	this->password = "";
 	//this->lastTimeConnected = NULL;
 	this->name = "";
+	this->id = 0;
 }
 
 
@@ -71,6 +72,13 @@ void User::setUsername(string username) {
 	this->username = username;
 }
 
+void User::setId(int sharedId) {
+	this->id = sharedId;
+}
+
+int User::getId() {
+	return this->id;
+}
 
 string User::getJsonString() {
 	Json::StreamWriterBuilder builder;
@@ -88,6 +96,7 @@ Json::Value User::getJson(bool withMatches) {
 Json::Value User::getJson() {
 	Json::Value value(Json::objectValue);
 	//value["alias"] = this->name;
+	value["id"] = this->id;
 	value["username"] = this->username;
 	value["name"] = this->name;
 	value["password"] = this->password;
@@ -108,7 +117,8 @@ Json::Value User::getJson() {
 }
 
 void User::initWithJson(Json::Value value){
-	this->username = value.get("alias","").asString();
+	this->id = value.get("id","").asInt();
+	this->username = value.get("username","").asString();
 	this->password = value.get("password","").asString();
 	this->name = value.get("name","").asString();
 	this->token = value.get("token","").asString();
@@ -124,8 +134,8 @@ void User::initWithJson(Json::Value value){
 }
 
 void User::updateWithJson(Json::Value value){
-	if(value.isMember("alias"))
-		this->username = value.get("alias","").asString();
+	if(value.isMember("id"))
+		this->id = value.get("id","").asInt();
 	if(value.isMember("password"))
 		this->password = value.get("password","").asString();
 	if(value.isMember("name"))
@@ -147,10 +157,6 @@ void User::updateWithJson(Json::Value value){
 	if(value.isMember("email"))
 		this->email = value.get("email","").asString();
 }
-
-
-
-
 
 void User::loginNow(){
 	this->lastTimeConnected = time(0);
