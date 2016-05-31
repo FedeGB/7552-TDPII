@@ -31,9 +31,9 @@ long SharedManager::postUser(Json::Value user) {
 	curl->setUri("users");
 	curl->setMethodType(curl->POST);
 	curl->addHeader("content-type: application/json");
-	// if(!user.get("email", "").asString().compare("") == 0 && user.isMember("username")) {
-		user["email"] = user.get("username", "").asString();
-	// }
+	if(!user.isMember("alias") && user.isMember("name")) {
+		user["alias"] = user.get("name", "").asString();
+	}
 	if(!user.isMember("photoProfile")) {
 		Json::Value photo; // null value
 		user["photoProfile"] = photo;
@@ -52,6 +52,7 @@ long SharedManager::postUser(Json::Value user) {
 	    interests[0] = defInterest;
 		user["interests"] = interests;
     }
+    //std::cout << user << std::endl;
 	curl->addJsonParameter("user", user);
 	Json::Value resp = curl->execute();
 	LoggerManager::getInstance()->log(LoggerManager::logInfo, "Post request of user " + user.get("alias", "").asString()
@@ -106,6 +107,9 @@ int SharedManager::putUser(Json::Value userWithDiffs) {
 	curl->addUriParameter(userWithDiffs.get("id", "").asString());
 	// TODO: Habria que ver de hacer este tipo de gets para mas usuarios y ver de validar con el Shared
 	// Al que estamos conectados ahora, para ver si es valido el PUT sobre este usuario
+	if(!userWithDiffs.isMember("alias") && userWithDiffs.isMember("name")) {
+		userWithDiffs["alias"] = userWithDiffs.get("name", "").asString();
+	}
 	if(!userWithDiffs.isMember("interests")) {
 		Json::Value sharedUser = this->getUser(userWithDiffs.get("id", "").asString());
 		userWithDiffs["interests"] = sharedUser.get("interests", "");

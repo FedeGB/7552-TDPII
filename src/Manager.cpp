@@ -41,6 +41,10 @@ bool Manager::deleteUser(string username){
 	return this->db->deleteUser(userToDelete);
 }
 
+bool Manager::updateUser(User* user) {
+	return this->getDatabase()->updateUser(user);
+}
+
 bool Manager::saveMessage(string json){
 	MessageFactory messageFactory;
 	Message* message = messageFactory.createWithJsonString(json);

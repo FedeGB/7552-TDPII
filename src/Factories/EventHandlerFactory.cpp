@@ -87,10 +87,11 @@ EventHandler* EventHandlerFactory::getEventHandler(struct mg_connection* nc, str
 	} else if(has_prefix(&hm->uri, &conversationPrefix)) { //    /conversations
 		if (mg_vcmp(&hm->method, "GET") == 0) { // GET all conversations
 			//TODO get all conversations
-		}
-		else if (mg_vcmp(&hm->method, "POST") == 0) { // POST create a new conversation
 			LoggerManager::getInstance()->log(LoggerManager::logInfo, "/conversations Request Received");
 			handler = new GetConversationEvent(nc, hm);
+		}
+		else if (mg_vcmp(&hm->method, "POST") == 0) { // POST create a new conversation
+			//handler = new GetConversationEvent(nc, hm);
 		}
 		else if(mg_vcmp(&hm->method, "PUT") == 0) { // PUT modifiy a conversation
 			//TODO modify conver

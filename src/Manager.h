@@ -38,7 +38,7 @@ public:
 	bool deleteUser(string username);
 	vector<Json::Value> getAllUsers();
 	vector<Json::Value> getAllMessages();
-
+	bool updateUser(User*);
 
 
 		private:

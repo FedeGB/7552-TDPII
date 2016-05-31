@@ -87,7 +87,8 @@ Json::Value User::getJson(bool withMatches) {
 
 Json::Value User::getJson() {
 	Json::Value value(Json::objectValue);
-	value["alias"] = this->username;
+	//value["alias"] = this->name;
+	value["username"] = this->username;
 	value["name"] = this->name;
 	value["password"] = this->password;
 	value["email"] = this->email;
