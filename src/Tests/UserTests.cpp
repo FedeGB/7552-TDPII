@@ -11,13 +11,13 @@ TEST(UsersTests,TestNewUser){
 	user->setName("Juan");
 	user->setLatitude(20.0);
 	user->setLongitude(40.0);
-	user->setPerfilImage("URL");
+	// user->setPerfilImage("URL");
 	ASSERT_EQ("User1", user->getUsername());
 	ASSERT_EQ("hola", user->getPassword());
 	ASSERT_EQ("Juan", user->getName());
 	ASSERT_EQ(20.0, user->getLatitude());
 	ASSERT_EQ(40.0, user->getLongitude());
-	ASSERT_EQ("URL", user->getPerfilImage());
+	// ASSERT_EQ("URL", user->getPerfilImage());
 	delete user;
 }
 

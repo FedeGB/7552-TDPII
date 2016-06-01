@@ -48,13 +48,13 @@ string User::getPassword() {
 	return this->password;
 }
 
-string User::getPerfilImage() {
-	return perfilImage;
-}
+// string User::getPerfilImage() {
+// 	return perfilImage;
+// }
 
-void User::setPerfilImage(string perfilImage) {
-	this->perfilImage = perfilImage;
-}
+// void User::setPerfilImage(string perfilImage) {
+// 	this->perfilImage = perfilImage;
+// }
 
 string User::getToken() {
 	return token;
@@ -105,7 +105,7 @@ Json::Value User::getJson() {
     location["longitude"] = this->longitude;
     location["latitude"] = this->latitude;
 	value["location"] = location;
-	value["photoProfile"] = this->perfilImage;
+	// value["photoProfile"] = this->perfilImage;
 
 	Json::Value vec(Json::arrayValue);
 	for (int i = 0 ; i < this->matches.size() ; i++){
@@ -124,7 +124,7 @@ void User::initWithJson(Json::Value value){
 	this->token = value.get("token","").asString();
 	this->latitude = atof((value.get("latitud","").asString()).c_str());
 	this->longitude = atof((value.get("longitude","").asString()).c_str());
-	this->perfilImage = value.get("photoProfile","").asString();
+	// this->perfilImage = value.get("photoProfile","").asString();
 	this->email = value.get("email", "").asString();
 	Json::Value vec = value.get("matches","");
 	for(Json::ValueConstIterator it = vec.begin(); it != vec.end(); ++it){
@@ -151,8 +151,8 @@ void User::updateWithJson(Json::Value value){
 		}
 
 	}
-	if(value.isMember("photoProfile"))
-		this->perfilImage = value.get("perfilImage","").asString();
+	// if(value.isMember("photoProfile"))
+	// 	this->perfilImage = value.get("perfilImage","").asString();
 
 	if(value.isMember("email"))
 		this->email = value.get("email","").asString();

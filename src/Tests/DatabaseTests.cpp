@@ -28,7 +28,7 @@ TEST(DatabaseTests,TestSaveUser){
 	user->setName("Juan");
 	user->setLatitude(20.0);
 	user->setLongitude(40.0);
-	user->setPerfilImage("URL");
+	// user->setPerfilImage("URL");
 	database->saveUser(user);
 	ASSERT_EQ(user->getName(), database->getUser(user->getUsername())->getName());
 	delete user;
@@ -43,7 +43,7 @@ TEST(DatabaseTests,TestSaveAndGetUser){
 	user->setName("Juan");
 	user->setLatitude(20.0);
 	user->setLongitude(40.0);
-	user->setPerfilImage("URL");
+	// user->setPerfilImage("URL");
 	database->saveUser(user);
 	ASSERT_EQ(user->getName(), database->getUser(user->getUsername())->getName());
 	database->deleteUser(user);
@@ -59,7 +59,7 @@ TEST(DatabaseTests,TestSaveAndGetAllUsers){
 	user->setName("Juan");
 	user->setLatitude(20.0);
 	user->setLongitude(40.0);
-	user->setPerfilImage("URL");
+	// user->setPerfilImage("URL");
 	database->saveUser(user);
 	User* user2 = new User("User2");
 	database->saveUser(user2);
@@ -132,14 +132,14 @@ TEST(DatabaseTests,TestUpdateUser){
 	user->setName("Juan");
 	user->setLatitude(20.0);
 	user->setLongitude(40.0);
-	user->setPerfilImage("URL");
+	// user->setPerfilImage("URL");
 	database->saveUser(user);
-	std::cout << database->getUser(user->getUsername())->getPerfilImage() << std::endl;
+	// std::cout << database->getUser(user->getUsername())->getPerfilImage() << std::endl;
 	ASSERT_EQ(user->getName(), database->getUser(user->getUsername())->getName());
-	ASSERT_EQ("URL", database->getUser(user->getUsername())->getPerfilImage());
-	user->setPerfilImage("URL2");
+	// ASSERT_EQ("URL", database->getUser(user->getUsername())->getPerfilImage());
+	// user->setPerfilImage("URL2");
 	database->updateUser(user);
-	ASSERT_EQ("URL2", database->getUser(user->getUsername())->getPerfilImage());
+	// ASSERT_EQ("URL2", database->getUser(user->getUsername())->getPerfilImage());
 	delete user;
 	delete database;
 }

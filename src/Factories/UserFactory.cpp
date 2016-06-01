@@ -30,7 +30,7 @@ User* UserFactory::createWithJsonValue(Json::Value value) {
 	string password = value.get("password", "").asString();
 	double locationX = value.get("latitud", 0).asDouble();
 	double locationY =  value.get("longitude", 0).asDouble();
-	string perfilImage = value.get("perfilImage", "").asString();
+	// string perfilImage = value.get("perfilImage", "").asString();
 	string email = value.get("email", "").asString();
 	//time_t lastTimeConnected = value.get("lastTimeConnected", "").asDouble();
 	string token = value.get("token","").asString();
@@ -40,7 +40,7 @@ User* UserFactory::createWithJsonValue(Json::Value value) {
 	u->setName(name);
 	u->setToken(token);
 	u->setEmail(email);
-	u->setPerfilImage(perfilImage);
+	// u->setPerfilImage(perfilImage);
 	u->setLatitude(locationX);
 	u->setLongitude(locationY);
 	return u;

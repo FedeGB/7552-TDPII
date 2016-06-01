@@ -38,8 +38,8 @@ public:
 
 	void setPassword(string password);
 
-	string getPerfilImage();
-	void setPerfilImage(string perfilImage);
+	// string getPerfilImage();
+	// void setPerfilImage(string perfilImage);
 
 	string getToken();
 	void setToken(string token);
@@ -79,7 +79,7 @@ private:
 	string password;
 	double latitude;
 	double longitude;
-	string perfilImage;
+	// string perfilImage;
 	string token;
 	time_t lastTimeConnected;
 	vector<string> matches;

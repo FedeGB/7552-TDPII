@@ -39,15 +39,35 @@ void UpdateUserData::handle(Manager* manager, SharedManager* sManager) {
     //if(validation) {
     Json::Reader r = Json::Reader();
     Json::Value value = Json::Value();
-    r.parse(hm->body.p,value);
-
+    r.parse(hm->body.p, value);
+    // Local user update
     User* user = manager->getUser(value.get("username","").asString());
     user->updateWithJson(value);
-
-//  Json::Value value2(hm->body.p);
-//  Json::Value value(Json::objectValue);
-
-    user->initWithJson(value);
-    this->response(0, "Modified", user->getJson());
-
+    bool updateUser = manager->updateUser(user);
+    if(updateUser) {
+        value["id"] = user->getId();
+        if(value.isMember("photoProfile") || value.isMember("photo_profile")) {
+            // Photo Profile Upload
+            std::string key = "";
+            value.isMember("photoProfile") ? key = "photoProfile" : key = "photo_profile";
+            value["photo"] = value.get(key, "").asString();
+            int photoUp = sManager->putUserPhoto(value);
+            if(!photoUp) {
+                this->response(1, "User photo profile could not be uploaded", (Json::Value)0);
+                return;
+            } else {
+                value.removeMember(key);
+            }
+        }
+        // Rest of user data to update on Shared Server
+        int sharedUpdate = sManager->putUser(value);
+        if(sharedUpdate) {
+            this->response(0, "Modified", user->getJson());
+        } else {
+            this->response(1, "User could not be modified", (Json::Value)0);
+        }
+    } else {
+        this->response(1, "User could not be modified", (Json::Value)0);
+    }
+    delete user;
 }
