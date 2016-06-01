@@ -31,12 +31,11 @@ public:
 	void init();
 	void uninit();
 	void update();
-	//string readRequestHeader(mg_connection* conn, string header);
 	void handleEvent(struct mg_connection* nc, int ev, void* ev_data);
-
 	void setManager(Manager* mg);
-
 	Manager* getManager();
+	string readRequestHeader(mg_connection* conn, string header);
+
 
 	void setSharedManager(SharedManager*);
 

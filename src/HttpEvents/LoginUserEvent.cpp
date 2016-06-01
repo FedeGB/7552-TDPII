@@ -1,4 +1,16 @@
 #include "LoginUserEvent.h"
+#include "../Utils.h"
+
+
+
+string getParameter2(string url){
+	url = url.substr(1, url.length());
+	int positionSpace = url.find(" ");
+	string substring = url.substr(positionSpace+1, url.length());
+	int positionEnter = substring.find("\r");
+	string token = substring.substr(0, positionEnter);
+	return token;
+}
 
 LoginUserEvent::LoginUserEvent() {
 
@@ -19,16 +31,27 @@ LoginUserEvent::~LoginUserEvent() {
 
 void LoginUserEvent::handle(Manager* manager, SharedManager* sManager) {
 	bool validation = this->validateInput();
-	if(validation) {
-		char user[100], password[100];
+	//if(validation) {
 		/* Get form variables */
-		mg_get_http_var(&hm->query_string, "user", user, sizeof(user));
-		mg_get_http_var(&hm->query_string, "password", password, sizeof(password));
-		std::string passStr(password);
+		char ssid[100];
+
+		char base[100];
+		mg_http_parse_header(
+			mg_get_http_header(hm, "Authorization"), "ssid", ssid, sizeof(ssid));
+		struct mg_str *cl_header = mg_get_http_header(hm, "Authorization");
+		mg_get_http_var(cl_header, "Basic", base, sizeof(base));
+
+
+		string output = getParameter2(cl_header->p);
+		string decoded = base64_decode(output);
+	    int separator = decoded.find(":");
+	    string user = decoded.substr(0, separator);
+		string passStr = decoded.substr(separator+1, decoded.length());
+
 		User* userFound = manager->getUser(user);
 		std::cout << "LOGIN: " << userFound->getUsername() << std::endl;
 		Json::Value jsonValue = Json::Value();
-		std::string token = "";
+		std::string token = userFound->getUsername();
 		if(userFound && !userFound->getUsername().empty()) {
 			if (passStr.compare(userFound->getPassword()) == 0){
 				userFound->loginNow();
@@ -48,7 +71,7 @@ void LoginUserEvent::handle(Manager* manager, SharedManager* sManager) {
 		} else {
 			this->response(1, "Invalid User or Password", jsonValue);
 		}
-	}
+	//}
 }
 
 

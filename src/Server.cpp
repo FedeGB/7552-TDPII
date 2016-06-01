@@ -40,20 +40,6 @@ void Server::update(){
 }
 
 
-/*
-string Server::readRequestHeader(mg_connection* conn, string header){
-	const char* headerPointer = mg_get_header(conn, header.c_str());
-	string h = "";
-
-	if (headerPointer){
-		string h1(headerPointer);
-		h = h1;
-	}
-
-	return h;
-}
-*/
-//
 void Server::handleEvent(struct mg_connection* nc, int ev, void* ev_data){
 		struct http_message *hm = (struct http_message *) ev_data;
 		switch(ev) {
