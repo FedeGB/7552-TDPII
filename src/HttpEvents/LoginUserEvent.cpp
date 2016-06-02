@@ -30,7 +30,7 @@ LoginUserEvent::~LoginUserEvent() {
 
 
 void LoginUserEvent::handle(Manager* manager, SharedManager* sManager) {
-	bool validation = this->validateInput();
+	//bool validation = this->validateInput();
 	//if(validation) {
 		/* Get form variables */
 		char ssid[100];

@@ -50,13 +50,14 @@ void UpdateUserData::handle(Manager* manager, SharedManager* sManager) {
             // Photo Profile Upload
             std::string key = "";
             value.isMember("photoProfile") ? key = "photoProfile" : key = "photo_profile";
-            value["photo"] = value.get(key, "").asString();
-            int photoUp = sManager->putUserPhoto(value);
+            Json::Value uploadP = Json::Value();
+            uploadP["photo"] = value.get(key, "").asString();
+            uploadP["id"] = user->getId();
+            value.removeMember(key);
+            int photoUp = sManager->putUserPhoto(uploadP);
             if(!photoUp) {
                 this->response(1, "User photo profile could not be uploaded", (Json::Value)0);
                 return;
-            } else {
-                value.removeMember(key);
             }
         }
         // Rest of user data to update on Shared Server

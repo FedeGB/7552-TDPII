@@ -21,7 +21,12 @@ Like::Like(Json::Value value ) {
 }
 
 Like::~Like() {
-
+    if(this->user1) {
+        delete this->user1;
+    }
+    if(this->user2) {
+        delete this->user2;
+    }
 }
 
 

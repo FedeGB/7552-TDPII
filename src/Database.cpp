@@ -155,6 +155,9 @@ vector<Json::Value> Database::getUsers(){
 
 Like* Database::getLike(string searchString) {
 	string json = this->getFromColumn(this->columnLikes, searchString);
+	if(json.empty()) {
+		return NULL;
+	}
 	Json::Value jsonValue = this->stringToJsonValue(json);
 	Like* like = new Like(jsonValue);
 	return like;

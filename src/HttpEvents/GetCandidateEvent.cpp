@@ -24,12 +24,43 @@ void GetCandidateEvent::handle(Manager* manager, SharedManager* sManager) {
 		Json::Value returnCandidates = Json::Value();
 		Json::Value candidates = Json::Value(Json::arrayValue);
 		returnCandidates["candidates"] = candidates;
+		User* myAppUser = manager->getUser(this->parameter);
+		if(!myAppUser) {
+			this->response(1, "There was an error with the Server", (Json::Value)0);
+			return;
+		}
+		Json::Value myShareUser = sManager->getUser(std::to_string(myAppUser->getId()));
 		while(it != sharedUsers.end() && act < max) {
 		    const Json::Value& user = *it;
+		    User* otherUser = manager->getUser(user.get("email", "").asString());
+			std::cout << user.get("email", "").asString() << std::endl;
+		    if(!otherUser) { // Usuario de shared no esta en este server
+		    	it++;
+		    	continue;
+		    }
+		    if(otherUser->getUsername().compare(myAppUser->getUsername()) == 0) {
+		    	it++;
+		    	continue;	
+		    }
+		    Like* wasSeen = manager->getLike(myAppUser->getUsername() + otherUser->getUsername());
+		    if(wasSeen != NULL) { // Si ya le di like/dislike no lo paso
+		    	delete wasSeen;
+		    	it++;
+		    	continue;
+		    }
+		    // TODO: Location comparison
+		    Json::Value myInterests = myShareUser.get("interests", Json::Value(Json::arrayValue));
+		    Json::ValueConstIterator myInterestsIt = myInterests.begin();
+		    while(myInterestsIt != myInterests.end()) {
+
+		    	myInterestsIt++;
+		    }
 		    returnCandidates["candidates"].append(user);
 			it++;
 			act++;
+			delete otherUser;
 		}
+		delete myAppUser;
 		this->response(0, "", returnCandidates);
 	}
 }
