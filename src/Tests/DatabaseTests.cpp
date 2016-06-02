@@ -93,8 +93,8 @@ TEST(DatabaseTests,TestSaveAndGetLike) {
 	Like* like = new Like(user1, user2, true);
 	database->saveLike(like);
 	ASSERT_EQ(like->getJsonString(), database->getLike(user1->getUsername()+user2->getUsername())->getJsonString());
-	delete user1;
-	delete user2;
+	//delete user1;
+	//delete user2;
 	delete like;
 	delete database;
 }

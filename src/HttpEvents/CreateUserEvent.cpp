@@ -49,7 +49,7 @@ void CreateUserEvent::handle(Manager* manager, SharedManager* sManager) {
 			r.parse(hm->body.p, val);
 			User* user = manager->getUser(val.get("username", "").asString());
 			Json::Value userJson = user->getJson(false);
-			userJson["sex"] = val.get("sex", "").asString();
+			userJson["sex"] = val.get("sex", "M").asString();
 			long id = sManager->postUser(userJson);
 			if(id) {
 				user->setId((int)id);

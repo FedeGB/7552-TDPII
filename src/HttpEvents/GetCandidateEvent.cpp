@@ -33,7 +33,6 @@ void GetCandidateEvent::handle(Manager* manager, SharedManager* sManager) {
 		while(it != sharedUsers.end() && act < max) {
 		    const Json::Value& user = *it;
 		    User* otherUser = manager->getUser(user.get("email", "").asString());
-			std::cout << user.get("email", "").asString() << std::endl;
 		    if(!otherUser) { // Usuario de shared no esta en este server
 		    	it++;
 		    	continue;
@@ -51,13 +50,22 @@ void GetCandidateEvent::handle(Manager* manager, SharedManager* sManager) {
 		    // TODO: Location comparison
 		    Json::Value myInterests = myShareUser.get("interests", Json::Value(Json::arrayValue));
 		    Json::ValueConstIterator myInterestsIt = myInterests.begin();
-		    while(myInterestsIt != myInterests.end()) {
-
+		    bool isCandidate = true;
+		    while(myInterestsIt != myInterests.end() && isCandidate) {
+		    	if((*it).get("category", "").asString().compare("sex") == 0) {
+		    		std::string interestedIn = (*it).get("value", "").asString();
+		    		if(interestedIn.substr(0, 1).compare(user.get("sex", "").asString()) != 0) {
+		    			isCandidate = false;
+		    			break;
+		    		}
+		    	}
 		    	myInterestsIt++;
 		    }
-		    returnCandidates["candidates"].append(user);
+		    if(isCandidate) {
+		    	returnCandidates["candidates"].append(user);
+				act++;
+		    }
 			it++;
-			act++;
 			delete otherUser;
 		}
 		delete myAppUser;
