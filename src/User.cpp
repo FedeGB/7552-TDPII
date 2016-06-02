@@ -105,6 +105,8 @@ Json::Value User::getJson() {
     location["longitude"] = this->longitude;
     location["latitude"] = this->latitude;
 	value["location"] = location;
+	value["token"] = this->token;
+
 	// value["photoProfile"] = this->perfilImage;
 
 	Json::Value vec(Json::arrayValue);

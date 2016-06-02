@@ -37,21 +37,41 @@ string getUserFromURL(string url){
     return token;
 }
 
+
+string getToken(string header){
+    string delimiter = "\r";
+    int position = header.find(delimiter);
+    string token = header.substr(0, position);
+    return token;
+}
+
+
 void GetUserMatches::handle(Manager* manager, SharedManager* sManager) {
     if(this->validateInput()) {
         char user[100];
         mg_get_http_var(&hm->query_string, "user", user, sizeof(user));
-        std::string user1Str(user);
-        string user2 = getUserFromURL(hm->uri.p);
-        vector<string> matches = manager->getMatches(user2);
+        string userString = getUserFromURL(hm->uri.p);
+        User* userFound = manager->getUser(userString);
         Json::Value event;
         Json::Value vec(Json::arrayValue);
-        for (int i = 0 ; i < matches.size() ; i++){
-            vec.append(matches.at(i));
-        }
-        event["matches"] = vec;
-        std::cout << event << std::endl;
 
+        if(userFound){
+            char base[100];
+            struct mg_str *cl_header = mg_get_http_header(hm, "Authorization");
+            //mg_get_http_var(cl_header, "ApiToken", base, sizeof(base));
+            std::string token(getToken(cl_header->p));
+            if(token.compare(userFound->getToken()) == 0){
+                vector<string> matches = manager->getMatches(userString);
+                for (int i = 0 ; i < matches.size() ; i++){
+                    vec.append(matches.at(i));
+                }
+                event["matches"] = vec;
+                std::cout << event << std::endl;
+
+
+            }
+
+        }
         this->response(0, "", event);
     }
 }
