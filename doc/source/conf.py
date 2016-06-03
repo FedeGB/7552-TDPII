@@ -35,7 +35,7 @@ extensions = [
     'rst2pdf.pdfbuilder'
 ]
 
-pdf_documents = [('index', u'rst2pdf', u'Documentacion App Server', u'Grupo 5'),]
+pdf_documents = [('index', u'App Server Doc', u'Documentacion App Server', u'Grupo 5'),]
 
 # Add any paths that contain templates here, relative to this directory.
 templates_path = ['_templates']
