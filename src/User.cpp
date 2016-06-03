@@ -137,7 +137,7 @@ void User::initWithJson(Json::Value value){
 
 void User::updateWithJson(Json::Value value){
 	if(value.isMember("id"))
-		this->id = value.get("id","").asInt();
+		this->id = std::stoi(value.get("id","").asString());
 	if(value.isMember("password"))
 		this->password = value.get("password","").asString();
 	if(value.isMember("name"))

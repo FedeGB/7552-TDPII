@@ -42,6 +42,9 @@ void UpdateUserData::handle(Manager* manager, SharedManager* sManager) {
     r.parse(hm->body.p, value);
     // Local user update
     User* user = manager->getUser(value.get("username","").asString());
+    if(!user) {
+        this->response(1, "User could not be modified", (Json::Value)0);
+    }
     user->updateWithJson(value);
     bool updateUser = manager->updateUser(user);
     if(updateUser) {
@@ -61,6 +64,7 @@ void UpdateUserData::handle(Manager* manager, SharedManager* sManager) {
             }
         }
         // Rest of user data to update on Shared Server
+        // TODO: Falta subir los intereses nuevos que haya!
         int sharedUpdate = sManager->putUser(value);
         if(sharedUpdate) {
             this->response(0, "Modified", user->getJson());
