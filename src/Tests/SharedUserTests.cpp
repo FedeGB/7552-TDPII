@@ -56,6 +56,7 @@ TEST(SharedUserTests, TestPostAndDeleteUser) {
 	user->setEmail(std::string(email));
 	Json::Value userJson = user->getJson(false);
 	userJson["sex"] = "M";
+	userJson["edad"] = 18;
 	long id = sManager->postUser(userJson);
 	delete[] username;
 	delete[] name;
@@ -81,6 +82,7 @@ TEST(SharedUserTests, TestPostPutDeleteUser) {
 	user->setEmail(std::string(email));
 	Json::Value userJson = user->getJson(false);
 	userJson["sex"] = "M";
+	userJson["edad"] = 18;
 	long id = sManager->postUser(userJson);
 	delete[] username;
 	delete[] name;
@@ -111,6 +113,7 @@ TEST(SharedUserTests, TestPostPutPhotoAndDeleteUser) {
 	user->setEmail(std::string(email));
 	Json::Value userJson = user->getJson(false);
 	userJson["sex"] = "M";
+	userJson["edad"] = 18;
 	long id = sManager->postUser(userJson);
 	delete[] username;
 	delete[] name;

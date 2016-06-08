@@ -52,7 +52,7 @@ long SharedManager::postUser(Json::Value user) {
 	    interests[0] = defInterest;
 		user["interests"] = interests;
     }
-    //std::cout << user << std::endl;
+    // std::cout << user << std::endl;
 	curl->addJsonParameter("user", user);
 	Json::Value resp = curl->execute();
 	LoggerManager::getInstance()->log(LoggerManager::logInfo, "Post request of user " + user.get("alias", "").asString()
@@ -158,7 +158,7 @@ Json::Value SharedManager::getInterests() {
 	return resp["interests"];
 }
 
-bool SharedManager::postInterest(Json::Value interest) {
+Json::Value SharedManager::postInterest(Json::Value interest) {
 	LoggerManager::getInstance()->log(LoggerManager::logInfo, 
 		"Post request of interest " + interest.get("category", "").asString()
 		+ " - " + interest.get("value", "").asString());
@@ -173,13 +173,12 @@ bool SharedManager::postInterest(Json::Value interest) {
 		+ " - " + interest.get("value", "").asString()
 		+ ". Response status: " + resp.get("status", "").asString());
 	delete curl;
-	if(resp.isMember("error", "")) {
+	if(resp.isMember("error")) {
 		std::string logMessage = "Post request of interest " + interest.get("category", "").asString()
 		+ " - " + interest.get("value", "").asString()
 		+ ". Response status: " + resp.get("status", "").asString() 
 		+ ". With error: " + resp.get("error", "").asString();
 		LoggerManager::getInstance()->log(LoggerManager::logInfo, logMessage);
-		return false;
 	}
-	return true;
+	return resp;
 }

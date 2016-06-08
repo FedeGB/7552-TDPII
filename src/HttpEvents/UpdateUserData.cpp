@@ -65,6 +65,16 @@ void UpdateUserData::handle(Manager* manager, SharedManager* sManager) {
         }
         // Rest of user data to update on Shared Server
         // TODO: Falta subir los intereses nuevos que haya!
+        if(value.isMember("interests")) {
+            Json::Value interests = value.get("interests", Json::Value(Json::arrayValue));
+            Json::ValueConstIterator interestsIt = interests.begin();
+            while(interestsIt != interests.end()) {
+                Json::Value response = sManager->postInterest(*interestsIt);
+                // TODO: Alguna cola para reupload de intereses que debieron subir
+                // pero no pudieron por algun problema (que no sea duplicado)
+                interestsIt++;
+            }
+        }
         int sharedUpdate = sManager->putUser(value);
         if(sharedUpdate) {
             this->response(0, "Modified", user->getJson());

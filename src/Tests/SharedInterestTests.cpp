@@ -24,9 +24,9 @@ TEST(SharedInterestTests, TestPostInterest) {
 	char* value = new char[10]();
 	get_random_str(value, 9);
 	interestJson["value"] = value;
-	bool response = sManager->postInterest(interestJson);
+	Json::Value response = sManager->postInterest(interestJson);
 	delete[] value;
-	ASSERT_TRUE(response);
+	ASSERT_TRUE(response.isMember("status"));
 }
 
 TEST(SharedInterestTests, TestGetInterests) {

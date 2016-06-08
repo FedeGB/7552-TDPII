@@ -49,7 +49,7 @@ public:
 	// Da de alta un interest en el Shared Server
 	// Pre: Interes con "category" y "value"
 	// Devuelve true en caso satisfactorio, false en caso contrario
-	bool postInterest(Json::Value);
+	Json::Value postInterest(Json::Value);
 };
 
 #endif /*SHAREDMANAGER_H_*/
