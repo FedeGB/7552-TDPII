@@ -110,6 +110,8 @@ Dar de alta a un usuario nuevo
 Parámetros
 ++++++++++
 **username**, **name**, **password**
+Opcionales:
+**location**, **interests**, **edad**, **alias**, **sex**
 
 *Ejemplo:*
 .. code-block:: json
@@ -126,13 +128,7 @@ Respuesta
 1. size: Cantidad de elementos devueltos en el payload
 
 - payload: Elementos pertinentes a devolver (si no necesita devolver nada éste esta vacio)  
-1. id  
-2. name  
-3. alias  
-4. email  
-5. photo_profile
-6. interests  
-7. location
+0
 
 Ejemplo de la respuesta:
 ++++++++++++++++++++++++
