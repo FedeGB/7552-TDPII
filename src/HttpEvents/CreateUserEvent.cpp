@@ -49,7 +49,21 @@ void CreateUserEvent::handle(Manager* manager, SharedManager* sManager) {
 			r.parse(hm->body.p, val);
 			User* user = manager->getUser(val.get("username", "").asString());
 			Json::Value userJson = user->getJson(false);
-			userJson["sex"] = val.get("sex", "M").asString();
+			if(!val.isMember("sex")) {
+				userJson["sex"] = "M";
+			} else {
+				userJson["sex"] = val.get("sex", "M").asString();
+			}
+			if(val.isMember("interests")) {
+			    Json::Value interests = val.get("interests", Json::Value(Json::arrayValue));
+	            Json::ValueConstIterator interestsIt = interests.begin();
+	            while(interestsIt != interests.end()) {
+	                Json::Value response = sManager->postInterest(*interestsIt);
+	                // TODO: Alguna cola para reupload de intereses que debieron subir
+	                // pero no pudieron por algun problema (que no sea duplicado)
+	                interestsIt++;
+	            }
+			}
 			long id = sManager->postUser(userJson);
 			if(id) {
 				user->setId((int)id);

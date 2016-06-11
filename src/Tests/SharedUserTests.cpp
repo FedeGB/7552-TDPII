@@ -22,11 +22,11 @@ TEST(SharedUserTests,TestGetUsers) {
 
 TEST(SharedUserTests,TestGetSpecificUser) {
 	SharedManager* sManager = new SharedManager();
-	Json::Value user = sManager->getUser("224");
+	Json::Value user = sManager->getUser("1");
 	delete sManager;
-	EXPECT_STREQ(user.get("id", "").asString().c_str(), "224");
-	EXPECT_STREQ(user.get("name", "").asString().c_str(), "Tom Brady");
-	EXPECT_STREQ(user.get("alias", "").asString().c_str(), "tommyGOAT");
+	EXPECT_STREQ(user.get("id", "").asString().c_str(), "1");
+	EXPECT_STREQ(user.get("name", "").asString().c_str(), "Janeth Doe");
+	EXPECT_STREQ(user.get("alias", "").asString().c_str(), "janedoe");
 }
 
 void get_random(char *s, const int len) {
