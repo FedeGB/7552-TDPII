@@ -32,12 +32,13 @@ void GetCandidateEvent::handle(Manager* manager, SharedManager* sManager) {
 		Json::Value myShareUser = sManager->getUser(std::to_string(myAppUser->getId()));
 		while(it != sharedUsers.end() && act < max) {
 		    const Json::Value& user = *it;
+		    Json::Value modifiUser = user;
 		    User* otherUser = manager->getUser(user.get("email", "").asString());
 		    if(!otherUser) { // Usuario de shared no esta en este server
 		    	it++;
 		    	continue;
 		    }
-		    if(otherUser->getUsername().compare(myAppUser->getUsername()) == 0) {
+		    if(otherUser->getUsername().compare(myAppUser->getUsername()) == 0) { // Si soy yo
 		    	it++;
 		    	continue;	
 		    }
@@ -47,7 +48,15 @@ void GetCandidateEvent::handle(Manager* manager, SharedManager* sManager) {
 		    	it++;
 		    	continue;
 		    }
-		    // TODO: Location comparison
+		    double myLon = myShareUser.get("location", Json::Value()).get("longitude", 0).asDouble();
+		    double myLat = myShareUser.get("location", Json::Value()).get("latitude", 0).asDouble();
+		    double otherLon = user.get("location", Json::Value()).get("longitude", 0).asDouble();
+		    double otherLat = user.get("location", Json::Value()).get("latitude", 0).asDouble();
+		    float distance = harvestineDistance(myLat, myLon, otherLat, otherLon);
+		    if(distance > myAppUser->getDistance()) { // Si el candidato esta lejos (para mi valor)
+		    	it++;
+		    	continue;
+		    }
 		    Json::Value myInterests = myShareUser.get("interests", Json::Value(Json::arrayValue));
 		    Json::ValueConstIterator myInterestsIt = myInterests.begin();
 		    bool isCandidate = true;
@@ -59,10 +68,14 @@ void GetCandidateEvent::handle(Manager* manager, SharedManager* sManager) {
 		    			break;
 		    		}
 		    	}
+		    	// TODO: Remover los intereses que no estan en comun
+		    	// y matchear intereses
 		    	myInterestsIt++;
 		    }
 		    if(isCandidate) {
-		    	returnCandidates["candidates"].append(user);
+		    	modifiUser.removeMember("location");
+		    	modifiUser["distance"] = (double)distance;
+		    	returnCandidates["candidates"].append(modifiUser);
 				act++;
 		    }
 			it++;

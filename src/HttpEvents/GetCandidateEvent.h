@@ -2,6 +2,8 @@
 #define __GETCANDIDATEEVENT_H_
 
 #include "EventHandler.h"
+#include "../Utils.h"
+
 
 class GetCandidateEvent: public EventHandler {
 public:

@@ -34,6 +34,7 @@ User* UserFactory::createWithJsonValue(Json::Value value) {
 	string email = value.get("email", "").asString();
 	//time_t lastTimeConnected = value.get("lastTimeConnected", "").asDouble();
 	string token = value.get("token","").asString();
+	double distance = value.get("distance", 10.0).asDouble();
 
 	User* u = new User(username);
 	u->setPassword(password);
@@ -43,6 +44,7 @@ User* UserFactory::createWithJsonValue(Json::Value value) {
 	// u->setPerfilImage(perfilImage);
 	u->setLatitude(locationX);
 	u->setLongitude(locationY);
+	u->setDistance(distance);
 	return u;
 }
 

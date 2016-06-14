@@ -53,6 +53,9 @@ public:
 	string getEmail();
 	void setEmail(string);
 
+	double getDistance();
+	void setDistance(double);
+
 	string getJsonString();
 
 	// Devuelve los datos del usuario en un Json
@@ -79,6 +82,7 @@ private:
 	string password;
 	double latitude;
 	double longitude;
+	double distance;
 	// string perfilImage;
 	string token;
 	time_t lastTimeConnected;

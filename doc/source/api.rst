@@ -111,14 +111,14 @@ Parámetros
 ++++++++++
 **username**, **name**, **password**
 Opcionales:
-**location**, **interests**, **edad**, **alias**, **sex**
+**location**, **interests**, **edad**, **alias**, **sex**, **distance**
 
 *Ejemplo:*
 .. code-block:: json
 
 	{"username":"juanma", "name": "juan", "password":"hola", "sex":"M"}
 
-Sex puede ser "M" o "W"
+Sex puede ser "M" o "F"
 
 Respuesta
 +++++++++
@@ -178,7 +178,7 @@ metadata: Información de metadata sobre la respuesta
 	   "alias": "not a user",
 	   "email": "usuario@usuario.com",
 	   "photo_profile": "< base64 >",
-	   "sex" : "male",
+	   "sex" : "M",
 	   "interests": [
 	      {"category": "music/band", "value": "michael jackson"},
 	      {"category": "music/band", "value": "pearl jam"},
@@ -542,8 +542,11 @@ payload: - Elementos pertinentes a devolver (si no necesita devolver nada éste 
 2. name
 3. alias
 4. email
-5. photo_profile 6. interests
-7. location
+5. photo_profile
+6. interests (en común)
+7. distance (en km)
+8. sex (M o F)
+9. edad
 
 Ejemplo de payload de la respuesta
 ++++++++++++++++++++++++++++++++++
@@ -557,12 +560,13 @@ Ejemplo de payload de la respuesta
 		   "alias": "not a user",  
 		   "email": "usuario@usuario.com",  
 		   "photo_profile": "< base_64 >",  
-		   "sex" : "male",  
+		   "sex" : "M", 
+		   "edad": 20,
 		   "interests": [  
 		      {"category": "music/band", "value": "michael jackson"},  
 		      {"category": "music/band", "value": "pearl jam"},  
 		      {"category": "outdoors", "value": "running"}  
 		   ],  
-		   "location": {"latitude": -121.45356, "longitude": 46.51119}  
+		   "distance": 10.0
 		   }]  
 	}

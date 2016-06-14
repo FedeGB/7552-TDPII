@@ -17,6 +17,8 @@ User::User(string username) {
 	//this->lastTimeConnected = NULL;
 	this->name = "";
 	this->id = 0;
+	this->email = username;
+	this->distance = 10.0;
 }
 
 
@@ -106,6 +108,7 @@ Json::Value User::getJson() {
     location["latitude"] = this->latitude;
 	value["location"] = location;
 	value["token"] = this->token;
+	value["distance"] = this->distance;
 
 	// value["photoProfile"] = this->perfilImage;
 
@@ -128,6 +131,7 @@ void User::initWithJson(Json::Value value){
 	this->longitude = atof((value.get("longitude","").asString()).c_str());
 	// this->perfilImage = value.get("photoProfile","").asString();
 	this->email = value.get("email", "").asString();
+	this->distance = value.get("distance", 10.0).asDouble();
 	Json::Value vec = value.get("matches","");
 	for(Json::ValueConstIterator it = vec.begin(); it != vec.end(); ++it){
 		Json::Value actual = *it;
@@ -158,6 +162,9 @@ void User::updateWithJson(Json::Value value){
 
 	if(value.isMember("email"))
 		this->email = value.get("email","").asString();
+	if(value.isMember("distance")) {
+		this->distance = value.get("distance", 10.0).asDouble();
+	}
 }
 
 void User::loginNow(){
@@ -190,4 +197,12 @@ void User::setEmail(string email) {
 
 string User::getEmail() {
 	return this->email;
+}
+
+void User::setDistance(double dis) {
+	this->distance = dis;
+}
+
+double User::getDistance() {
+	return this->distance;
 }

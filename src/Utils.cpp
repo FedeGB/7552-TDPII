@@ -102,3 +102,16 @@ std::string base64_decode(std::string const& encoded_string) {
 
 }
 
+
+
+// Distancia entre dos posiciones
+// Post: Distancia en KM
+float harvestineDistance(double lat1, double lon1, double lat2, double lon2) {
+  double R = 6371; // Radio de la tierra en KM
+  double dlon = (lon2 - lon1) * PI / 180.0;
+  double dlat = (lat2 - lat1) * PI / 180.0;
+  double a = pow((sin(dlat/2)), 2) + (cos(lat1 * PI / 180.0) * cos(lat2 * PI / 180.0) * pow((sin(dlon/2)), 2));
+  double c = 2 * atan2(sqrt(a), sqrt(1-a));
+  float d = (float)R * c;
+  return d;
+}
