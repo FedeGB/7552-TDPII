@@ -4,7 +4,7 @@
 
 
 
-TEST(UsersTests,TestSenderAndReceptor){
+TEST(MessageTests,TestSenderAndReceptor){
 	User* user1 = new User("User1");
 	User* user2 = new User("User2");
 	string data = "Testing";
@@ -18,7 +18,7 @@ TEST(UsersTests,TestSenderAndReceptor){
 }
 
 
-TEST(UsersTests,TestId){
+TEST(MessageTests,TestId){
 	User* user1 = new User("User1");
 	User* user2 = new User("User2");
 	string data = "Testing";
@@ -31,7 +31,7 @@ TEST(UsersTests,TestId){
 }
 
 
-TEST(UsersTests,TestMessageJson){
+TEST(MessageTests,TestMessageJson){
 	User* user1 = new User("User1");
 	User* user2 = new User("User2");
 	string data = "Testing";

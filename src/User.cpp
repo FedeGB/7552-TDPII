@@ -128,7 +128,7 @@ Json::Value User::getJson() {
 }
 
 void User::initWithJson(Json::Value value){
-	this->id = value.get("id","").asInt();
+	this->id = value.get("id", 0).asInt();
 	this->username = value.get("username","").asString();
 	this->password = value.get("password","").asString();
 	this->name = value.get("name","").asString();

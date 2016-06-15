@@ -25,17 +25,75 @@ TEST(UsersTests,TestNewUser){
 
 
 TEST(UsersTests, TestJson){
-/*	User* user = new User("User1");
+	User* user = new User("User1");
 	Json::Value value;
-	value.Value("username:");
-	u1->initWithJson(value);
-	string body = "Testing";
-	Message* m = new Message(u1,u2,body);
-	ASSERT_EQ(u1->getUsername(),m->getEmisor()->getUsername());
-	ASSERT_EQ(u2->getUsername(),m->getReceptor()->getUsername());
-	ASSERT_EQ(body,m->getBody());
+	value["name"] = "User 1";
+	value["email"] = "user1@mail.com";
+	value["password"] = "123456";
+	Json::Value location = Json::Value();
+	location["latitude"] = 10.50;
+	location["longitude"] = -1.5897;
+	value["location"] = location;
+	value["distance"] = 5;
+	Json::Value range = Json::Value();
+	range["min"] = 20;
+	range["max"] = 24;
+	value["ageRange"] = range;
+	user->initWithJson(value);
+	Json::Value userComp = user->getJson(false);
+	ASSERT_EQ(userComp.get("email", "").asString(), value.get("email", "").asString());
+	ASSERT_EQ(userComp.get("password", "").asString(), value.get("password", "").asString());
+	ASSERT_EQ(userComp.get("distance", "").asDouble(), value.get("distance", "").asDouble());
+	ASSERT_EQ(userComp.get("location", Json::Value()).get("latitude", 0).asDouble(),
+	 value.get("location", Json::Value()).get("latitude", 0).asDouble());
+	ASSERT_EQ(userComp.get("location", Json::Value()).get("longitude", 0).asDouble(),
+	 value.get("location", Json::Value()).get("longitude", 0).asDouble());
+	ASSERT_EQ(userComp.get("ageRange", Json::Value()).get("min", 0).asInt(),
+	 value.get("ageRange", Json::Value()).get("min", 0).asInt());
+	ASSERT_EQ(userComp.get("ageRange", Json::Value()).get("max", 0).asInt(),
+	 value.get("ageRange", Json::Value()).get("max", 0).asInt());
+	delete user;
+}
 
-	delete u1;
-	delete u2;
-	delete m;*/
+
+TEST(UsersTests, TestJsonUpadate){
+	User* user = new User("User1");
+	Json::Value value;
+	value["name"] = "User 1";
+	value["email"] = "user1@mail.com";
+	value["password"] = "123456";
+	Json::Value location = Json::Value();
+	location["latitude"] = 10.50;
+	location["longitude"] = -1.5897;
+	value["location"] = location;
+	value["distance"] = 5;
+	Json::Value range = Json::Value();
+	range["min"] = 20;
+	range["max"] = 24;
+	value["ageRange"] = range;
+	user->initWithJson(value);
+	// Updates
+	value["distance"] = 10;
+	range["min"] = 18;
+	value["ageRange"] = range;
+	location["latitude"] = 2.333;
+	value["location"] = location;
+	user->updateWithJson(value);
+	Json::Value userComp = user->getJson(false);
+	ASSERT_EQ(userComp.get("email", "").asString(), value.get("email", "").asString());
+	ASSERT_EQ(userComp.get("password", "").asString(), value.get("password", "").asString());
+	ASSERT_EQ(userComp.get("distance", "").asDouble(), value.get("distance", "").asDouble());
+	ASSERT_EQ(userComp.get("location", Json::Value()).get("latitude", 0).asDouble(),
+	 value.get("location", Json::Value()).get("latitude", 0).asDouble());
+	ASSERT_EQ(userComp.get("location", Json::Value()).get("longitude", 0).asDouble(),
+	 value.get("location", Json::Value()).get("longitude", 0).asDouble());
+	ASSERT_EQ(userComp.get("ageRange", Json::Value()).get("min", 0).asInt(),
+	 value.get("ageRange", Json::Value()).get("min", 0).asInt());
+	ASSERT_EQ(userComp.get("ageRange", Json::Value()).get("max", 0).asInt(),
+	 value.get("ageRange", Json::Value()).get("max", 0).asInt());
+
+	ASSERT_NE(userComp.get("distance", "").asDouble(), 5);
+	ASSERT_NE(userComp.get("location", Json::Value()).get("latitude", 0).asDouble(), 10.50);
+	ASSERT_NE(userComp.get("ageRange", Json::Value()).get("min", 0).asInt(), 20);
+	delete user;
 }
