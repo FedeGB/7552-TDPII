@@ -162,6 +162,8 @@ void User::updateWithJson(Json::Value value){
 
 	if(value.isMember("email"))
 		this->email = value.get("email","").asString();
+	if(value.isMember("username"))
+		this->username = value.get("username","").asString();
 	if(value.isMember("distance")) {
 		this->distance = value.get("distance", 10.0).asDouble();
 	}
