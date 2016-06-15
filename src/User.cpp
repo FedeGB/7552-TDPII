@@ -127,8 +127,8 @@ void User::initWithJson(Json::Value value){
 	this->password = value.get("password","").asString();
 	this->name = value.get("name","").asString();
 	this->token = value.get("token","").asString();
-	this->latitude = atof((value.get("latitud","").asString()).c_str());
-	this->longitude = atof((value.get("longitude","").asString()).c_str());
+	this->latitude = atof((value.get("location", Json::Value()).get("latitude","").asString()).c_str());
+	this->longitude = atof((value.get("location", Json::Value()).get("longitude","").asString()).c_str());
 	// this->perfilImage = value.get("photoProfile","").asString();
 	this->email = value.get("email", "").asString();
 	this->distance = value.get("distance", 10.0).asDouble();

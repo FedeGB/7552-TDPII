@@ -68,6 +68,7 @@ void CreateUserEvent::handle(Manager* manager, SharedManager* sManager) {
 	                // pero no pudieron por algun problema (que no sea duplicado)
 	                interestsIt++;
 	            }
+	            userJson["interests"] = val.get("interests", Json::Value(Json::arrayValue));
 			}
 			long id = sManager->postUser(userJson);
 			if(id) {

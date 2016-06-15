@@ -28,8 +28,14 @@ User* UserFactory::createWithJsonValue(Json::Value value) {
 	string name = value.get("name", "").asString();
 	string username = value.get("username","").asString();
 	string password = value.get("password", "").asString();
-	double locationX = value.get("latitud", 0).asDouble();
-	double locationY =  value.get("longitude", 0).asDouble();
+	double locationX, locationY;
+	if(value.isMember("location")) {
+		locationX = value.get("location", Json::Value()).get("latitude", 0.0).asDouble();
+		locationY = value.get("location", Json::Value()).get("longitude", 0.0).asDouble();
+	} else {
+		locationX = value.get("latitude", 0.0).asDouble();
+		locationY =  value.get("longitude", 0.0).asDouble();
+	}
 	// string perfilImage = value.get("perfilImage", "").asString();
 	string email = value.get("email", "").asString();
 	//time_t lastTimeConnected = value.get("lastTimeConnected", "").asDouble();

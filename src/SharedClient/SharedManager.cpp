@@ -52,7 +52,6 @@ long SharedManager::postUser(Json::Value user) {
 	    interests[0] = defInterest;
 		user["interests"] = interests;
     }
-    // std::cout << user << std::endl;
 	curl->addJsonParameter("user", user);
 	Json::Value resp = curl->execute();
 	LoggerManager::getInstance()->log(LoggerManager::logInfo, "Post request of user " + user.get("alias", "").asString()

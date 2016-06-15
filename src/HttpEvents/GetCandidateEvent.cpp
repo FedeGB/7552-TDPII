@@ -61,8 +61,8 @@ void GetCandidateEvent::handle(Manager* manager, SharedManager* sManager) {
 		    Json::ValueConstIterator myInterestsIt = myInterests.begin();
 		    bool isCandidate = true;
 		    while(myInterestsIt != myInterests.end() && isCandidate) {
-		    	if((*it).get("category", "").asString().compare("sex") == 0) {
-		    		std::string interestedIn = (*it).get("value", "").asString();
+		    	if(user.get("category", "").asString().compare("sex") == 0) {
+		    		std::string interestedIn = user.get("value", "").asString();
 		    		if(interestedIn.substr(0, 1).compare(user.get("sex", "").asString()) != 0) {
 		    			isCandidate = false;
 		    			break;
