@@ -41,16 +41,25 @@ User* UserFactory::createWithJsonValue(Json::Value value) {
 	//time_t lastTimeConnected = value.get("lastTimeConnected", "").asDouble();
 	string token = value.get("token","").asString();
 	double distance = value.get("distance", 10.0).asDouble();
+	int minAge, maxAge;
+	if(!value.isMember("ageRange")) {
+		minAge = value.get("edad", 18).asInt();
+		maxAge = value.get("edad", 18).asInt() + 7;
+	} else {
+		minAge = value.get("ageRange", Json::Value()).get("min", 18).asInt();
+		maxAge = value.get("ageRange", Json::Value()).get("max", 25).asInt();
+	}
 
 	User* u = new User(username);
 	u->setPassword(password);
 	u->setName(name);
 	u->setToken(token);
 	u->setEmail(email);
-	// u->setPerfilImage(perfilImage);
 	u->setLatitude(locationX);
 	u->setLongitude(locationY);
 	u->setDistance(distance);
+	u->setMaxAge(maxAge);
+	u->setMinAge(minAge);
 	return u;
 }
 

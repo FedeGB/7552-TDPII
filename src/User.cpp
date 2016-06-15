@@ -19,6 +19,8 @@ User::User(string username) {
 	this->id = 0;
 	this->email = username;
 	this->distance = 10.0;
+	this->minAge = 18;
+	this->maxAge = 25;
 }
 
 
@@ -109,6 +111,10 @@ Json::Value User::getJson() {
 	value["location"] = location;
 	value["token"] = this->token;
 	value["distance"] = this->distance;
+	Json::Value range = Json::Value();
+	range["min"] = this->minAge;
+	range["max"] = this->maxAge;
+	value["ageRange"] = range;
 
 	// value["photoProfile"] = this->perfilImage;
 
@@ -127,11 +133,13 @@ void User::initWithJson(Json::Value value){
 	this->password = value.get("password","").asString();
 	this->name = value.get("name","").asString();
 	this->token = value.get("token","").asString();
-	this->latitude = atof((value.get("location", Json::Value()).get("latitude","").asString()).c_str());
-	this->longitude = atof((value.get("location", Json::Value()).get("longitude","").asString()).c_str());
+	this->latitude = value.get("location", Json::Value()).get("latitude", 0.0).asDouble();
+	this->longitude = value.get("location", Json::Value()).get("longitude", 0.0).asDouble();
 	// this->perfilImage = value.get("photoProfile","").asString();
 	this->email = value.get("email", "").asString();
 	this->distance = value.get("distance", 10.0).asDouble();
+	this->minAge = value.get("ageRange", Json::Value()).get("min", 18).asInt();
+	this->maxAge = value.get("ageRange", Json::Value()).get("max", 25).asInt();
 	Json::Value vec = value.get("matches","");
 	for(Json::ValueConstIterator it = vec.begin(); it != vec.end(); ++it){
 		Json::Value actual = *it;
@@ -166,6 +174,10 @@ void User::updateWithJson(Json::Value value){
 		this->username = value.get("username","").asString();
 	if(value.isMember("distance")) {
 		this->distance = value.get("distance", 10.0).asDouble();
+	}
+	if(value.isMember("ageRange")) {
+		this->minAge = value.get("ageRange", Json::Value()).get("min", 18).asInt();
+		this->maxAge = value.get("ageRange", Json::Value()).get("max", 25).asInt();
 	}
 }
 
@@ -207,4 +219,20 @@ void User::setDistance(double dis) {
 
 double User::getDistance() {
 	return this->distance;
+}
+
+int User::getMaxAge() {
+	return this->maxAge;
+}
+
+void User::setMaxAge(int max) {
+	this->maxAge = max;
+}
+
+int User::getMinAge() {
+	return this->minAge;
+}
+
+void User::setMinAge(int min) {
+	this->minAge = min;
 }

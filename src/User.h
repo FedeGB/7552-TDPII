@@ -56,6 +56,11 @@ public:
 	double getDistance();
 	void setDistance(double);
 
+	int getMaxAge();
+	void setMaxAge(int);
+	int getMinAge();
+	void setMinAge(int);
+
 	string getJsonString();
 
 	// Devuelve los datos del usuario en un Json
@@ -83,6 +88,8 @@ private:
 	double latitude;
 	double longitude;
 	double distance;
+	int minAge;
+	int maxAge;
 	// string perfilImage;
 	string token;
 	time_t lastTimeConnected;

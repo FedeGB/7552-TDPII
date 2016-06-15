@@ -48,6 +48,11 @@ void GetCandidateEvent::handle(Manager* manager, SharedManager* sManager) {
 		    	it++;
 		    	continue;
 		    }
+		    // Si no esta dentro de mi rango de edades definidas
+		    if(user.get("edad", 18).asInt() < myAppUser->getMinAge() || user.get("edad", 18).asInt() > myAppUser->getMaxAge()) {
+		    	it++;
+		    	continue;
+		    }
 		    double myLon = myShareUser.get("location", Json::Value()).get("longitude", 0).asDouble();
 		    double myLat = myShareUser.get("location", Json::Value()).get("latitude", 0).asDouble();
 		    double otherLon = user.get("location", Json::Value()).get("longitude", 0).asDouble();
