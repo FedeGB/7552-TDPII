@@ -38,6 +38,8 @@ void GetUserDataEvent::handle(Manager* manager, SharedManager* sManager) {
 	    sharedUserData["username"] = user->getJson().get("username", "").asString();
 	    user->updateWithJson(sharedUserData); // Update de lo que viene de Shared
 	    manager->updateUser(user);
+	    sharedUserData["distance"] = user->getDistance();
+	    sharedUserData["ageRange"] = user->getJson().get("ageRange", Json::Value());
 	    this->response(0, "", sharedUserData); 
 	    delete user;
 	//}

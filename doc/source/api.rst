@@ -114,6 +114,7 @@ Opcionales:
 **location**, **interests**, **edad**, **alias**, **sex**, **distance**
 
 *Ejemplo:*
+
 .. code-block:: json
 
 	{"username":"juanma", "name": "juan", "password":"hola", "sex":"M"}
@@ -184,7 +185,12 @@ metadata: Información de metadata sobre la respuesta
 	      {"category": "music/band", "value": "pearl jam"},
 	      {"category": "outdoors", "value": "running"}
 	   ],
-	   "location": {"latitude": -121.45356, "longitude": 46.51119}
+	   "location": {"latitude": -121.45356, "longitude": 46.51119},
+	   "disantece":10,
+	   "ageRange":{
+	   		"min":20,
+	   		"max":26
+	   }
 	}
 
 
@@ -197,6 +203,9 @@ Parámetros
 ++++++++++
 
 **username**: ID del usuario (mail del usuario) Requierido
+
+Opcionales:
+**location**, **interests**, **edad**, **alias**, **sex**, **distance**, **name**, **password**, **ageRange**
 
 Respuesta
 +++++++++
@@ -240,7 +249,12 @@ Respuesta
 	"location": { 
 	        "latitude": -121.45356,
 	        "longitude": 46.51119
-	        }
+	        },
+	"distance":10,
+	"ageRange": {
+		"min": 19,
+		"max":26
+		}
 	}
 
 DELETE
@@ -278,7 +292,7 @@ Respuesta
 
 
 User Matches
-===========
+============
 **URI del recurso** /users/getMatches
 
 GET
@@ -392,7 +406,7 @@ Ejemplo de respuesta
 
 	{
 	  "errorNum": 0,
-	  "message": "Like Saved",
+	  "message": "",
 	  "metadata": {
 	    "size": 1
 	  },
