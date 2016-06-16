@@ -30,6 +30,7 @@ void GetCandidateEvent::handle(Manager* manager, SharedManager* sManager) {
 			return;
 		}
 		Json::Value myShareUser = sManager->getUser(std::to_string(myAppUser->getId()));
+		std::map<std::string,bool> interestMap;
 		while(it != sharedUsers.end() && act < max) {
 		    const Json::Value& user = *it;
 		    Json::Value modifiUser = user;
@@ -58,6 +59,8 @@ void GetCandidateEvent::handle(Manager* manager, SharedManager* sManager) {
 		    double otherLon = user.get("location", Json::Value()).get("longitude", 0).asDouble();
 		    double otherLat = user.get("location", Json::Value()).get("latitude", 0).asDouble();
 		    float distance = harvestineDistance(myLat, myLon, otherLat, otherLon);
+		    std::cout << myShareUser << std::endl;
+		    std::cout << user << std::endl;
 		    if(distance > myAppUser->getDistance()) { // Si el candidato esta lejos (para mi valor)
 		    	it++;
 		    	continue;
@@ -65,25 +68,57 @@ void GetCandidateEvent::handle(Manager* manager, SharedManager* sManager) {
 		    Json::Value myInterests = myShareUser.get("interests", Json::Value(Json::arrayValue));
 		    Json::ValueConstIterator myInterestsIt = myInterests.begin();
 		    bool isCandidate = true;
+		    std::string mapKey;
 		    while(myInterestsIt != myInterests.end() && isCandidate) {
-		    	if(user.get("category", "").asString().compare("sex") == 0) {
-		    		std::string interestedIn = user.get("value", "").asString();
+		    	if((*myInterestsIt).get("category", "").asString().compare("sex") == 0) {
+		    		std::string interestedIn = (*myInterestsIt).get("value", "").asString();
 		    		if(interestedIn.substr(0, 1).compare(user.get("sex", "").asString()) != 0) {
 		    			isCandidate = false;
 		    			break;
 		    		}
 		    	}
-		    	// TODO: Remover los intereses que no estan en comun
-		    	// y matchear intereses
+		    	mapKey = (*myInterestsIt).get("category", "").asString() + (*myInterestsIt).get("value", "").asString();
+		    	std::transform(mapKey.begin(), mapKey.end(), mapKey.begin(), ::tolower);
+		    	mapKey.erase(std::remove_if(mapKey.begin(), mapKey.end(), ::isspace), mapKey.end());
+		    	interestMap[mapKey] = true;
 		    	myInterestsIt++;
 		    }
+		    Json::Value otherInterests = user.get("interests", Json::Value(Json::arrayValue));
+		    Json::ValueConstIterator otherInterestsIt = otherInterests.begin();
+		    Json::Value commonInterests = Json::Value(Json::arrayValue);
+		    while(otherInterestsIt != otherInterests.end() && isCandidate) {
+		    	if((*otherInterestsIt).get("category", "").asString().compare("sex") == 0) {
+		    		std::string interestedIn = (*otherInterestsIt).get("value", "").asString();
+		    		if(interestedIn.substr(0, 1).compare(myShareUser.get("sex", "").asString()) != 0) {
+		    			isCandidate = false;
+		    			break;
+		    		}
+		    	}
+		    	mapKey = (*otherInterestsIt).get("category", "").asString() + (*otherInterestsIt).get("value", "").asString();
+		    	std::transform(mapKey.begin(), mapKey.end(), mapKey.begin(), ::tolower);
+		    	mapKey.erase(std::remove_if(mapKey.begin(), mapKey.end(), ::isspace), mapKey.end());
+		    	std::map<std::string,bool>::iterator it;
+		    	it = interestMap.find(mapKey);
+		    	if(it !=interestMap.end()) {
+		    		commonInterests.append((*otherInterestsIt));
+		    	}
+		    	otherInterestsIt++;
+		    }
+		    if(commonInterests.size() < 1) {
+		    	isCandidate = false;
+		    }
+		    // TODO: Tomar en cuenta rango de edad del otro usuario (ya que si yo no caigo en el rango de el otro
+		    // nunca se va a dar un match, a menos que el otro cambie el rango, que puede pasar o no)
 		    if(isCandidate) {
 		    	modifiUser.removeMember("location");
 		    	modifiUser["distance"] = (double)distance;
+		    	modifiUser.removeMember("interests");
+		    	modifiUser["interests"] = commonInterests;
 		    	returnCandidates["candidates"].append(modifiUser);
 				act++;
 		    }
 			it++;
+			interestMap.clear();
 			delete otherUser;
 		}
 		delete myAppUser;

@@ -3,6 +3,8 @@
 
 #include "EventHandler.h"
 #include "../Utils.h"
+#include <map>
+#include <algorithm>
 
 
 class GetCandidateEvent: public EventHandler {
