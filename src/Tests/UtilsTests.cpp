@@ -23,3 +23,11 @@ TEST(UtilsTests, HaverstineDistanceTest2) {
 	float distCalcu = harvestineDistance(lat1, lon1, lat2, lon2);
 	ASSERT_FLOAT_EQ(distance, distCalcu);
 }
+
+
+
+TEST(UtilsTests, Base64EncodeDecode) {
+	std::string toEncode = "esto es un string";
+	std::string encodedString = base64_encode((const unsigned char*)toEncode.c_str(), toEncode.length());
+	ASSERT_EQ(toEncode, base64_decode(encodedString));
+}
