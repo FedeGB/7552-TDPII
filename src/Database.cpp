@@ -244,6 +244,8 @@ bool Database::saveLike(Like* like){
 	string user2 = like->getUser2()->getUsername();
 	string aux = user1 + user2;
 	string json = like->getJsonString();
+	LoggerManager::getInstance()->log(LoggerManager::logDebug, 
+	"Guardando like de " + user1 + " a " + user2 );
 	return this->putInColumn(columnLikes, aux, json);
 }
 

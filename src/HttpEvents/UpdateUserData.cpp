@@ -75,6 +75,7 @@ void UpdateUserData::handle(Manager* manager, SharedManager* sManager) {
                 interestsIt++;
             }
         }
+        if(value.isMember("edad")) value["age"] = value.get("edad", 18).asInt();
         int sharedUpdate = sManager->putUser(value);
         if(sharedUpdate) {
             this->response(0, "Modified", user->getJson());

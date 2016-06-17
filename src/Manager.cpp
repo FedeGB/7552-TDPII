@@ -63,28 +63,32 @@ bool Manager::saveMessage(string json){
 
 bool Manager::saveLike(string json){
 	LikeFactory likeFactory;
+	LoggerManager::getInstance()->log(LoggerManager::logInfo, "Incoming json:" + json );
 	Like* like = likeFactory.createWithJsonString(json);
+	LoggerManager::getInstance()->log(LoggerManager::logDebug, "Like created" );
 	if(thereIsMatch(like)){
+		LoggerManager::getInstance()->log(LoggerManager::logInfo,
+		"Hubo match entre " + like->getUser1()->getUsername() + " y " + like->getUser2()->getUsername() );
 		User* user1 = like->getUser1();
 		User* user2 = like->getUser2();
 		user1->addMatch(user2->getUsername());
 		user2->addMatch(user1->getUsername());
 	}
-	// TODO logear
 	return 	this->db->saveLike(like);
 }
 
 bool Manager::thereIsMatch(Like* like){
 	Like* theOtherLike = this->getLike(like->getUser2()->getUsername()+like->getUser1()->getUsername());
-	if(theOtherLike->getLike()){
+	if(theOtherLike && theOtherLike->getLike()){
 		User* user1 = this->db->getUser(like->getUser1()->getUsername());
 		User* user2 = this->db->getUser(like->getUser2()->getUsername());
 		user1->addMatch(user2->getUsername());
 		user2->addMatch(user1->getUsername());
 		this->db->updateUser(user1);
 		this->db->updateUser(user2);
+		return true;
 	}
-	return true;
+	return false;
 }
 
 User* Manager::getUser(std::string user) {
