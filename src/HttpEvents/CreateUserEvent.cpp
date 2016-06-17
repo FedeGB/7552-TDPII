@@ -59,7 +59,7 @@ void CreateUserEvent::handle(Manager* manager, SharedManager* sManager) {
 			} else {
 				userJson["edad"] = val.get("edad", 18).asInt();
 			}
-			userJson["age"] = userJson["edad"]; // Just in case
+			userJson["age"] = userJson.get("edad", 18).asInt(); // Just in case
 			if(val.isMember("interests")) {
 			    Json::Value interests = val.get("interests", Json::Value(Json::arrayValue));
 	            Json::ValueConstIterator interestsIt = interests.begin();

@@ -44,6 +44,7 @@ void UpdateUserData::handle(Manager* manager, SharedManager* sManager) {
     User* user = manager->getUser(value.get("username","").asString());
     if(!user) {
         this->response(1, "User could not be modified", (Json::Value)0);
+        return;
     }
     user->updateWithJson(value);
     bool updateUser = manager->updateUser(user);
