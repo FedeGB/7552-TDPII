@@ -418,7 +418,7 @@ endobj
 << /Outlines 133 0 R /PageLabels 204 0 R /PageMode /UseNone /Pages 188 0 R /Type /Catalog >>
 endobj
 132 0 obj
-<< /Author () /CreationDate <rst2pdf.createpdf.PDFDate instance at 0x7fedd2bbfc68> /Creator (\(unspecified\)) /Keywords () /Producer (ReportLab PDF Library - www.reportlab.com) /Subject (\(unspecified\)) 
+<< /Author () /CreationDate <rst2pdf.createpdf.PDFDate instance at 0x7fa6d31e85f0> /Creator (\(unspecified\)) /Keywords () /Producer (ReportLab PDF Library - www.reportlab.com) /Subject (\(unspecified\)) 
   /Title () >>
 endobj
 133 0 obj
@@ -652,7 +652,7 @@ q
 1 0 0 1 40.01575 524.1606 cm
 q
 0 0 0 rg
-BT 1 0 0 1 0 2.4 Tm /F2 12 Tf 14.4 TL 218.598 0 Td (June 15, 2016) Tj T* -218.598 0 Td ET
+BT 1 0 0 1 0 2.4 Tm /F2 12 Tf 14.4 TL 218.598 0 Td (June 17, 2016) Tj T* -218.598 0 Td ET
 Q
 Q
 q
@@ -1958,7 +1958,7 @@ Q
 endstream
 endobj
 196 0 obj
-<< /Length 12925 >>
+<< /Length 12924 >>
 stream
 1 0 0 1 0 0 cm  BT /F1 12 Tf 14.4 TL ET
 q
@@ -2483,7 +2483,7 @@ Q
 q
 1 0 0 1 40.01575 115.0394 cm
 q
-BT 1 0 0 1 0 2 Tm 12 TL /F2 10 Tf 0 0 0 rg (username) Tj /F1 10 Tf (, ) Tj /F2 10 Tf (name) Tj /F1 10 Tf (, ) Tj /F2 10 Tf (password ) Tj /F1 10 Tf (Opcionales: ) Tj /F2 10 Tf (location) Tj /F1 10 Tf (, ) Tj /F2 10 Tf (interests) Tj /F1 10 Tf (, ) Tj /F2 10 Tf (edad) Tj /F1 10 Tf (, ) Tj /F2 10 Tf (alias) Tj /F1 10 Tf (, ) Tj /F2 10 Tf (sex) Tj /F1 10 Tf (, ) Tj /F2 10 Tf (distance) Tj T* ET
+BT 1 0 0 1 0 2 Tm 12 TL /F2 10 Tf 0 0 0 rg (username) Tj /F1 10 Tf (, ) Tj /F2 10 Tf (name) Tj /F1 10 Tf (, ) Tj /F2 10 Tf (password ) Tj /F1 10 Tf (Opcionales: ) Tj /F2 10 Tf (location) Tj /F1 10 Tf (, ) Tj /F2 10 Tf (interests) Tj /F1 10 Tf (, ) Tj /F2 10 Tf (age) Tj /F1 10 Tf (, ) Tj /F2 10 Tf (alias) Tj /F1 10 Tf (, ) Tj /F2 10 Tf (sex) Tj /F1 10 Tf (, ) Tj /F2 10 Tf (distance) Tj T* ET
 Q
 Q
 q
@@ -3242,7 +3242,7 @@ Q
 endstream
 endobj
 198 0 obj
-<< /Length 15130 >>
+<< /Length 15129 >>
 stream
 1 0 0 1 0 0 cm  BT /F1 12 Tf 14.4 TL ET
 q
@@ -3394,7 +3394,7 @@ Q
 q
 1 0 0 1 40.01575 546.6394 cm
 q
-BT 1 0 0 1 0 2 Tm 12 TL /F1 10 Tf 0 0 0 rg (Opcionales: ) Tj /F2 10 Tf (location) Tj /F1 10 Tf (, ) Tj /F2 10 Tf (interests) Tj /F1 10 Tf (, ) Tj /F2 10 Tf (edad) Tj /F1 10 Tf (, ) Tj /F2 10 Tf (alias) Tj /F1 10 Tf (, ) Tj /F2 10 Tf (sex) Tj /F1 10 Tf (, ) Tj /F2 10 Tf (distance) Tj /F1 10 Tf (, ) Tj /F2 10 Tf (name) Tj /F1 10 Tf (, ) Tj /F2 10 Tf (password) Tj /F1 10 Tf (, ) Tj /F2 10 Tf (ageRange) Tj T* ET
+BT 1 0 0 1 0 2 Tm 12 TL /F1 10 Tf 0 0 0 rg (Opcionales: ) Tj /F2 10 Tf (location) Tj /F1 10 Tf (, ) Tj /F2 10 Tf (interests) Tj /F1 10 Tf (, ) Tj /F2 10 Tf (age) Tj /F1 10 Tf (, ) Tj /F2 10 Tf (alias) Tj /F1 10 Tf (, ) Tj /F2 10 Tf (sex) Tj /F1 10 Tf (, ) Tj /F2 10 Tf (distance) Tj /F1 10 Tf (, ) Tj /F2 10 Tf (name) Tj /F1 10 Tf (, ) Tj /F2 10 Tf (password) Tj /F1 10 Tf (, ) Tj /F2 10 Tf (ageRange) Tj T* ET
 Q
 Q
 q
@@ -5274,7 +5274,7 @@ Q
 endstream
 endobj
 203 0 obj
-<< /Length 9861 >>
+<< /Length 9858 >>
 stream
 1 0 0 1 0 0 cm  BT /F1 12 Tf 14.4 TL ET
 q
@@ -5349,7 +5349,7 @@ q
 1 0 0 1 40.01575 561.4394 cm
 q
 0 0 0 rg
-BT 1 0 0 1 0 50 Tm /F1 10 Tf 12 TL 2.782594 Tw (errorNum - c\363digo de error \(0 indica success\) message - mensaje asociado al c\363digo de error metadata: -) Tj T* 0 Tw 1.274358 Tw (Informaci\363n de metadata sobre la respuesta 1. size - Cantidad de elementos devueltos en el payload payload: -) Tj T* 0 Tw .163182 Tw (Elementos pertinentes a devolver \(si no necesita devolver nada \351ste esta vacio\) 0. candidates: es un arrayJson que) Tj T* 0 Tw .409163 Tw (contiene varios usuarios candidatos con lo siguiente: 1. id 2. name 3. alias 4. email 5. photo_profile 6. interests \(en) Tj T* 0 Tw (com\372n\) 7. distance \(en km\) 8. sex \(M o F\) 9. edad) Tj T* ET
+BT 1 0 0 1 0 50 Tm /F1 10 Tf 12 TL 2.782594 Tw (errorNum - c\363digo de error \(0 indica success\) message - mensaje asociado al c\363digo de error metadata: -) Tj T* 0 Tw 1.274358 Tw (Informaci\363n de metadata sobre la respuesta 1. size - Cantidad de elementos devueltos en el payload payload: -) Tj T* 0 Tw .163182 Tw (Elementos pertinentes a devolver \(si no necesita devolver nada \351ste esta vacio\) 0. candidates: es un arrayJson que) Tj T* 0 Tw .409163 Tw (contiene varios usuarios candidatos con lo siguiente: 1. id 2. name 3. alias 4. email 5. photo_profile 6. interests \(en) Tj T* 0 Tw (com\372n\) 7. distance \(en km\) 8. sex \(M o F\) 9. age) Tj T* ET
 Q
 Q
 q
@@ -5442,13 +5442,13 @@ n 114 108.75 18 12 re f*
 .933333 1 .8 rg
 n 132 108.75 6 12 re f*
 .933333 1 .8 rg
-n 66 96.75 36 12 re f*
+n 66 96.75 30 12 re f*
 .933333 1 .8 rg
-n 102 96.75 6 12 re f*
+n 96 96.75 6 12 re f*
 .933333 1 .8 rg
-n 114 96.75 12 12 re f*
+n 108 96.75 12 12 re f*
 .933333 1 .8 rg
-n 126 96.75 6 12 re f*
+n 120 96.75 6 12 re f*
 .933333 1 .8 rg
 n 66 84.75 66 12 re f*
 .933333 1 .8 rg
@@ -5521,7 +5521,7 @@ n 138 24.75 24 12 re f*
 n 66 12.75 12 12 re f*
 .933333 1 .8 rg
 n 0 .75 6 12 re f*
-BT 1 0 0 1 0 206 Tm 12 TL /F5 10 Tf 0 0 0 rg ({) Tj 0 0 0 rg  T* (        ) Tj /F6 10 Tf 0 .439216 0 rg ("candidates") Tj /F5 10 Tf 0 0 0 rg (:[) Tj 0 0 0 rg  T* (           ) Tj 0 0 0 rg ({) Tj 0 0 0 rg  T* (           ) Tj /F6 10 Tf 0 .439216 0 rg ("id") Tj /F5 10 Tf 0 0 0 rg (:) Tj 0 0 0 rg ( ) Tj /F6 10 Tf 0 0 .815686 rg (1) Tj /F5 10 Tf 0 0 0 rg (,) Tj 0 0 0 rg  T* (           ) Tj /F6 10 Tf 0 .439216 0 rg ("name") Tj /F5 10 Tf 0 0 0 rg (:) Tj 0 0 0 rg ( ) Tj .729412 .129412 .129412 rg ("usuario") Tj 0 0 0 rg (,) Tj 0 0 0 rg  T* (           ) Tj /F6 10 Tf 0 .439216 0 rg ("alias") Tj /F5 10 Tf 0 0 0 rg (:) Tj 0 0 0 rg ( ) Tj .729412 .129412 .129412 rg ("not a user") Tj 0 0 0 rg (,) Tj 0 0 0 rg  T* (           ) Tj /F6 10 Tf 0 .439216 0 rg ("email") Tj /F5 10 Tf 0 0 0 rg (:) Tj 0 0 0 rg ( ) Tj .729412 .129412 .129412 rg ("usuario@usuario.com") Tj 0 0 0 rg (,) Tj 0 0 0 rg  T* (           ) Tj /F6 10 Tf 0 .439216 0 rg ("photo_profile") Tj /F5 10 Tf 0 0 0 rg (:) Tj 0 0 0 rg ( ) Tj .729412 .129412 .129412 rg (") Tj (<) Tj ( base_64 ) Tj (>) Tj (") Tj 0 0 0 rg (,) Tj 0 0 0 rg  T* (           ) Tj /F6 10 Tf 0 .439216 0 rg ("sex") Tj /F5 10 Tf 0 0 0 rg ( ) Tj 0 0 0 rg (:) Tj 0 0 0 rg ( ) Tj .729412 .129412 .129412 rg ("M") Tj 0 0 0 rg (,) Tj 0 0 0 rg  T* (           ) Tj /F6 10 Tf 0 .439216 0 rg ("edad") Tj /F5 10 Tf 0 0 0 rg (:) Tj 0 0 0 rg ( ) Tj /F6 10 Tf 0 0 .815686 rg (20) Tj /F5 10 Tf 0 0 0 rg (,) Tj 0 0 0 rg  T* (           ) Tj /F6 10 Tf 0 .439216 0 rg ("interests") Tj /F5 10 Tf 0 0 0 rg (:) Tj 0 0 0 rg ( ) Tj 0 0 0 rg ([) Tj 0 0 0 rg  T* (              ) Tj 0 0 0 rg ({) Tj /F6 10 Tf 0 .439216 0 rg ("category") Tj /F5 10 Tf 0 0 0 rg (:) Tj 0 0 0 rg ( ) Tj .729412 .129412 .129412 rg ("music/band") Tj 0 0 0 rg (,) Tj 0 0 0 rg ( ) Tj /F6 10 Tf 0 .439216 0 rg ("value") Tj /F5 10 Tf 0 0 0 rg (:) Tj 0 0 0 rg ( ) Tj .729412 .129412 .129412 rg ("michael jackson") Tj 0 0 0 rg (},) Tj 0 0 0 rg  T* (              ) Tj 0 0 0 rg ({) Tj /F6 10 Tf 0 .439216 0 rg ("category") Tj /F5 10 Tf 0 0 0 rg (:) Tj 0 0 0 rg ( ) Tj .729412 .129412 .129412 rg ("music/band") Tj 0 0 0 rg (,) Tj 0 0 0 rg ( ) Tj /F6 10 Tf 0 .439216 0 rg ("value") Tj /F5 10 Tf 0 0 0 rg (:) Tj 0 0 0 rg ( ) Tj .729412 .129412 .129412 rg ("pearl jam") Tj 0 0 0 rg (},) Tj 0 0 0 rg  T* (              ) Tj 0 0 0 rg ({) Tj /F6 10 Tf 0 .439216 0 rg ("category") Tj /F5 10 Tf 0 0 0 rg (:) Tj 0 0 0 rg ( ) Tj .729412 .129412 .129412 rg ("outdoors") Tj 0 0 0 rg (,) Tj 0 0 0 rg ( ) Tj /F6 10 Tf 0 .439216 0 rg ("value") Tj /F5 10 Tf 0 0 0 rg (:) Tj 0 0 0 rg ( ) Tj .729412 .129412 .129412 rg ("running") Tj 0 0 0 rg (}) Tj 0 0 0 rg  T* (           ) Tj 0 0 0 rg (],) Tj 0 0 0 rg  T* (           ) Tj /F6 10 Tf 0 .439216 0 rg ("distance") Tj /F5 10 Tf 0 0 0 rg (:) Tj 0 0 0 rg ( ) Tj /F6 10 Tf .376471 0 .878431 rg (10.0) Tj /F5 10 Tf 0 0 0 rg  T* (           ) Tj 0 0 0 rg (}]) Tj 0 0 0 rg  T* 0 0 0 rg (}) Tj T* ET
+BT 1 0 0 1 0 206 Tm 12 TL /F5 10 Tf 0 0 0 rg ({) Tj 0 0 0 rg  T* (        ) Tj /F6 10 Tf 0 .439216 0 rg ("candidates") Tj /F5 10 Tf 0 0 0 rg (:[) Tj 0 0 0 rg  T* (           ) Tj 0 0 0 rg ({) Tj 0 0 0 rg  T* (           ) Tj /F6 10 Tf 0 .439216 0 rg ("id") Tj /F5 10 Tf 0 0 0 rg (:) Tj 0 0 0 rg ( ) Tj /F6 10 Tf 0 0 .815686 rg (1) Tj /F5 10 Tf 0 0 0 rg (,) Tj 0 0 0 rg  T* (           ) Tj /F6 10 Tf 0 .439216 0 rg ("name") Tj /F5 10 Tf 0 0 0 rg (:) Tj 0 0 0 rg ( ) Tj .729412 .129412 .129412 rg ("usuario") Tj 0 0 0 rg (,) Tj 0 0 0 rg  T* (           ) Tj /F6 10 Tf 0 .439216 0 rg ("alias") Tj /F5 10 Tf 0 0 0 rg (:) Tj 0 0 0 rg ( ) Tj .729412 .129412 .129412 rg ("not a user") Tj 0 0 0 rg (,) Tj 0 0 0 rg  T* (           ) Tj /F6 10 Tf 0 .439216 0 rg ("email") Tj /F5 10 Tf 0 0 0 rg (:) Tj 0 0 0 rg ( ) Tj .729412 .129412 .129412 rg ("usuario@usuario.com") Tj 0 0 0 rg (,) Tj 0 0 0 rg  T* (           ) Tj /F6 10 Tf 0 .439216 0 rg ("photo_profile") Tj /F5 10 Tf 0 0 0 rg (:) Tj 0 0 0 rg ( ) Tj .729412 .129412 .129412 rg (") Tj (<) Tj ( base_64 ) Tj (>) Tj (") Tj 0 0 0 rg (,) Tj 0 0 0 rg  T* (           ) Tj /F6 10 Tf 0 .439216 0 rg ("sex") Tj /F5 10 Tf 0 0 0 rg ( ) Tj 0 0 0 rg (:) Tj 0 0 0 rg ( ) Tj .729412 .129412 .129412 rg ("M") Tj 0 0 0 rg (,) Tj 0 0 0 rg  T* (           ) Tj /F6 10 Tf 0 .439216 0 rg ("age") Tj /F5 10 Tf 0 0 0 rg (:) Tj 0 0 0 rg ( ) Tj /F6 10 Tf 0 0 .815686 rg (20) Tj /F5 10 Tf 0 0 0 rg (,) Tj 0 0 0 rg  T* (           ) Tj /F6 10 Tf 0 .439216 0 rg ("interests") Tj /F5 10 Tf 0 0 0 rg (:) Tj 0 0 0 rg ( ) Tj 0 0 0 rg ([) Tj 0 0 0 rg  T* (              ) Tj 0 0 0 rg ({) Tj /F6 10 Tf 0 .439216 0 rg ("category") Tj /F5 10 Tf 0 0 0 rg (:) Tj 0 0 0 rg ( ) Tj .729412 .129412 .129412 rg ("music/band") Tj 0 0 0 rg (,) Tj 0 0 0 rg ( ) Tj /F6 10 Tf 0 .439216 0 rg ("value") Tj /F5 10 Tf 0 0 0 rg (:) Tj 0 0 0 rg ( ) Tj .729412 .129412 .129412 rg ("michael jackson") Tj 0 0 0 rg (},) Tj 0 0 0 rg  T* (              ) Tj 0 0 0 rg ({) Tj /F6 10 Tf 0 .439216 0 rg ("category") Tj /F5 10 Tf 0 0 0 rg (:) Tj 0 0 0 rg ( ) Tj .729412 .129412 .129412 rg ("music/band") Tj 0 0 0 rg (,) Tj 0 0 0 rg ( ) Tj /F6 10 Tf 0 .439216 0 rg ("value") Tj /F5 10 Tf 0 0 0 rg (:) Tj 0 0 0 rg ( ) Tj .729412 .129412 .129412 rg ("pearl jam") Tj 0 0 0 rg (},) Tj 0 0 0 rg  T* (              ) Tj 0 0 0 rg ({) Tj /F6 10 Tf 0 .439216 0 rg ("category") Tj /F5 10 Tf 0 0 0 rg (:) Tj 0 0 0 rg ( ) Tj .729412 .129412 .129412 rg ("outdoors") Tj 0 0 0 rg (,) Tj 0 0 0 rg ( ) Tj /F6 10 Tf 0 .439216 0 rg ("value") Tj /F5 10 Tf 0 0 0 rg (:) Tj 0 0 0 rg ( ) Tj .729412 .129412 .129412 rg ("running") Tj 0 0 0 rg (}) Tj 0 0 0 rg  T* (           ) Tj 0 0 0 rg (],) Tj 0 0 0 rg  T* (           ) Tj /F6 10 Tf 0 .439216 0 rg ("distance") Tj /F5 10 Tf 0 0 0 rg (:) Tj 0 0 0 rg ( ) Tj /F6 10 Tf .376471 0 .878431 rg (10.0) Tj /F5 10 Tf 0 0 0 rg  T* (           ) Tj 0 0 0 rg (}]) Tj 0 0 0 rg  T* 0 0 0 rg (}) Tj T* ET
 Q
 Q
 Q
@@ -5886,36 +5886,36 @@ xref
 0000046868 00000 n
 0000047004 00000 n
 0000056942 00000 n
-0000069926 00000 n
-0000082880 00000 n
-0000098069 00000 n
-0000106777 00000 n
-0000114793 00000 n
-0000125155 00000 n
-0000135348 00000 n
-0000145267 00000 n
-0000145466 00000 n
-0000145504 00000 n
-0000145542 00000 n
-0000145580 00000 n
-0000145618 00000 n
-0000145656 00000 n
-0000145694 00000 n
-0000145732 00000 n
-0000145770 00000 n
-0000145808 00000 n
-0000145846 00000 n
-0000145884 00000 n
-0000145922 00000 n
-0000145960 00000 n
-0000145998 00000 n
+0000069925 00000 n
+0000082879 00000 n
+0000098067 00000 n
+0000106775 00000 n
+0000114791 00000 n
+0000125153 00000 n
+0000135346 00000 n
+0000145262 00000 n
+0000145461 00000 n
+0000145499 00000 n
+0000145537 00000 n
+0000145575 00000 n
+0000145613 00000 n
+0000145651 00000 n
+0000145689 00000 n
+0000145727 00000 n
+0000145765 00000 n
+0000145803 00000 n
+0000145841 00000 n
+0000145879 00000 n
+0000145917 00000 n
+0000145955 00000 n
+0000145993 00000 n
 trailer
 << /ID 
  % ReportLab generated PDF document -- digest (http://www.reportlab.com)
  [(-\270/\215\023\374\232\255\017j\310\301DYu\363) (-\270/\215\023\374\232\255\017j\310\301DYu\363)]
  /Info 132 0 R /Root 131 0 R /Size 220 >>
 startxref
-146036
+146031
 %%EOF
 %PDF-1.4
 %“Œ‹ž ReportLab Generated PDF document http://www.reportlab.com
@@ -6329,7 +6329,7 @@ endobj
 << /Outlines 131 0 R /PageLabels 200 0 R /PageMode /UseNone /Pages 186 0 R /Type /Catalog >>
 endobj
 130 0 obj
-<< /Author () /CreationDate <rst2pdf.createpdf.PDFDate instance at 0x7fedd2cc1758> /Creator (\(unspecified\)) /Keywords () /Producer (ReportLab PDF Library - www.reportlab.com) /Subject (\(unspecified\)) 
+<< /Author () /CreationDate <rst2pdf.createpdf.PDFDate instance at 0x7fa6d40daf80> /Creator (\(unspecified\)) /Keywords () /Producer (ReportLab PDF Library - www.reportlab.com) /Subject (\(unspecified\)) 
   /Title () >>
 endobj
 131 0 obj
@@ -6563,7 +6563,7 @@ q
 1 0 0 1 40.01575 524.1606 cm
 q
 0 0 0 rg
-BT 1 0 0 1 0 2.4 Tm /F2 12 Tf 14.4 TL 218.598 0 Td (June 15, 2016) Tj T* -218.598 0 Td ET
+BT 1 0 0 1 0 2.4 Tm /F2 12 Tf 14.4 TL 218.598 0 Td (June 17, 2016) Tj T* -218.598 0 Td ET
 Q
 Q
 q
@@ -7849,7 +7849,7 @@ Q
 endstream
 endobj
 192 0 obj
-<< /Length 12925 >>
+<< /Length 12924 >>
 stream
 1 0 0 1 0 0 cm  BT /F1 12 Tf 14.4 TL ET
 q
@@ -8374,7 +8374,7 @@ Q
 q
 1 0 0 1 40.01575 115.0394 cm
 q
-BT 1 0 0 1 0 2 Tm 12 TL /F2 10 Tf 0 0 0 rg (username) Tj /F1 10 Tf (, ) Tj /F2 10 Tf (name) Tj /F1 10 Tf (, ) Tj /F2 10 Tf (password ) Tj /F1 10 Tf (Opcionales: ) Tj /F2 10 Tf (location) Tj /F1 10 Tf (, ) Tj /F2 10 Tf (interests) Tj /F1 10 Tf (, ) Tj /F2 10 Tf (edad) Tj /F1 10 Tf (, ) Tj /F2 10 Tf (alias) Tj /F1 10 Tf (, ) Tj /F2 10 Tf (sex) Tj /F1 10 Tf (, ) Tj /F2 10 Tf (distance) Tj T* ET
+BT 1 0 0 1 0 2 Tm 12 TL /F2 10 Tf 0 0 0 rg (username) Tj /F1 10 Tf (, ) Tj /F2 10 Tf (name) Tj /F1 10 Tf (, ) Tj /F2 10 Tf (password ) Tj /F1 10 Tf (Opcionales: ) Tj /F2 10 Tf (location) Tj /F1 10 Tf (, ) Tj /F2 10 Tf (interests) Tj /F1 10 Tf (, ) Tj /F2 10 Tf (age) Tj /F1 10 Tf (, ) Tj /F2 10 Tf (alias) Tj /F1 10 Tf (, ) Tj /F2 10 Tf (sex) Tj /F1 10 Tf (, ) Tj /F2 10 Tf (distance) Tj T* ET
 Q
 Q
 q
@@ -9133,7 +9133,7 @@ Q
 endstream
 endobj
 194 0 obj
-<< /Length 15130 >>
+<< /Length 15129 >>
 stream
 1 0 0 1 0 0 cm  BT /F1 12 Tf 14.4 TL ET
 q
@@ -9285,7 +9285,7 @@ Q
 q
 1 0 0 1 40.01575 546.6394 cm
 q
-BT 1 0 0 1 0 2 Tm 12 TL /F1 10 Tf 0 0 0 rg (Opcionales: ) Tj /F2 10 Tf (location) Tj /F1 10 Tf (, ) Tj /F2 10 Tf (interests) Tj /F1 10 Tf (, ) Tj /F2 10 Tf (edad) Tj /F1 10 Tf (, ) Tj /F2 10 Tf (alias) Tj /F1 10 Tf (, ) Tj /F2 10 Tf (sex) Tj /F1 10 Tf (, ) Tj /F2 10 Tf (distance) Tj /F1 10 Tf (, ) Tj /F2 10 Tf (name) Tj /F1 10 Tf (, ) Tj /F2 10 Tf (password) Tj /F1 10 Tf (, ) Tj /F2 10 Tf (ageRange) Tj T* ET
+BT 1 0 0 1 0 2 Tm 12 TL /F1 10 Tf 0 0 0 rg (Opcionales: ) Tj /F2 10 Tf (location) Tj /F1 10 Tf (, ) Tj /F2 10 Tf (interests) Tj /F1 10 Tf (, ) Tj /F2 10 Tf (age) Tj /F1 10 Tf (, ) Tj /F2 10 Tf (alias) Tj /F1 10 Tf (, ) Tj /F2 10 Tf (sex) Tj /F1 10 Tf (, ) Tj /F2 10 Tf (distance) Tj /F1 10 Tf (, ) Tj /F2 10 Tf (name) Tj /F1 10 Tf (, ) Tj /F2 10 Tf (password) Tj /F1 10 Tf (, ) Tj /F2 10 Tf (ageRange) Tj T* ET
 Q
 Q
 q
@@ -11221,7 +11221,7 @@ Q
 endstream
 endobj
 199 0 obj
-<< /Length 9167 >>
+<< /Length 9164 >>
 stream
 1 0 0 1 0 0 cm  BT /F1 12 Tf 14.4 TL ET
 q
@@ -11259,7 +11259,7 @@ q
 1 0 0 1 40.01575 660.6394 cm
 q
 0 0 0 rg
-BT 1 0 0 1 0 50 Tm /F1 10 Tf 12 TL 2.782594 Tw (errorNum - c\363digo de error \(0 indica success\) message - mensaje asociado al c\363digo de error metadata: -) Tj T* 0 Tw 1.274358 Tw (Informaci\363n de metadata sobre la respuesta 1. size - Cantidad de elementos devueltos en el payload payload: -) Tj T* 0 Tw .163182 Tw (Elementos pertinentes a devolver \(si no necesita devolver nada \351ste esta vacio\) 0. candidates: es un arrayJson que) Tj T* 0 Tw .409163 Tw (contiene varios usuarios candidatos con lo siguiente: 1. id 2. name 3. alias 4. email 5. photo_profile 6. interests \(en) Tj T* 0 Tw (com\372n\) 7. distance \(en km\) 8. sex \(M o F\) 9. edad) Tj T* ET
+BT 1 0 0 1 0 50 Tm /F1 10 Tf 12 TL 2.782594 Tw (errorNum - c\363digo de error \(0 indica success\) message - mensaje asociado al c\363digo de error metadata: -) Tj T* 0 Tw 1.274358 Tw (Informaci\363n de metadata sobre la respuesta 1. size - Cantidad de elementos devueltos en el payload payload: -) Tj T* 0 Tw .163182 Tw (Elementos pertinentes a devolver \(si no necesita devolver nada \351ste esta vacio\) 0. candidates: es un arrayJson que) Tj T* 0 Tw .409163 Tw (contiene varios usuarios candidatos con lo siguiente: 1. id 2. name 3. alias 4. email 5. photo_profile 6. interests \(en) Tj T* 0 Tw (com\372n\) 7. distance \(en km\) 8. sex \(M o F\) 9. age) Tj T* ET
 Q
 Q
 q
@@ -11352,13 +11352,13 @@ n 114 108.75 18 12 re f*
 .933333 1 .8 rg
 n 132 108.75 6 12 re f*
 .933333 1 .8 rg
-n 66 96.75 36 12 re f*
+n 66 96.75 30 12 re f*
 .933333 1 .8 rg
-n 102 96.75 6 12 re f*
+n 96 96.75 6 12 re f*
 .933333 1 .8 rg
-n 114 96.75 12 12 re f*
+n 108 96.75 12 12 re f*
 .933333 1 .8 rg
-n 126 96.75 6 12 re f*
+n 120 96.75 6 12 re f*
 .933333 1 .8 rg
 n 66 84.75 66 12 re f*
 .933333 1 .8 rg
@@ -11431,7 +11431,7 @@ n 138 24.75 24 12 re f*
 n 66 12.75 12 12 re f*
 .933333 1 .8 rg
 n 0 .75 6 12 re f*
-BT 1 0 0 1 0 206 Tm 12 TL /F5 10 Tf 0 0 0 rg ({) Tj 0 0 0 rg  T* (        ) Tj /F6 10 Tf 0 .439216 0 rg ("candidates") Tj /F5 10 Tf 0 0 0 rg (:[) Tj 0 0 0 rg  T* (           ) Tj 0 0 0 rg ({) Tj 0 0 0 rg  T* (           ) Tj /F6 10 Tf 0 .439216 0 rg ("id") Tj /F5 10 Tf 0 0 0 rg (:) Tj 0 0 0 rg ( ) Tj /F6 10 Tf 0 0 .815686 rg (1) Tj /F5 10 Tf 0 0 0 rg (,) Tj 0 0 0 rg  T* (           ) Tj /F6 10 Tf 0 .439216 0 rg ("name") Tj /F5 10 Tf 0 0 0 rg (:) Tj 0 0 0 rg ( ) Tj .729412 .129412 .129412 rg ("usuario") Tj 0 0 0 rg (,) Tj 0 0 0 rg  T* (           ) Tj /F6 10 Tf 0 .439216 0 rg ("alias") Tj /F5 10 Tf 0 0 0 rg (:) Tj 0 0 0 rg ( ) Tj .729412 .129412 .129412 rg ("not a user") Tj 0 0 0 rg (,) Tj 0 0 0 rg  T* (           ) Tj /F6 10 Tf 0 .439216 0 rg ("email") Tj /F5 10 Tf 0 0 0 rg (:) Tj 0 0 0 rg ( ) Tj .729412 .129412 .129412 rg ("usuario@usuario.com") Tj 0 0 0 rg (,) Tj 0 0 0 rg  T* (           ) Tj /F6 10 Tf 0 .439216 0 rg ("photo_profile") Tj /F5 10 Tf 0 0 0 rg (:) Tj 0 0 0 rg ( ) Tj .729412 .129412 .129412 rg (") Tj (<) Tj ( base_64 ) Tj (>) Tj (") Tj 0 0 0 rg (,) Tj 0 0 0 rg  T* (           ) Tj /F6 10 Tf 0 .439216 0 rg ("sex") Tj /F5 10 Tf 0 0 0 rg ( ) Tj 0 0 0 rg (:) Tj 0 0 0 rg ( ) Tj .729412 .129412 .129412 rg ("M") Tj 0 0 0 rg (,) Tj 0 0 0 rg  T* (           ) Tj /F6 10 Tf 0 .439216 0 rg ("edad") Tj /F5 10 Tf 0 0 0 rg (:) Tj 0 0 0 rg ( ) Tj /F6 10 Tf 0 0 .815686 rg (20) Tj /F5 10 Tf 0 0 0 rg (,) Tj 0 0 0 rg  T* (           ) Tj /F6 10 Tf 0 .439216 0 rg ("interests") Tj /F5 10 Tf 0 0 0 rg (:) Tj 0 0 0 rg ( ) Tj 0 0 0 rg ([) Tj 0 0 0 rg  T* (              ) Tj 0 0 0 rg ({) Tj /F6 10 Tf 0 .439216 0 rg ("category") Tj /F5 10 Tf 0 0 0 rg (:) Tj 0 0 0 rg ( ) Tj .729412 .129412 .129412 rg ("music/band") Tj 0 0 0 rg (,) Tj 0 0 0 rg ( ) Tj /F6 10 Tf 0 .439216 0 rg ("value") Tj /F5 10 Tf 0 0 0 rg (:) Tj 0 0 0 rg ( ) Tj .729412 .129412 .129412 rg ("michael jackson") Tj 0 0 0 rg (},) Tj 0 0 0 rg  T* (              ) Tj 0 0 0 rg ({) Tj /F6 10 Tf 0 .439216 0 rg ("category") Tj /F5 10 Tf 0 0 0 rg (:) Tj 0 0 0 rg ( ) Tj .729412 .129412 .129412 rg ("music/band") Tj 0 0 0 rg (,) Tj 0 0 0 rg ( ) Tj /F6 10 Tf 0 .439216 0 rg ("value") Tj /F5 10 Tf 0 0 0 rg (:) Tj 0 0 0 rg ( ) Tj .729412 .129412 .129412 rg ("pearl jam") Tj 0 0 0 rg (},) Tj 0 0 0 rg  T* (              ) Tj 0 0 0 rg ({) Tj /F6 10 Tf 0 .439216 0 rg ("category") Tj /F5 10 Tf 0 0 0 rg (:) Tj 0 0 0 rg ( ) Tj .729412 .129412 .129412 rg ("outdoors") Tj 0 0 0 rg (,) Tj 0 0 0 rg ( ) Tj /F6 10 Tf 0 .439216 0 rg ("value") Tj /F5 10 Tf 0 0 0 rg (:) Tj 0 0 0 rg ( ) Tj .729412 .129412 .129412 rg ("running") Tj 0 0 0 rg (}) Tj 0 0 0 rg  T* (           ) Tj 0 0 0 rg (],) Tj 0 0 0 rg  T* (           ) Tj /F6 10 Tf 0 .439216 0 rg ("distance") Tj /F5 10 Tf 0 0 0 rg (:) Tj 0 0 0 rg ( ) Tj /F6 10 Tf .376471 0 .878431 rg (10.0) Tj /F5 10 Tf 0 0 0 rg  T* (           ) Tj 0 0 0 rg (}]) Tj 0 0 0 rg  T* 0 0 0 rg (}) Tj T* ET
+BT 1 0 0 1 0 206 Tm 12 TL /F5 10 Tf 0 0 0 rg ({) Tj 0 0 0 rg  T* (        ) Tj /F6 10 Tf 0 .439216 0 rg ("candidates") Tj /F5 10 Tf 0 0 0 rg (:[) Tj 0 0 0 rg  T* (           ) Tj 0 0 0 rg ({) Tj 0 0 0 rg  T* (           ) Tj /F6 10 Tf 0 .439216 0 rg ("id") Tj /F5 10 Tf 0 0 0 rg (:) Tj 0 0 0 rg ( ) Tj /F6 10 Tf 0 0 .815686 rg (1) Tj /F5 10 Tf 0 0 0 rg (,) Tj 0 0 0 rg  T* (           ) Tj /F6 10 Tf 0 .439216 0 rg ("name") Tj /F5 10 Tf 0 0 0 rg (:) Tj 0 0 0 rg ( ) Tj .729412 .129412 .129412 rg ("usuario") Tj 0 0 0 rg (,) Tj 0 0 0 rg  T* (           ) Tj /F6 10 Tf 0 .439216 0 rg ("alias") Tj /F5 10 Tf 0 0 0 rg (:) Tj 0 0 0 rg ( ) Tj .729412 .129412 .129412 rg ("not a user") Tj 0 0 0 rg (,) Tj 0 0 0 rg  T* (           ) Tj /F6 10 Tf 0 .439216 0 rg ("email") Tj /F5 10 Tf 0 0 0 rg (:) Tj 0 0 0 rg ( ) Tj .729412 .129412 .129412 rg ("usuario@usuario.com") Tj 0 0 0 rg (,) Tj 0 0 0 rg  T* (           ) Tj /F6 10 Tf 0 .439216 0 rg ("photo_profile") Tj /F5 10 Tf 0 0 0 rg (:) Tj 0 0 0 rg ( ) Tj .729412 .129412 .129412 rg (") Tj (<) Tj ( base_64 ) Tj (>) Tj (") Tj 0 0 0 rg (,) Tj 0 0 0 rg  T* (           ) Tj /F6 10 Tf 0 .439216 0 rg ("sex") Tj /F5 10 Tf 0 0 0 rg ( ) Tj 0 0 0 rg (:) Tj 0 0 0 rg ( ) Tj .729412 .129412 .129412 rg ("M") Tj 0 0 0 rg (,) Tj 0 0 0 rg  T* (           ) Tj /F6 10 Tf 0 .439216 0 rg ("age") Tj /F5 10 Tf 0 0 0 rg (:) Tj 0 0 0 rg ( ) Tj /F6 10 Tf 0 0 .815686 rg (20) Tj /F5 10 Tf 0 0 0 rg (,) Tj 0 0 0 rg  T* (           ) Tj /F6 10 Tf 0 .439216 0 rg ("interests") Tj /F5 10 Tf 0 0 0 rg (:) Tj 0 0 0 rg ( ) Tj 0 0 0 rg ([) Tj 0 0 0 rg  T* (              ) Tj 0 0 0 rg ({) Tj /F6 10 Tf 0 .439216 0 rg ("category") Tj /F5 10 Tf 0 0 0 rg (:) Tj 0 0 0 rg ( ) Tj .729412 .129412 .129412 rg ("music/band") Tj 0 0 0 rg (,) Tj 0 0 0 rg ( ) Tj /F6 10 Tf 0 .439216 0 rg ("value") Tj /F5 10 Tf 0 0 0 rg (:) Tj 0 0 0 rg ( ) Tj .729412 .129412 .129412 rg ("michael jackson") Tj 0 0 0 rg (},) Tj 0 0 0 rg  T* (              ) Tj 0 0 0 rg ({) Tj /F6 10 Tf 0 .439216 0 rg ("category") Tj /F5 10 Tf 0 0 0 rg (:) Tj 0 0 0 rg ( ) Tj .729412 .129412 .129412 rg ("music/band") Tj 0 0 0 rg (,) Tj 0 0 0 rg ( ) Tj /F6 10 Tf 0 .439216 0 rg ("value") Tj /F5 10 Tf 0 0 0 rg (:) Tj 0 0 0 rg ( ) Tj .729412 .129412 .129412 rg ("pearl jam") Tj 0 0 0 rg (},) Tj 0 0 0 rg  T* (              ) Tj 0 0 0 rg ({) Tj /F6 10 Tf 0 .439216 0 rg ("category") Tj /F5 10 Tf 0 0 0 rg (:) Tj 0 0 0 rg ( ) Tj .729412 .129412 .129412 rg ("outdoors") Tj 0 0 0 rg (,) Tj 0 0 0 rg ( ) Tj /F6 10 Tf 0 .439216 0 rg ("value") Tj /F5 10 Tf 0 0 0 rg (:) Tj 0 0 0 rg ( ) Tj .729412 .129412 .129412 rg ("running") Tj 0 0 0 rg (}) Tj 0 0 0 rg  T* (           ) Tj 0 0 0 rg (],) Tj 0 0 0 rg  T* (           ) Tj /F6 10 Tf 0 .439216 0 rg ("distance") Tj /F5 10 Tf 0 0 0 rg (:) Tj 0 0 0 rg ( ) Tj /F6 10 Tf .376471 0 .878431 rg (10.0) Tj /F5 10 Tf 0 0 0 rg  T* (           ) Tj 0 0 0 rg (}]) Tj 0 0 0 rg  T* 0 0 0 rg (}) Tj T* ET
 Q
 Q
 Q
@@ -11786,32 +11786,32 @@ xref
 0000042650 00000 n
 0000046290 00000 n
 0000056228 00000 n
-0000069212 00000 n
-0000082166 00000 n
-0000097355 00000 n
-0000106296 00000 n
-0000114286 00000 n
-0000125568 00000 n
-0000135518 00000 n
-0000144743 00000 n
-0000144920 00000 n
-0000144958 00000 n
-0000144996 00000 n
-0000145034 00000 n
-0000145072 00000 n
-0000145110 00000 n
-0000145148 00000 n
-0000145186 00000 n
-0000145224 00000 n
-0000145262 00000 n
-0000145300 00000 n
-0000145338 00000 n
-0000145376 00000 n
+0000069211 00000 n
+0000082165 00000 n
+0000097353 00000 n
+0000106294 00000 n
+0000114284 00000 n
+0000125566 00000 n
+0000135516 00000 n
+0000144738 00000 n
+0000144915 00000 n
+0000144953 00000 n
+0000144991 00000 n
+0000145029 00000 n
+0000145067 00000 n
+0000145105 00000 n
+0000145143 00000 n
+0000145181 00000 n
+0000145219 00000 n
+0000145257 00000 n
+0000145295 00000 n
+0000145333 00000 n
+0000145371 00000 n
 trailer
 << /ID 
  % ReportLab generated PDF document -- digest (http://www.reportlab.com)
  [(-\270/\215\023\374\232\255\017j\310\301DYu\363) (-\270/\215\023\374\232\255\017j\310\301DYu\363)]
  /Info 130 0 R /Root 129 0 R /Size 214 >>
 startxref
-145414
+145409
 %%EOF

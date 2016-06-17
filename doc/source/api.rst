@@ -111,7 +111,7 @@ Parámetros
 ++++++++++
 **username**, **name**, **password**
 Opcionales:
-**location**, **interests**, **edad**, **alias**, **sex**, **distance**
+**location**, **interests**, **age**, **alias**, **sex**, **distance**
 
 *Ejemplo:*
 
@@ -205,7 +205,7 @@ Parámetros
 **username**: ID del usuario (mail del usuario) Requierido
 
 Opcionales:
-**location**, **interests**, **edad**, **alias**, **sex**, **distance**, **name**, **password**, **ageRange**
+**location**, **interests**, **age**, **alias**, **sex**, **distance**, **name**, **password**, **ageRange**
 
 Respuesta
 +++++++++
@@ -560,7 +560,7 @@ payload: - Elementos pertinentes a devolver (si no necesita devolver nada éste 
 6. interests (en común)
 7. distance (en km)
 8. sex (M o F)
-9. edad
+9. age
 
 Ejemplo de payload de la respuesta
 ++++++++++++++++++++++++++++++++++
@@ -575,7 +575,7 @@ Ejemplo de payload de la respuesta
 		   "email": "usuario@usuario.com",  
 		   "photo_profile": "< base_64 >",  
 		   "sex" : "M", 
-		   "edad": 20,
+		   "age": 20,
 		   "interests": [  
 		      {"category": "music/band", "value": "michael jackson"},  
 		      {"category": "music/band", "value": "pearl jam"},  
