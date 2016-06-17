@@ -2,23 +2,32 @@
 #include <gtest/gtest.h>
 #include "Server.h"
 #include "Resources/Logger.h"
+#include <csignal>
+
+
+Server* serv = NULL;
+
+void signalHandler( int signum )
+{
+	std::cout << "Signal (" << signum << ") received. Closing Server.." << std::endl;
+	if(serv) {
+		LoggerManager::getInstance()->log(LoggerManager::logInfo, "Server Closed");
+		delete serv;
+	}
+	exit(signum);
+}
 
 int main(int argc, char *argv[]){
 
 	LoggerManager::getInstance()->log(LoggerManager::logInfo, "Server Started");
-	Server* serv = new Server();
+	signal(SIGINT, signalHandler);
+	serv = new Server();
 	serv->init();
 	printf("Server iniciado \n");
 
 	for (;;) {
 		serv->update();
 	}
-	std::cout<<"End"<<std::endl;
 
 	return 0;
-
-//	std::cout<<"Estructura base del proyecto!"<<std::endl;
-//	::testing::InitGoogleTest(&argc, argv);
-//    return RUN_ALL_TESTS();
-
 }

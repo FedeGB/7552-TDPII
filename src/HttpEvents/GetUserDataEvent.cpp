@@ -34,6 +34,10 @@ void GetUserDataEvent::handle(Manager* manager, SharedManager* sManager) {
 	//bool validation = this->validateInput();
 	//if(validation) {
 	    User* user = manager->getUser(this->parameter);
+	    if(!user) {
+	    	this->response(0, "User does not exist.", (Json::Value)0);
+	    	return;
+	    }
 	    Json::Value sharedUserData = sManager->getUser(std::to_string(user->getId()));
 	    sharedUserData["username"] = user->getJson().get("username", "").asString();
 	    user->updateWithJson(sharedUserData); // Update de lo que viene de Shared

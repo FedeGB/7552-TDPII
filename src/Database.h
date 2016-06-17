@@ -9,6 +9,7 @@
 #define DATABASE_H_
 
 #include "rocksdb/db.h"
+#include "rocksdb/utilities/backupable_db.h"
 #include "rocksdb/slice.h"
 #include "rocksdb/options.h"
 #include "json/json.h"
@@ -64,6 +65,9 @@ private:
 	ColumnFamilyHandle* columnConversations;
 	ColumnFamilyHandle* columnMessages;
 	ColumnFamilyHandle* columnLikes;
+
+	void backUpDB();
+	void recoverBackUpDB();
 
 
 

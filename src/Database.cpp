@@ -11,7 +11,8 @@
 #include <string>
 #include <vector>
 
-std::string kDBPath = "rocksdbb";
+std::string kDBPath = "/tmp/rocksdb";
+std::string buDBPath = "rocksdb_backup";
 
 Database::Database() {
 
@@ -19,6 +20,7 @@ Database::Database() {
 	Options options;
 	options.create_if_missing = true;
 	Status s = DB::Open(options, kDBPath, &this->database);
+	// this->recoverBackUpDB();
 	if(s.ok()){
 		s = database->CreateColumnFamily(ColumnFamilyOptions(), "columnUsers", &this->columnUsers);
 		assert(s.ok());
@@ -47,7 +49,10 @@ Database::Database() {
 	std::vector<ColumnFamilyHandle*> handles;
 
 	s = DB::Open(options, kDBPath ,column_families,&handles,&this->database);
-	assert(s.ok());
+	// this->recoverBackUpDB();
+	if(!s.ok()) {
+
+	}
 
 	this->columnDefault = handles[0];
 	this->columnUsers = handles[1];
@@ -59,7 +64,6 @@ Database::Database() {
 
 	std::vector<Iterator*> iterators;
 	Status status = database->NewIterators(rocksdb::ReadOptions(), handles, &iterators);
-
 	// shows all the values of the database
 	for(int i = 0 ; i < iterators.size() ; i++){
 		rocksdb::Iterator* it =  iterators.at(i);
@@ -73,6 +77,7 @@ Database::Database() {
 }
 
 Database::~Database() {
+	// this->backUpDB();
 	Status s;
 	delete this->columnDefault;
 	s = database->DropColumnFamily(columnUsers);
@@ -88,6 +93,40 @@ Database::~Database() {
 	assert(s.ok());
 	delete this->columnLikes;
 	delete this->database; // TODO agregar las columns
+}
+
+void Database::backUpDB() {
+	BackupEngine* backup_engine;
+	Status s;
+	s = BackupEngine::Open(Env::Default(), BackupableDBOptions(buDBPath), &backup_engine);
+	if(!s.ok()) {
+		delete backup_engine;
+		return;
+	}
+	s = backup_engine->CreateNewBackup(this->database);
+	if(!s.ok()) {
+		delete backup_engine;
+		return;
+	}
+	std::vector<BackupInfo> backup_info;
+	backup_engine->GetBackupInfo(&backup_info);
+	// you can get IDs from backup_info if there are more than two
+	// s = backup_engine->VerifyBackup(1 /* ID */);
+	// assert(s.ok());
+	// s = backup_engine->VerifyBackup(2 /* ID */);
+	// assert(s.ok());
+	delete backup_engine;
+}
+
+void Database::recoverBackUpDB() {
+	BackupEngineReadOnly* backup_engine;
+	Status s = BackupEngineReadOnly::Open(Env::Default(), BackupableDBOptions(buDBPath), &backup_engine);
+	if(!s.ok()) {
+		delete backup_engine;
+		return;
+	}
+	backup_engine->RestoreDBFromLatestBackup(kDBPath, kDBPath);
+	delete backup_engine;
 }
 
 bool Database::put(string key, string value){
