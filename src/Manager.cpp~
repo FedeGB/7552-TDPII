@@ -78,6 +78,13 @@ bool Manager::saveLike(string json){
 }
 
 bool Manager::thereIsMatch(Like* like){
+	LikeFactory likeFactory;
+	Like* like = likeFactory.createWithJsonString(json);
+	Like* theOtherLike = this->getLike(like->getUser2()->getUsername()+like->getUser1()->getUsername());
+	return theOtherLike && theOtherLike->getLike();
+}
+
+bool Manager::thereIsMatch(string json){
 	Like* theOtherLike = this->getLike(like->getUser2()->getUsername()+like->getUser1()->getUsername());
 	if(theOtherLike && theOtherLike->getLike()){
 		User* user1 = this->db->getUser(like->getUser1()->getUsername());
@@ -89,13 +96,6 @@ bool Manager::thereIsMatch(Like* like){
 		return true;
 	}
 	return false;
-}
-
-bool Manager::thereIsMatch(string json){
-	LikeFactory likeFactory;
-	Like* like = likeFactory.createWithJsonString(json);
-	Like* theOtherLike = this->getLike(like->getUser2()->getUsername()+like->getUser1()->getUsername());
-	return theOtherLike && theOtherLike->getLike();
 }
 
 User* Manager::getUser(std::string user) {
