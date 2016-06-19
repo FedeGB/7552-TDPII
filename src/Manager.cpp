@@ -66,6 +66,9 @@ bool Manager::saveLike(string json){
 	LoggerManager::getInstance()->log(LoggerManager::logInfo, "Incoming json:" + json );
 	Like* like = likeFactory.createWithJsonString(json);
 	LoggerManager::getInstance()->log(LoggerManager::logDebug, "Like created" );
+	User* userLiked = like->getUser2();
+	userLiked->oneLikeUp();
+	this->updateUser(userLiked);
 	if(thereIsMatch(like)){
 		LoggerManager::getInstance()->log(LoggerManager::logInfo,
 		"Hubo match entre " + like->getUser1()->getUsername() + " y " + like->getUser2()->getUsername() );

@@ -49,6 +49,8 @@ private:
 	char *s_http_port;
 	EventHandlerFactory* eventFactory;
 
+	void statisticCalculations();
+
 };
 
 

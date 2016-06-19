@@ -74,3 +74,10 @@ void Server::setSharedManager(SharedManager* sm) {
 SharedManager* Server::getSharedManager() {
 	return this->sManager;
 }
+
+
+void Server::statisticCalculations() {
+	// TODO: Get all users and calculate
+	// the 1%, and set them with the corresponding bool
+	// set the ones not on the 1% with the bool in false
+}

@@ -22,6 +22,8 @@ User::User(string username) {
 	this->minAge = 18;
 	this->maxAge = 25;
 	this->lastCandiatesRequest = 0;
+	this->likesReceived = 0;
+	this->popularOnePercent = false;
 }
 
 
@@ -86,6 +88,32 @@ void User::resetCandidatesSend() {
 
 bool User::hasReachedMaxCandidatesSend() {
 	return (this->candidatesSend >= 20);
+}
+
+
+void User::oneLikeUp() {
+	this->likesReceived++;
+}
+
+bool User::returnAsCandidate() {
+	if(this->popularOnePercent) {
+		srand (time(NULL));
+		int random = rand() % 2; // 50 / 50
+		if(random == 0) {
+			return true;
+		} else {
+			return false;
+		}
+	}
+	return true;
+}
+
+void User::setIsPopular() {
+	this->popularOnePercent = true;
+}
+
+void User::setIsNotPopular() {
+	this->popularOnePercent = false;
 }
 
 // string User::getPerfilImage() {
@@ -153,6 +181,8 @@ Json::Value User::getJson() {
 	value["ageRange"] = range;
 	value["lastCandiatesRequest"] = (int)this->lastCandiatesRequest;
 	value["candidatesSend"] = this->candidatesSend;
+	value["popularOnePercent"] = this->popularOnePercent;
+	value["likesReceived"] = this->likesReceived;
 	// value["photoProfile"] = this->perfilImage;
 
 	Json::Value vec(Json::arrayValue);
@@ -184,6 +214,8 @@ void User::initWithJson(Json::Value value){
 	}
 	this->candidatesSend = value.get("candidatesSend", 0).asInt();
 	this->lastCandiatesRequest = (time_t)value.get("lastCandiatesRequest", 0).asInt();
+	this->popularOnePercent = value.get("popularOnePercent", false).asBool();
+	this->likesReceived = value.get("likesReceived", 0).asInt();
 }
 
 void User::updateWithJson(Json::Value value){
