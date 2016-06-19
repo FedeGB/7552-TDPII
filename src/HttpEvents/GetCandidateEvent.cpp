@@ -29,6 +29,16 @@ void GetCandidateEvent::handle(Manager* manager, SharedManager* sManager) {
 			this->response(1, "There was an error with the Server", (Json::Value)0);
 			return;
 		}
+		if(this->checkDailyLimit(myAppUser)) {
+			myAppUser->updateLastRequest();
+			manager->updateUser(myAppUser);
+			this->response(2, "Maximum candidates per day reached", Json::Value());
+			return;
+		}
+		if(myAppUser->hasReachedMaxCandidatesSend()) {
+			myAppUser->resetCandidatesSend();
+			manager->updateUser(myAppUser);
+		}
 		Json::Value myShareUser = sManager->getUser(std::to_string(myAppUser->getId()));
 		std::map<std::string,bool> interestMap;
 		while(it != sharedUsers.end() && act < max) {
@@ -50,7 +60,7 @@ void GetCandidateEvent::handle(Manager* manager, SharedManager* sManager) {
 		    	continue;
 		    }
 		    // Si no esta dentro de mi rango de edades definidas
-		    if(user.get("edad", 18).asInt() < myAppUser->getMinAge() || user.get("edad", 18).asInt() > myAppUser->getMaxAge()) {
+		    if(user.get("age", 18).asInt() < myAppUser->getMinAge() || user.get("age", 18).asInt() > myAppUser->getMaxAge()) {
 		    	it++;
 		    	continue;
 		    }
@@ -59,8 +69,6 @@ void GetCandidateEvent::handle(Manager* manager, SharedManager* sManager) {
 		    double otherLon = user.get("location", Json::Value()).get("longitude", 0).asDouble();
 		    double otherLat = user.get("location", Json::Value()).get("latitude", 0).asDouble();
 		    float distance = harvestineDistance(myLat, myLon, otherLat, otherLon);
-		    std::cout << myShareUser << std::endl;
-		    std::cout << user << std::endl;
 		    if(distance > myAppUser->getDistance()) { // Si el candidato esta lejos (para mi valor)
 		    	it++;
 		    	continue;
@@ -121,6 +129,9 @@ void GetCandidateEvent::handle(Manager* manager, SharedManager* sManager) {
 			interestMap.clear();
 			delete otherUser;
 		}
+		myAppUser->updateLastRequest();
+		myAppUser->updateCandidatesSend((int)returnCandidates["candidates"].size());
+		manager->updateUser(myAppUser);
 		delete myAppUser;
 		this->response(0, "", returnCandidates);
 	}
@@ -131,4 +142,12 @@ bool GetCandidateEvent::validateInput() {
     if(!parentValidation) return parentValidation;
     // Validar header y token para ver si es correcto el acceso!!!
     return true;
+}
+
+
+bool GetCandidateEvent::checkDailyLimit(User* user) {
+	if(user->requestWasToday() && user->hasReachedMaxCandidatesSend()) {
+		return true;
+	}
+	return false;
 }
