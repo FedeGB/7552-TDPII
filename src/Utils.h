@@ -8,10 +8,15 @@
 #include <string>
 #include <cmath>
 
+
 #define PI 3.14159265
 
-std::string base64_encode(unsigned char const* , unsigned int len);
-std::string base64_decode(std::string const& s);
+
+using namespace std;
+
+string base64_encode(unsigned char const* , unsigned int len);
+string base64_decode(string const& s);
+string getToken(string header);
 float harvestineDistance(double, double, double, double);
 
 #endif //TINDER_UTILS_H

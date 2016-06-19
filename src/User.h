@@ -78,6 +78,14 @@ public:
 	void setMatches(vector<string> vector);
 	void addMatch(string user);
 
+	void updateLastRequest();
+	bool requestWasToday();
+
+	void updateCandidatesSend(int);
+	bool hasReachedMaxCandidatesSend();
+	void resetCandidatesSend();
+
+
 
 private:
 	int id;
@@ -93,6 +101,8 @@ private:
 	// string perfilImage;
 	string token;
 	time_t lastTimeConnected;
+	time_t lastCandiatesRequest;
+	int candidatesSend;
 	vector<string> matches;
 
 };

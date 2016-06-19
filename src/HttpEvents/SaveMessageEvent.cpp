@@ -3,6 +3,7 @@
 //
 
 #include "SaveMessageEvent.h"
+#include "../Utils.h"
 
 SaveMessageEvent::SaveMessageEvent() {
 
@@ -22,12 +23,21 @@ bool SaveMessageEvent::validateInput() {
 
     bool parentValidation = EventHandler::validateInput();
     if(!parentValidation) return parentValidation;
+
+
     // Validar header y token para ver si es correcto el acceso!!!
     return true;
 }
 
 void SaveMessageEvent::handle(Manager* manager, SharedManager* sManager) {
-    if(this->validateInput()) {
+    Json::Reader r = Json::Reader();
+    Json::Value val = Json::Value();
+    r.parse(hm->body.p,val);
+    string userString = val.get("user1", "").asString();
+    User* user = manager->getUser(userString);
+    struct mg_str *cl_header = mg_get_http_header(hm, "Authorization");
+    std::string token(getToken(cl_header->p));
+    if(token.compare(user->getToken()) == 0){
         bool messageWasSaved = manager->saveMessage(hm->body.p);
         if(messageWasSaved) {
             this->response(0, "Message Saved", (Json::Value)0);

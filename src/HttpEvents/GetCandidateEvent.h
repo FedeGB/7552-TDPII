@@ -16,6 +16,7 @@ public:
 
 protected:
 	bool validateInput();
+	bool checkDailyLimit(User*);
 	string parameter;
 };
 

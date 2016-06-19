@@ -21,6 +21,7 @@ User::User(string username) {
 	this->distance = 10.0;
 	this->minAge = 18;
 	this->maxAge = 25;
+	this->lastCandiatesRequest = 0;
 }
 
 
@@ -50,6 +51,41 @@ void User::setPassword(string password) {
 }
 string User::getPassword() {
 	return this->password;
+}
+
+bool User::requestWasToday() {
+	char lastDate[10];
+	char todayDate[10];
+	struct tm * timeinfoLast;
+	struct tm * timeinfoToday;
+	time_t todayTime;
+	time (&todayTime);
+
+	timeinfoLast = localtime (&this->lastCandiatesRequest);
+	strftime (lastDate, 10, "%D", timeinfoLast);
+
+	timeinfoToday = localtime (&todayTime);
+	strftime (todayDate, 10, "%D", timeinfoToday);
+	if(strcmp(lastDate, todayDate) == 0) {
+		return true;
+	}
+	return false;
+}
+
+void User::updateLastRequest() {
+	time (&this->lastCandiatesRequest);
+}
+
+void User::updateCandidatesSend(int amount) {
+	this->candidatesSend += amount;
+}
+
+void User::resetCandidatesSend() {
+	this->candidatesSend = 0;
+}
+
+bool User::hasReachedMaxCandidatesSend() {
+	return (this->candidatesSend >= 20);
 }
 
 // string User::getPerfilImage() {
@@ -115,7 +151,8 @@ Json::Value User::getJson() {
 	range["min"] = this->minAge;
 	range["max"] = this->maxAge;
 	value["ageRange"] = range;
-
+	value["lastCandiatesRequest"] = (int)this->lastCandiatesRequest;
+	value["candidatesSend"] = this->candidatesSend;
 	// value["photoProfile"] = this->perfilImage;
 
 	Json::Value vec(Json::arrayValue);
@@ -145,6 +182,8 @@ void User::initWithJson(Json::Value value){
 		Json::Value actual = *it;
 		this->matches.push_back(actual.asString());
 	}
+	this->candidatesSend = value.get("candidatesSend", 0).asInt();
+	this->lastCandiatesRequest = (time_t)value.get("lastCandiatesRequest", 0).asInt();
 }
 
 void User::updateWithJson(Json::Value value){
