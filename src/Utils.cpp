@@ -16,7 +16,7 @@ static inline bool is_base64(unsigned char c) {
   return (isalnum(c) || (c == '+') || (c == '/'));
 }
 
-std::string base64_encode(unsigned char const* bytes_to_encode, unsigned int in_len) {
+string base64_encode(unsigned char const* bytes_to_encode, unsigned int in_len) {
   std::string ret;
   int i = 0;
   int j = 0;
@@ -59,7 +59,7 @@ std::string base64_encode(unsigned char const* bytes_to_encode, unsigned int in_
 
 }
 
-std::string base64_decode(std::string const& encoded_string) {
+string base64_decode(std::string const& encoded_string) {
   int in_len = encoded_string.size();
   int i = 0;
   int j = 0;
@@ -103,15 +103,22 @@ std::string base64_decode(std::string const& encoded_string) {
 }
 
 
-
 // Distancia entre dos posiciones
 // Post: Distancia en KM
 float harvestineDistance(double lat1, double lon1, double lat2, double lon2) {
   double R = 6371; // Radio de la tierra en KM
   double dlon = (lon2 - lon1) * PI / 180.0;
   double dlat = (lat2 - lat1) * PI / 180.0;
-  double a = pow((sin(dlat/2)), 2) + (cos(lat1 * PI / 180.0) * cos(lat2 * PI / 180.0) * pow((sin(dlon/2)), 2));
-  double c = 2 * atan2(sqrt(a), sqrt(1-a));
-  float d = (float)R * c;
+  double a = pow((sin(dlat / 2)), 2) + (cos(lat1 * PI / 180.0) * cos(lat2 * PI / 180.0) * pow((sin(dlon / 2)), 2));
+  double c = 2 * atan2(sqrt(a), sqrt(1 - a));
+  float d = (float) R * c;
   return d;
+
+}
+
+string getToken(string header){
+  string delimiter = "\r";
+  int position = header.find(delimiter);
+  string token = header.substr(0, position);
+  return token;
 }

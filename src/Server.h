@@ -35,10 +35,7 @@ public:
 	void setManager(Manager* mg);
 	Manager* getManager();
 	string readRequestHeader(mg_connection* conn, string header);
-
-
 	void setSharedManager(SharedManager*);
-
 	SharedManager* getSharedManager();
 
 private:
@@ -48,7 +45,6 @@ private:
 	struct mg_connection *nc;
 	char *s_http_port;
 	EventHandlerFactory* eventFactory;
-
 };
 
 
