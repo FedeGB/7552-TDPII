@@ -19,11 +19,7 @@ GetUserDataEvent::~GetUserDataEvent() {
 bool GetUserDataEvent::validateInput() {
 	bool parentValidation = EventHandler::validateInput();
 	if(!parentValidation) return parentValidation;
-	// TODO VALIDATE HEADER Y TOKEN
-	char username[100];
-    mg_get_http_var(&hm->query_string, "username", username, sizeof(username));
-    std::string userStr(username);
-    if(userStr.empty()) {
+    if(this->parameter.empty()) {
     	this->response(2, "Missing parameters", Json::Value());
     	return false;
     }
@@ -31,8 +27,8 @@ bool GetUserDataEvent::validateInput() {
 }
 
 void GetUserDataEvent::handle(Manager* manager, SharedManager* sManager) {
-	//bool validation = this->validateInput();
-	//if(validation) {
+	bool validation = this->validateInput();
+	if(validation) {
 	    User* user = manager->getUser(this->parameter);
 	    if(!user) {
 	    	this->response(0, "User does not exist.", Json::Value());
@@ -46,5 +42,5 @@ void GetUserDataEvent::handle(Manager* manager, SharedManager* sManager) {
 	    sharedUserData["ageRange"] = user->getJson().get("ageRange", Json::Value());
 	    this->response(0, "", sharedUserData); 
 	    delete user;
-	//}
+	}
 }
