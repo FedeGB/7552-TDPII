@@ -1,5 +1,4 @@
 #include "LoginUserEvent.h"
-#include "../Utils.h"
 
 
 
@@ -50,7 +49,7 @@ void LoginUserEvent::handle(Manager* manager, SharedManager* sManager) {
 			token.append(":");
 			token.append(userFound->getPassword());
 			const unsigned char *t = reinterpret_cast<const unsigned char *>( token.c_str());
-			User *userFound = manager->getUser(user);
+			//User *userFound = manager->getUser(user);
 			token = base64_encode(t, token.length());
 			userFound->setToken(token);
 			manager->updateUser(userFound);

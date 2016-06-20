@@ -29,6 +29,17 @@ void GetCandidateEvent::handle(Manager* manager, SharedManager* sManager) {
 			this->response(1, "There was an error with the Server", Json::Value());
 			return;
 		}
+
+		struct mg_str *cl_header = mg_get_http_header(hm, "Token");
+		if(!cl_header) {
+			this->response(1, "Token missing", (Json::Value)0);
+			return;
+		}
+		std::string token(getHeaderParam(cl_header->p));
+		if(token.compare(myAppUser->getToken()) != 0) {
+			this->response(1, "Invalid Token", (Json::Value) 0);
+		}
+
 		if(this->checkDailyLimit(myAppUser)) {
 			myAppUser->updateLastRequest();
 			manager->updateUser(myAppUser);
@@ -148,6 +159,7 @@ void GetCandidateEvent::handle(Manager* manager, SharedManager* sManager) {
 bool GetCandidateEvent::validateInput() {
     bool parentValidation = EventHandler::validateInput();
     if(!parentValidation) return parentValidation;
+
     // Validar header y token para ver si es correcto el acceso!!!
     return true;
 }

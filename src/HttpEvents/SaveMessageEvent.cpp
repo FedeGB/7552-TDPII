@@ -36,7 +36,7 @@ void SaveMessageEvent::handle(Manager* manager, SharedManager* sManager) {
     User* user = manager->getUser(userString);
     struct mg_str *cl_header = mg_get_http_header(hm, "Token");
     if(!cl_header) {
-        this->response(1, "Invalid Token", Json::Value());
+        this->response(1, "Token Missing ", Json::Value());
         return;
     }
     std::string token(getHeaderParam(cl_header->p));
@@ -50,4 +50,5 @@ void SaveMessageEvent::handle(Manager* manager, SharedManager* sManager) {
     } else {
         this->response(2, "Invalid Token", Json::Value());
     }
+
 }

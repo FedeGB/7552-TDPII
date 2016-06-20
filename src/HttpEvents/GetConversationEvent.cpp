@@ -50,22 +50,30 @@ void GetConversationEvent::handle(Manager* manager, SharedManager* sManager) {
 	    std::string user2Str = getHeaderParam(u2_header->p);
 	    std::string token(getHeaderParam(cl_header->p));
 	    User* user1 = manager->getUser(user1Str);
-	    if(token.compare(user1->getToken()) == 0) {
-		    Conversation* conver = manager->getConversation(user1Str, user2Str);
-			vector<Message*> messages = manager->getMessages(user1Str, user2Str);
-			Json::Value event;
-			Json::Value vec(Json::arrayValue);
-			for (int i = 0 ; i < messages.size() ; i++){
-				vec.append(messages.at(i)->getJson());
-				delete messages.at(i);
-			}
-			delete conver;
-			event["messages"] = vec;
-			// std::cout << event << std::endl;
 
-		    this->response(0, "", event);
-		} else {
-			this->response(2, "Invalid Token", Json::Value());
+		User* userFound = manager->getUser(user1Str);
+		if(!cl_header) {
+			this->response(1, "Token missing", (Json::Value)0);
+			return;
 		}
+
+		if(token.compare(userFound->getToken()) != 0){
+			this->response(1, "Invalid Token", (Json::Value)0);
+			return;
+		}
+
+		Conversation* conver = manager->getConversation(user1Str, user2Str);
+		vector<Message*> messages = manager->getMessages(user1Str, user2Str);
+		Json::Value event;
+		Json::Value vec(Json::arrayValue);
+		for (int i = 0 ; i < messages.size() ; i++){
+			vec.append(messages.at(i)->getJson());
+			delete messages.at(i);
+		}
+		delete conver;
+		event["messages"] = vec;
+		// std::cout << event << std::endl;
+		this->response(0, "", event);
+
 	}
 }

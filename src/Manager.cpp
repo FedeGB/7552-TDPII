@@ -73,6 +73,7 @@ bool Manager::saveLike(string json){
 	Like* like = likeFactory.createWithJsonString(json);
 	LoggerManager::getInstance()->log(LoggerManager::logDebug, "Like created" );
 	User* userLiked = like->getUser2();
+	if(!userLiked) return false;
 	userLiked = this->getUser(userLiked->getUsername());
 	userLiked->oneLikeUp();
 	this->updateUser(userLiked);
