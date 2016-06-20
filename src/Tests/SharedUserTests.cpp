@@ -84,7 +84,7 @@ TEST(SharedUserTests, TestPostPutDeleteUser) {
 	userJson["sex"] = "M";
 	userJson["age"] = 18;
 	long id = sManager->postUser(userJson);
-	delete[] username;
+	// delete[] username;
 	delete[] name;
 	delete[] email;
 	delete user;
