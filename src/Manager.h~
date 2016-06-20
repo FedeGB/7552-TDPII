@@ -33,7 +33,6 @@ public:
 	bool saveMessage(string json);
 	bool saveLike(string json);
 	bool thereIsMatch(Like* like);
-	bool thereIsMatch(string json);
 	Like* getLike(string user);
 	vector<string> getMatches(string user);
 	bool deleteUser(string username);
