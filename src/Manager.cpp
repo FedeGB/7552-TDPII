@@ -41,6 +41,12 @@ bool Manager::deleteUser(string username){
 	return this->db->deleteUser(userToDelete);
 }
 
+bool Manager::deleteConversation(std::string user1, std::string user2) {
+	Conversation* conv = this->getConversation(user1, user2);
+	if(!conv) return false;
+	return this->db->deleteConversation(conv);
+}
+
 bool Manager::updateUser(User* user) {
 	return this->getDatabase()->updateUser(user);
 }
@@ -54,7 +60,7 @@ bool Manager::saveMessage(string json){
 
 	int messageID = conv->getNumberMessages();
 	message->setId(to_string(messageID));
-	conv->addOneMessage();
+	conv->addOneMessage(messageID);
 	this->db->saveConversation(conv);
 	LoggerManager::getInstance()->log(LoggerManager::logInfo, "New Message created");
 	return this->db->saveMessage(message);
@@ -79,6 +85,12 @@ bool Manager::saveLike(string json){
 		user2->addMatch(user1->getUsername());
 	}
 	return 	this->db->saveLike(like);
+}
+
+bool Manager::deleteLike(std::string user1, std::string user2) {
+	Like* likeToDelete = this->getLike(user1 + user2);
+	if(!likeToDelete) return false;
+	return this->db->deleteLike(likeToDelete);
 }
 
 bool Manager::thereIsMatch(Like* like){

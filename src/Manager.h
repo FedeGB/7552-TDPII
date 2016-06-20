@@ -29,12 +29,14 @@ public:
 	bool createUser(string json);
 	User* getUser(std::string);
 	Conversation* getConversation(std::string, std::string);
+	bool deleteConversation(std::string, std::string);
 	vector<Message*> getMessages(string user1, string user2);
 	bool saveMessage(string json);
 	bool saveLike(string json);
 	bool thereIsMatch(Like* like);
 	bool thereIsMatch(string json);
 	Like* getLike(string user);
+	bool deleteLike(std::string, std::string);
 	vector<string> getMatches(string user);
 	bool deleteUser(string username);
 	vector<Json::Value> getAllUsers();
