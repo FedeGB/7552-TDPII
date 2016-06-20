@@ -11,8 +11,8 @@
 #include <string>
 #include <vector>
 
-std::string kDBPath = "/tmp/rocksdb";
-std::string buDBPath = "rocksdb_backup";
+std::string kDBPath = "/tmp/rocksdb1";
+std::string buDBPath = "rocksdb_backup1";
 
 Database::Database() {
 
@@ -80,17 +80,17 @@ Database::~Database() {
 	// this->backUpDB();
 	Status s;
 	delete this->columnDefault;
-	s = database->DropColumnFamily(columnUsers);
-	  assert(s.ok());
+	//s = database->DropColumnFamily(columnUsers);
+	//  assert(s.ok());
 	delete this->columnUsers;
-	s = database->DropColumnFamily(columnMessages);
-	  assert(s.ok());
+	//s = database->DropColumnFamily(columnMessages);
+	//  assert(s.ok());
 	delete this->columnMessages;
-	s = database->DropColumnFamily(columnConversations);
-	  assert(s.ok());
+	//s = database->DropColumnFamily(columnConversations);
+	//  assert(s.ok());
 	delete this->columnConversations;
-	s = database->DropColumnFamily(columnLikes);
-	assert(s.ok());
+	//s = database->DropColumnFamily(columnLikes);
+	//assert(s.ok());
 	delete this->columnLikes;
 	delete this->database; // TODO agregar las columns
 }

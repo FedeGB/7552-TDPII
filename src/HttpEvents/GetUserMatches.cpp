@@ -46,12 +46,11 @@ void GetUserMatches::handle(Manager* manager, SharedManager* sManager) {
         User* userFound = manager->getUser(userString);
         Json::Value event;
         Json::Value vec = Json::Value(Json::arrayValue);
-
         if(userFound){
-            struct mg_str *cl_header = mg_get_http_header(hm, "Authorization");
+            struct mg_str *cl_header = mg_get_http_header(hm, "Token");
             //mg_get_http_var(cl_header, "ApiToken", base, sizeof(base));
             if(!cl_header) {
-                this->response(1, "Invalid Auth", (Json::Value)0);
+                this->response(1, "Token missing", (Json::Value)0);
                 return;
             }
             std::string token(getToken(cl_header->p));
@@ -62,6 +61,9 @@ void GetUserMatches::handle(Manager* manager, SharedManager* sManager) {
                 }
                 event["matches"] = vec;
                 std::cout << event << std::endl;
+            }else{
+                this->response(1, "Invalid Token", (Json::Value)0);
+                return;
             }
 
         }

@@ -3,7 +3,7 @@
 
 
 
-string getParameter2(string url){
+string getTokenFromURL(string url){
 	url = url.substr(1, url.length());
 	int positionSpace = url.find(" ");
 	string substring = url.substr(positionSpace+1, url.length());
@@ -34,12 +34,11 @@ void LoginUserEvent::handle(Manager* manager, SharedManager* sManager) {
 	char base[100];
 	struct mg_str *cl_header = mg_get_http_header(hm, "Authorization");
 	mg_get_http_var(cl_header, "Basic", base, sizeof(base));
-	string output = getParameter2(cl_header->p);
+	string output = getTokenFromURL(cl_header->p);
 	string decoded = base64_decode(output);
 	int separator = decoded.find(":");
 	string user = decoded.substr(0, separator);
 	string passStr = decoded.substr(separator+1, decoded.length());
-
 	User* userFound = manager->getUser(user);
 	Json::Value jsonValue = Json::Value();
 	string token = "";
@@ -51,7 +50,6 @@ void LoginUserEvent::handle(Manager* manager, SharedManager* sManager) {
 			token.append(":");
 			token.append(userFound->getPassword());
 			const unsigned char *t = reinterpret_cast<const unsigned char *>( token.c_str());
-
 			User *userFound = manager->getUser(user);
 			token = base64_encode(t, token.length());
 			userFound->setToken(token);
@@ -61,7 +59,6 @@ void LoginUserEvent::handle(Manager* manager, SharedManager* sManager) {
 			jsonValue["result"] = "Invalid password";
 		}
 	}
-	Json::Value param = Json::Value();
 	jsonValue["token"] = token;
 	if(!token.empty()) {
 		this->response(0, "Success", jsonValue);
