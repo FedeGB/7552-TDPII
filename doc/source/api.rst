@@ -14,7 +14,7 @@ El correcto acceso de login (con un usuario y contraseña validos) devuelve un t
 
 Parametros
 ++++++++++
-Por header via Basic Auth:
+**Por header** via Basic Auth:
 *Ejemplo*
 "Authorization" : "Basic base64_encode(username:password)"
 
@@ -155,7 +155,7 @@ Ejemplo de la respuesta:
 	    "size": 0
 	  },
 	  "payload": {
-	  
+
 	  }
 	}
 
@@ -319,6 +319,10 @@ Parámetros
 ++++++++++
 **username**: ID del usuario (mail del usuario)
 
+**Por header**
+Token : <token>
+*El token que se usa es el devuelto en el login*
+
 Respuesta
 +++++++++
 - errorNum: código de error (0 indica success)
@@ -459,6 +463,10 @@ user1 - ID del usuario (username)
 user2 - ID del usuario (username)
 data - mensaje a enviar
 
+**Por header**
+Token : <token>
+*El token que se usa es el devuelto en el login*
+
 **Ejemplo de body request**
 
 .. code-block:: json
@@ -504,11 +512,17 @@ Devuelve la conversación entre dos usuarios
 
 Parámetros
 ++++++++++
-user1 - ID del usuario host (username)
-user2 - ID del usuario guest (username)
+
+**Por header**
+Token : <token>
+*El token que se usa es el devuelto en el login*
+user1 : username1
+user2 : username2
+
+*user1 seria el emisor (yo), user2 el receptor*
 
 Respuesta
-
++++++++++
 errorNum - código de error (0 indica success)
 message - mensaje asociado al código de error
 metadata: - Información de metadata sobre la respuesta
