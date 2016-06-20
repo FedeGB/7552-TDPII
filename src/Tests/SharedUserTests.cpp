@@ -86,13 +86,13 @@ TEST(SharedUserTests, TestPostPutDeleteUser) {
 	userJson["sex"] = "M";
 	userJson["age"] = 18;
 	long id = sManager->postUser(userJson);
+	ASSERT_TRUE(id != 0);
 	delete[] username;
 	delete[] name;
 	delete[] email;
 	delete user;
 	username = name = email = NULL;
 	user = NULL;
-	ASSERT_TRUE(id != 0);
 	userJson["sex"] = "F";
 	userJson["id"] = std::to_string((int)id);
 	int putU = sManager->putUser(userJson);
