@@ -46,16 +46,24 @@ void GetCandidateEvent::handle(Manager* manager, SharedManager* sManager) {
 		    Json::Value modifiUser = user;
 		    User* otherUser = manager->getUser(user.get("email", "").asString());
 		    if(!otherUser) { // Usuario de shared no esta en este server
+		    	delete otherUser;
 		    	it++;
 		    	continue;
 		    }
 		    if(otherUser->getUsername().compare(myAppUser->getUsername()) == 0) { // Si soy yo
+		    	delete otherUser;
 		    	it++;
 		    	continue;	
 		    }
 		    Like* wasSeen = manager->getLike(myAppUser->getUsername() + otherUser->getUsername());
 		    if(wasSeen != NULL) { // Si ya le di like/dislike no lo paso
 		    	delete wasSeen;
+		    	delete otherUser;
+		    	it++;
+		    	continue;
+		    }
+		    if(!otherUser->returnAsCandidate()) { // Si es popular (1%) y salio sorteado (?) no se pasa como candidato
+		    	delete otherUser;
 		    	it++;
 		    	continue;
 		    }

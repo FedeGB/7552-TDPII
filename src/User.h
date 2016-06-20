@@ -15,6 +15,7 @@
 #include <stdlib.h>
 #include <iostream>
 #include <string>
+#include "Resources/Logger.h"
 
 using namespace std;
 using namespace Json;

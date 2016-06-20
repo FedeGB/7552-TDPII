@@ -103,6 +103,7 @@ bool User::returnAsCandidate() {
 	if(this->popularOnePercent) {
 		srand (time(NULL));
 		int random = rand() % 2; // 50 / 50
+		LoggerManager::getInstance()->log(LoggerManager::logDebug, this->username + ". Random: " + std::to_string(random));
 		if(random == 0) {
 			return true;
 		} else {

@@ -18,11 +18,13 @@
 #include <stdio.h>
 #include <string.h>
 #include <iostream>
+#include <algorithm>
+#include <thread>
+#include <unistd.h>
 
 class Manager;
 
 using namespace std;
-
 
 class Server {
 public:
@@ -35,6 +37,7 @@ public:
 	void setManager(Manager* mg);
 	Manager* getManager();
 	string readRequestHeader(mg_connection* conn, string header);
+	void statisticCalculations();
 
 
 	void setSharedManager(SharedManager*);
@@ -48,8 +51,9 @@ private:
 	struct mg_connection *nc;
 	char *s_http_port;
 	EventHandlerFactory* eventFactory;
-
-	void statisticCalculations();
+	std::thread statistics;
+	time_t lastStatisticRun;
+	bool running;
 
 };
 
@@ -58,4 +62,7 @@ static void ev_handler(struct mg_connection* nc, int ev, void* ev_data){
 	Server* server = (Server*) nc->mgr->user_data;
 	server->handleEvent(nc, ev, ev_data);
 }
+
+bool orderByLikesDesc(Json::Value, Json::Value);
+
 #endif /* SERVER_H_ */
