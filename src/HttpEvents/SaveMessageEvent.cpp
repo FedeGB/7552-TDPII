@@ -40,9 +40,9 @@ void SaveMessageEvent::handle(Manager* manager, SharedManager* sManager) {
     if(token.compare(user->getToken()) == 0){
         bool messageWasSaved = manager->saveMessage(hm->body.p);
         if(messageWasSaved) {
-            this->response(0, "Message Saved", (Json::Value)0);
+            this->response(0, "Message Saved", Json::Value());
         } else {
-            this->response(1, "Couldn't save", (Json::Value)0);
+            this->response(1, "Couldn't save", Json::Value());
         }
     }
 }

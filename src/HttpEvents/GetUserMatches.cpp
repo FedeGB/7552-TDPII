@@ -50,7 +50,7 @@ void GetUserMatches::handle(Manager* manager, SharedManager* sManager) {
             struct mg_str *cl_header = mg_get_http_header(hm, "Token");
             //mg_get_http_var(cl_header, "ApiToken", base, sizeof(base));
             if(!cl_header) {
-                this->response(1, "Token missing", (Json::Value)0);
+                this->response(1, "Token missing", Json::Value());
                 return;
             }
             std::string token(getToken(cl_header->p));
@@ -62,7 +62,7 @@ void GetUserMatches::handle(Manager* manager, SharedManager* sManager) {
                 event["matches"] = vec;
                 std::cout << event << std::endl;
             }else{
-                this->response(1, "Invalid Token", (Json::Value)0);
+                this->response(1, "Invalid Token", Json::Value());
                 return;
             }
 

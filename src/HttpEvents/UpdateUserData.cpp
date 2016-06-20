@@ -28,7 +28,7 @@ bool UpdateUserData::validateInput() {
     mg_get_http_var(&hm->query_string, "username", username, sizeof(username));
     std::string userStr(username);
     if(userStr.empty()) {
-        this->response(2, "Missing parameters", (Json::Value)0);
+        this->response(2, "Missing parameters", Json::Value());
         return false;
     }
     return true;
@@ -43,7 +43,7 @@ void UpdateUserData::handle(Manager* manager, SharedManager* sManager) {
     // Local user update
     User* user = manager->getUser(value.get("username","").asString());
     if(!user) {
-        this->response(1, "User could not be modified", (Json::Value)0);
+        this->response(1, "User could not be modified", Json::Value());
         return;
     }
     user->updateWithJson(value);
@@ -60,7 +60,7 @@ void UpdateUserData::handle(Manager* manager, SharedManager* sManager) {
             value.removeMember(key);
             int photoUp = sManager->putUserPhoto(uploadP);
             if(!photoUp) {
-                this->response(1, "User photo profile could not be uploaded", (Json::Value)0);
+                this->response(1, "User photo profile could not be uploaded", Json::Value());
                 return;
             }
         }
@@ -81,10 +81,10 @@ void UpdateUserData::handle(Manager* manager, SharedManager* sManager) {
         if(sharedUpdate) {
             this->response(0, "Modified", user->getJson());
         } else {
-            this->response(1, "User could not be modified", (Json::Value)0);
+            this->response(1, "User could not be modified", Json::Value());
         }
     } else {
-        this->response(1, "User could not be modified", (Json::Value)0);
+        this->response(1, "User could not be modified", Json::Value());
     }
     delete user;
 }

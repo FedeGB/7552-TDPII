@@ -90,14 +90,27 @@ Ejemplo de la respuesta:
 	  "payload": {
 	    "Users": [
 	      {
-	        "latitude": 0,
-	        "longitude": 0,
+	      	"location": {
+		        "latitude": 0,
+		        "longitude": 0
+		    },
 	        "matches": [],
 	        "name": "juan",
 	        "password": "hola",
 	        "perfilImage": "",
 	        "token": "juanmahola",
-	        "username": "juanma"
+	        "username": "juanma@mail.com",
+	        "email": "juanma@mail.com",
+	        "ageRange": {
+	        	"min":18,
+	        	"max":25
+	        },
+	        "distance":10,
+	        "likesReceived":2,
+	        "id":50,
+	        "lastCandidatesRequest":1446254616
+	        "candidatesSend":13,
+	        "popularOnePercent":false
 	      }
 	    ]
 	  }
@@ -141,7 +154,9 @@ Ejemplo de la respuesta:
 	  "metadata": {
 	    "size": 0
 	  },
-	  "payload": 0
+	  "payload": {
+	  
+	  }
 	}
 
 GET SPECIFIC
@@ -293,7 +308,7 @@ Respuesta
 
 User Matches
 ============
-**URI del recurso** /users/getMatches
+**URI del recurso** /users/username/matches
 
 GET
 ---
@@ -315,6 +330,7 @@ Respuesta
 
 Ejemplo del payload en la respuesta
 +++++++++++++++++++++++++++++++++++
+
 .. code-block:: json
 
 	{
@@ -362,6 +378,7 @@ payload: - Elementos pertinentes a devolver (si no necesita devolver nada éste 
 
 Ejemplo de respuesta
 ++++++++++++++++++++
+
 .. code-block:: json
 
 	{
@@ -370,7 +387,9 @@ Ejemplo de respuesta
 	  "metadata": {
 	    "size": 0
 	  },
-	  "payload": 0
+	  "payload": {
+	  	"match":false
+	  }
 	}
 
 Messages
@@ -469,7 +488,9 @@ Ejemplo de response:
 	  "metadata": {
 	    "size": 0
 	  },
-	  "payload": 0
+	  "payload": {
+
+	  }
 	}
 
 Conversations

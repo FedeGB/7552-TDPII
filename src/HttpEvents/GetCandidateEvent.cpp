@@ -26,7 +26,7 @@ void GetCandidateEvent::handle(Manager* manager, SharedManager* sManager) {
 		returnCandidates["candidates"] = candidates;
 		User* myAppUser = manager->getUser(this->parameter);
 		if(!myAppUser) {
-			this->response(1, "There was an error with the Server", (Json::Value)0);
+			this->response(1, "There was an error with the Server", Json::Value());
 			return;
 		}
 		if(this->checkDailyLimit(myAppUser)) {

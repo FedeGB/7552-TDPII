@@ -24,7 +24,7 @@ bool GetConversationEvent::validateInput() {
     std::string user1Str(user1);
     std::string user2Str(user2);
     if(user1Str.empty() || user2Str.empty()) {
-    	this->response(2, "Missing parameters", (Json::Value)0);
+    	this->response(2, "Missing parameters", Json::Value());
     	return false;
     }
 	return true;
