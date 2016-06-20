@@ -71,15 +71,5 @@ void LoginUserEvent::handle(Manager* manager, SharedManager* sManager) {
 bool LoginUserEvent::validateInput() {
 	bool parentValidation = EventHandler::validateInput();
 	if(!parentValidation) return parentValidation;
-	// TODO VALIDATE HEADER
-	// char user[100], password[100];
-	// mg_get_http_var(&hm->query_string, "user", user, sizeof(user));
-	// mg_get_http_var(&hm->query_string, "password", password, sizeof(password));
-	// std::string userStr(user);
-	// std::string passStr(password);
-	// if(userStr.empty() || passStr.empty()) {
-	// 	this->response(2, "Missing parameters", (Json::Value)0);
-	// 	return false;
-	// }
 	return true;
 }

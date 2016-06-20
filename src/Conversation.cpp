@@ -31,9 +31,8 @@ Conversation::Conversation(Json::Value value) {
 	this->id = value.get("id","").asInt();
 	Json::Value vec = value.get("messagesId", Json::Value(arrayValue));
 	Json::ValueConstIterator messageIt = vec.begin();
-	int i = 0;
 	while(messageIt != vec.end()) {
-		this->messagesId.push_back((*messageIt).get(i, 0).asInt());
+		this->messagesId.push_back((*messageIt).asInt());
 		messageIt++;
 	}
 }

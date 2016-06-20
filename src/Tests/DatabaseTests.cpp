@@ -201,4 +201,5 @@ TEST(DatabaseTests,TestSaveTwoMessages){
 	delete database;
 	delete conv;
 	delete message;
+	delete messageTwo;
 }

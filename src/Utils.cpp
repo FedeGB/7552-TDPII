@@ -116,7 +116,7 @@ float harvestineDistance(double lat1, double lon1, double lat2, double lon2) {
 
 }
 
-string getToken(string header){
+string getHeaderParam(string header){
   string delimiter = "\r";
   int position = header.find(delimiter);
   string token = header.substr(0, position);

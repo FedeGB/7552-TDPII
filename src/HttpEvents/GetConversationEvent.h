@@ -3,6 +3,7 @@
 
 #include "EventHandler.h"
 
+
 class GetConversationEvent: public EventHandler {
 public:
 	GetConversationEvent();
