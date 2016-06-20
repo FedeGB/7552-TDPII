@@ -95,6 +95,10 @@ void User::oneLikeUp() {
 	this->likesReceived++;
 }
 
+int User::getLikesReceived() {
+	return this->likesReceived;
+}
+
 bool User::returnAsCandidate() {
 	if(this->popularOnePercent) {
 		srand (time(NULL));

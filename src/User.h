@@ -86,6 +86,7 @@ public:
 	void resetCandidatesSend();
 
 	void oneLikeUp();
+	int getLikesReceived();
 	bool returnAsCandidate();
 
 	void setIsPopular();

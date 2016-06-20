@@ -77,7 +77,15 @@ SharedManager* Server::getSharedManager() {
 
 
 void Server::statisticCalculations() {
-	// TODO: Get all users and calculate
-	// the 1%, and set them with the corresponding bool
-	// set the ones not on the 1% with the bool in false
+	vector<Json::Value> users = this->manager->getAllUsers();
+	int total = users.size();
+	User* actualUser = NULL;
+	int onePercent = total/100;
+	if(!onePercent) onePercent = 1;
+	int i = 0;
+	// while(i < total) {
+	// 	actualUser = users.at(i);
+	// 	int actualLikes = actualUser->getLikesReceived();
+	// 	i++;
+	// }
 }
