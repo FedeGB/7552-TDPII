@@ -14,7 +14,7 @@ link_directories("${PROJECT_SOURCE_DIR}/lib")
 enable_testing()
 find_package(GTest REQUIRED)
 
-set(TEST_LINK_LIBS libjsoncpp.a z pthread rt)
+set(TEST_LINK_LIBS z pthread rt)
 
 #file( GLOB FILES src/Like.cpp src/Resources/* src/Conversation.cpp src/Database.cpp src/Manager.cpp src/Message.cpp src/Server.cpp src/User.cpp src/mongoose.c src/Factories/* src/HttpEvents/*)
 file( GLOB FILES src/* src/*/*)
@@ -45,6 +45,15 @@ if(CHECK_COVERAGE)
 endif()
 
 find_package(CURL)
+find_package(Jsoncpp)
+
+if(JSONCPP_FOUND)
+	message("Encontrado jsoncpp")
+	target_link_libraries(tests ${JSONCPP_LIBRARIES})
+	target_link_libraries(main ${JSONCPP_LIBRARIES})
+else()
+	message(FATAL_ERROR "No se encuentra jsoncpp")
+endif()
 
 if(CURL_FOUND)
 	target_link_libraries(tests ${CURL_LIBRARIES})
