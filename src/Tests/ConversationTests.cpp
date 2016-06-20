@@ -18,12 +18,15 @@ TEST(ConversationTests,TestNewConversation){
 	ASSERT_EQ(user1, conv->getUser1());
 	conv->setUser2(user2);
 	ASSERT_EQ(user2, conv->getUser2());
-	conv->addOneMessage();
+	Message* msg = new Message(user1, user2, "HOLA");
+	msg->setId("1");
+	conv->addOneMessage(std::stoi(std::string(msg->getId())));
 	ASSERT_EQ(1, conv->getNumberMessages());
 	conv->setNumberMessages(2);
 	ASSERT_EQ(2, conv->getNumberMessages());
 	delete user1;
 	delete user2;
+	delete msg;
 	delete conv;
 
 }

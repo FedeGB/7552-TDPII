@@ -78,11 +78,11 @@ void CreateUserEvent::handle(Manager* manager, SharedManager* sManager) {
 				this->response(0, "Registered", (Json::Value)0);
 			} else {
 				manager->deleteUser(val.get("username", "").asString());
-				this->response(1, "Already Registered", (Json::Value)0);	
+				this->response(1, "Already Registered", Json::Value());	
 			}
 			delete user;
 		} else {
-			this->response(1, "Already Registered", (Json::Value)0);
+			this->response(1, "Already Registered", Json::Value());
 		}
 	}
 }

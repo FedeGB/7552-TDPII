@@ -36,7 +36,10 @@ Database::Database() {
 		delete this->columnMessages;
 		delete this->columnLikes;
 		delete this->database;
-	}
+	}/* else {
+		LoggerManager::getInstance()->log(LoggerManager::logError, " Database Error ");
+		return;
+	}*/
 	// open DB with 4 column families
 	std::vector<ColumnFamilyDescriptor> column_families;
 	// have to open default column family
@@ -51,7 +54,8 @@ Database::Database() {
 	s = DB::Open(options, kDBPath ,column_families,&handles,&this->database);
 	// this->recoverBackUpDB();
 	if(!s.ok()) {
-
+		LoggerManager::getInstance()->log(LoggerManager::logError, " Database Error ");
+		return;
 	}
 
 	this->columnDefault = handles[0];
@@ -312,5 +316,35 @@ bool Database::deleteUser(User *user) {
 	return s.ok();
 }
 
+bool Database::deleteConversation(Conversation* conv) {
+	string user1 = conv->getUser1()->getUsername();
+	string user2 = conv->getUser2()->getUsername();
+	std::vector<int> msgIds = conv->getMessagesIds();
+	Message* msg = NULL;
+	for (std::vector<int>::iterator it = msgIds.begin() ; it != msgIds.end(); ++it) {
+		msg = this->getMessage(user1, user2, std::to_string(*it));
+		this->deleteMessage(msg);
+		delete msg;
+		msg = NULL;
+	}
+	string aux = user1 + user2;
+	Status s = database->Delete(rocksdb::WriteOptions(), this->columnConversations, aux);
+	return s.ok();
+}
 
+bool Database::deleteMessage(Message* msg) {
+	string json = msg->getJsonString();
+	string aux = msg->getId();
+	aux += msg->getSender()->getUsername();
+	aux += msg->getReceptor()->getUsername();
+	Status s = database->Delete(rocksdb::WriteOptions(), this->columnMessages, aux);
+	return s.ok();
+}
 
+bool Database::deleteLike(Like* like) {
+	string user1 = like->getUser1()->getUsername();
+	string user2 = like->getUser2()->getUsername();
+	string aux = user1 + user2;
+	Status s = database->Delete(rocksdb::WriteOptions(), this->columnLikes, aux);
+	return s.ok();
+}

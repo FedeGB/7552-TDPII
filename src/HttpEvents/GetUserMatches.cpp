@@ -3,7 +3,6 @@
 //
 
 #include "GetUserMatches.h"
-#include "../Utils.h"
 
 
 
@@ -40,29 +39,25 @@ string getUserFromURL(string url){
 
 void GetUserMatches::handle(Manager* manager, SharedManager* sManager) {
     if(this->validateInput()) {
-        //char user[100];
-        //mg_get_http_var(&hm->query_string, "user", user, sizeof(user));
         string userString = getUserFromURL(hm->uri.p);
         User* userFound = manager->getUser(userString);
         Json::Value event;
         Json::Value vec = Json::Value(Json::arrayValue);
         if(userFound){
             struct mg_str *cl_header = mg_get_http_header(hm, "Token");
-            //mg_get_http_var(cl_header, "ApiToken", base, sizeof(base));
             if(!cl_header) {
-                this->response(1, "Token missing", (Json::Value)0);
+                this->response(1, "Token missing", Json::Value());
                 return;
             }
-            std::string token(getToken(cl_header->p));
+            std::string token(getHeaderParam(cl_header->p));
             if(token.compare(userFound->getToken()) == 0){
                 vector<string> matches = manager->getMatches(userString);
                 for (int i = 0 ; i < matches.size() ; i++){
                     vec.append(matches.at(i));
                 }
                 event["matches"] = vec;
-                std::cout << event << std::endl;
             }else{
-                this->response(1, "Invalid Token", (Json::Value)0);
+                this->response(1, "Invalid Token", Json::Value());
                 return;
             }
 

@@ -29,6 +29,12 @@ Conversation::Conversation(Json::Value value) {
 	this->user2 = new User(value.get("user2","").asString());
 	this->numberMessages = value.get("numberMessages","").asInt();
 	this->id = value.get("id","").asInt();
+	Json::Value vec = value.get("messagesId", Json::Value(arrayValue));
+	Json::ValueConstIterator messageIt = vec.begin();
+	while(messageIt != vec.end()) {
+		this->messagesId.push_back((*messageIt).asInt());
+		messageIt++;
+	}
 }
 
 
@@ -68,7 +74,8 @@ void Conversation::setUser2( User* user2) {
 	this->user2 = user2;
 }
 
-void Conversation::addOneMessage(){
+void Conversation::addOneMessage(int msgId){
+	messagesId.push_back(msgId);
 	this->numberMessages++;
 }
 
@@ -84,6 +91,15 @@ Json::Value Conversation::getJson() {
 	value["user2"] = this->user2->getUsername();
 	value["id"] = this->id;
 	value["numberMessages"] = this->numberMessages;
+	Json::Value vec(Json::arrayValue);
+	for (int i = 0 ; i < this->messagesId.size() ; i++){
+		vec.append(this->messagesId.at(i));
+	}
+	value["messagesId"] = vec;
 	return value;
+}
+
+const std::vector<int>& Conversation::getMessagesIds() {
+	return this->messagesId;
 }
 

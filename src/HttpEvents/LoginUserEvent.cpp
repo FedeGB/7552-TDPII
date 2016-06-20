@@ -1,5 +1,4 @@
 #include "LoginUserEvent.h"
-#include "../Utils.h"
 
 
 
@@ -50,7 +49,7 @@ void LoginUserEvent::handle(Manager* manager, SharedManager* sManager) {
 			token.append(":");
 			token.append(userFound->getPassword());
 			const unsigned char *t = reinterpret_cast<const unsigned char *>( token.c_str());
-			User *userFound = manager->getUser(user);
+			//User *userFound = manager->getUser(user);
 			token = base64_encode(t, token.length());
 			userFound->setToken(token);
 			manager->updateUser(userFound);
@@ -71,15 +70,5 @@ void LoginUserEvent::handle(Manager* manager, SharedManager* sManager) {
 bool LoginUserEvent::validateInput() {
 	bool parentValidation = EventHandler::validateInput();
 	if(!parentValidation) return parentValidation;
-	// TODO VALIDATE HEADER
-	// char user[100], password[100];
-	// mg_get_http_var(&hm->query_string, "user", user, sizeof(user));
-	// mg_get_http_var(&hm->query_string, "password", password, sizeof(password));
-	// std::string userStr(user);
-	// std::string passStr(password);
-	// if(userStr.empty() || passStr.empty()) {
-	// 	this->response(2, "Missing parameters", (Json::Value)0);
-	// 	return false;
-	// }
 	return true;
 }

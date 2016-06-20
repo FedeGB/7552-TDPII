@@ -29,18 +29,35 @@ bool SaveUserLike::validateInput() {
 
 void SaveUserLike::handle(Manager* manager, SharedManager* sManager) {
     if(this->validateInput()) {
+        Json::Reader r = Json::Reader();
+        Json::Value val = Json::Value();
+        r.parse(hm->body.p,val);
+        string userString = val.get("user1", "").asString();
+        User* user = manager->getUser(userString);
+        struct mg_str *cl_header = mg_get_http_header(hm, "Token");
+
+        if(!cl_header) {
+            this->response(1, "Token missing", (Json::Value)0);
+            return;
+        }
+
+        std::string token(getHeaderParam(cl_header->p));
+        if(token.compare(user->getToken()) != 0){
+            this->response(1, "Invalid Token", (Json::Value)0);
+            return;
+        }
+
         bool likeWasSaved = manager->saveLike(hm->body.p);
         if(likeWasSaved) {
-	    if (manager->thereIsMatch(hm->body.p)) {
 	    	Json::Value event;
-		event["match"] = true;
-		this->response(0, "Like Saved", event);
-	    }
-	    else {
-            	this->response(0, "Like Saved", (Json::Value)0);
-	    }	    
+            if (manager->thereIsMatch(hm->body.p)) {
+        		event["match"] = true;
+            } else {
+                event["match"] = false;
+            }
+    		this->response(0, "Like Saved", event);
         } else {
-            this->response(1, "Couldn't save like", (Json::Value)0);
+            this->response(1, "Couldn't save like", Json::Value());
         }
     }
 }

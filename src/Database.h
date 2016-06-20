@@ -54,6 +54,10 @@ public:
 
 //deletes
 	bool deleteUser(User* user);
+	bool deleteConversation(Conversation*);
+	bool deleteLike(Like*);
+	bool deleteMessage(Message*);
+
 	Json::Value stringToJsonValue(string str);
 	string JsonValueToSting(Json::Value  json);
 

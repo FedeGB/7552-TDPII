@@ -6,7 +6,10 @@
 #include "../Manager.h"
 #include "../SharedClient/SharedManager.h"
 #include "../Message.h"
+#include "../Utils.h"
+
 #include <string>
+#include "../Utils.h"
 
 class EventHandler {
 public:

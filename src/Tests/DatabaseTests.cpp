@@ -32,6 +32,7 @@ TEST(DatabaseTests,TestSaveUser){
 	// user->setPerfilImage("URL");
 	database->saveUser(user);
 	ASSERT_EQ(user->getName(), database->getUser(user->getUsername())->getName());
+	database->deleteUser(user);
 	delete user;
 	delete database;
 }
@@ -67,7 +68,10 @@ TEST(DatabaseTests,TestSaveAndGetAllUsers){
 	User* user2 = new User("User2" + std::to_string(previous + 1));
 	database->saveUser(user2);
 	ASSERT_EQ(previous + 2, database->getUsers().size());
+	database->deleteUser(user);
+	database->deleteUser(user2);
 	delete user;
+	delete user2;
 	delete database;
 }
 
@@ -81,6 +85,9 @@ TEST(DatabaseTests,TestSaveAndGetConversation){
 	database->saveUser(user2);
 	Conversation* conversation = new Conversation(user1, user2);
 	ASSERT_EQ(conversation->getJsonString(), database->getConversation(user1->getUsername(), user2->getUsername())->getJsonString());
+	database->deleteUser(user1);
+	database->deleteUser(user2);
+	database->deleteConversation(conversation);
 	delete user1;
 	delete user2;
 	delete conversation;
@@ -100,6 +107,9 @@ TEST(DatabaseTests,TestSaveAndGetLike) {
 	ASSERT_EQ(like->getJsonString(), database->getLike(user1->getUsername()+user2->getUsername())->getJsonString());
 	//delete user1;
 	//delete user2;
+	database->deleteLike(like);
+	database->deleteUser(user1);
+	database->deleteUser(user2);
 	delete like;
 	delete database;
 }
@@ -123,12 +133,13 @@ TEST(DatabaseTests,TestSaveAndGetMessage){
 	database->saveMessage(message);
 	ASSERT_EQ(data, database->getMessage(user1->getUsername(), user2->getUsername(), to_string(id))->getData());
 	ASSERT_EQ(data, database->getMessage(user2->getUsername(), user1->getUsername(), to_string(id))->getData());
-
+	database->deleteUser(user1);
+	database->deleteUser(user2);
 	delete user1;
 	delete user2;
-	delete database;
 	delete conv;
 	delete message;
+	delete database;
 }
 
 TEST(DatabaseTests,TestUpdateUser){
@@ -147,6 +158,7 @@ TEST(DatabaseTests,TestUpdateUser){
 	// user->setPerfilImage("URL2");
 	database->updateUser(user);
 	// ASSERT_EQ("URL2", database->getUser(user->getUsername())->getPerfilImage());
+	database->deleteUser(user);
 	delete user;
 	delete database;
 }
@@ -159,8 +171,6 @@ TEST(DatabaseTests,TestSaveTwoMessages){
 	string data = "Hi";
 	string dataTwo = "How are you? ";
 	Conversation* conv = database->getConversation(user1->getUsername(), user2->getUsername());
-	conv->addOneMessage();
-	conv->addOneMessage();
 	database->saveConversation(conv);
 	previous = database->getAllMessages().size();
 	Message* message = new Message(user1, user2, data);
@@ -169,6 +179,8 @@ TEST(DatabaseTests,TestSaveTwoMessages){
 	Message* messageTwo = new Message(user2, user1, dataTwo);
 	messageTwo->setId("1");
 	database->saveMessage(messageTwo);
+	conv->addOneMessage(0);
+	conv->addOneMessage(1);
 
 
 	vector<Message*> messages = database->getMessages(user1->getUsername(), user2->getUsername());
@@ -180,10 +192,14 @@ TEST(DatabaseTests,TestSaveTwoMessages){
 //	}
 	ASSERT_EQ(data, database->getMessage(user1->getUsername(), user2->getUsername(), "0")->getData());
 	ASSERT_EQ(dataTwo, database->getMessage(user2->getUsername(), user1->getUsername(), "1")->getData());
-	ASSERT_EQ(previous + 2, database->getAllMessages().size());
+	ASSERT_EQ(previous + 1, database->getAllMessages().size());
+	database->deleteUser(user1);
+	database->deleteUser(user2);
+	database->deleteConversation(conv);
 	delete user1;
 	delete user2;
 	delete database;
 	delete conv;
 	delete message;
+	delete messageTwo;
 }

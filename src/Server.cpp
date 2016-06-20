@@ -13,14 +13,23 @@ Server::Server() {
 	this->manager = new Manager();
 	this->eventFactory = new EventHandlerFactory();
 	this->sManager = new SharedManager();
+	this->running = true;
+	this->lastStatisticRun = 0;
+	if(!this->statistics.joinable()) {
+		this->statistics = std::thread(&Server::statisticCalculations, this);
+	}
 	//this->mgr.user_data = this;
 }
 
 Server::~Server() {
-	  mg_mgr_free(&mgr);
-	  delete manager;
-	  delete eventFactory;
-	  delete sManager;
+	this->running = false;
+	if(this->statistics.joinable()) {
+		this->statistics.join(); // Wait for running thread
+	}
+	mg_mgr_free(&mgr);
+	delete manager;
+	delete eventFactory;
+	delete sManager;
 }
 
 
@@ -32,6 +41,7 @@ void Server::init(){
 
 
 void Server::uninit(){
+	this->running = false;
 	mg_mgr_free(&mgr);
 }
 
@@ -73,4 +83,55 @@ void Server::setSharedManager(SharedManager* sm) {
 
 SharedManager* Server::getSharedManager() {
 	return this->sManager;
+}
+
+
+void Server::statisticCalculations() {
+	time_t todayTime;
+	while(this->running) {
+		time (&todayTime);
+		if(this->lastStatisticRun + 60 > todayTime) {
+			sleep(1);
+			continue;
+		}
+		std::cout << "Statistics running.." << std::endl;
+		LoggerManager::getInstance()->log(LoggerManager::logInfo, "Statistics running..");
+		vector<Json::Value> users = this->manager->getAllUsers();
+		int total = users.size();
+		User* actualUser = NULL;
+		Json::Value userJson;
+		int onePercent = total/100;
+		if(!onePercent) onePercent = 1;
+		LoggerManager::getInstance()->log(LoggerManager::logInfo, "Popular percent amount: " + std::to_string(onePercent));
+		int i = 0;
+		std::sort(users.begin(), users.end(), orderByLikesDesc);
+		while(i < total) {
+			userJson = users.at(i);
+			actualUser = new User(userJson.get("username", "").asString());
+			actualUser->initWithJson(userJson);
+			if(onePercent) {
+				LoggerManager::getInstance()->log(LoggerManager::logDebug, actualUser->getUsername() + " is Popular.");
+				actualUser->setIsPopular();
+				onePercent--;
+			} else {
+				actualUser->setIsNotPopular();
+			}
+			this->manager->updateUser(actualUser);
+			delete actualUser;
+			actualUser = NULL;
+			i++;
+		}
+		time (&this->lastStatisticRun);
+		char lastRun[30];
+		struct tm * timeinfoLast;
+		timeinfoLast = localtime (&this->lastStatisticRun);
+		strftime (lastRun, 30, "%c", timeinfoLast);
+		std::cout << "Statistics finish at: " + std::string(lastRun) << std::endl;
+		LoggerManager::getInstance()->log(LoggerManager::logInfo, "Statistics finish at: " + std::string(lastRun));
+		sleep(2);
+	}
+}
+
+bool orderByLikesDesc(Json::Value u1, Json::Value u2) {
+	return (u1.get("likesReceived", 0).asInt() > u2.get("likesReceived", 0).asInt());
 }

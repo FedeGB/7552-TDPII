@@ -32,7 +32,8 @@ public:
 	void setUser1(User* user1);
 	User* getUser2();
 	void setUser2(User* user2);
-	void addOneMessage();
+	void addOneMessage(int);
+	const std::vector<int>& getMessagesIds();
 
 	Json::Value getJson();
 	string getJsonString();
@@ -43,6 +44,7 @@ private:
 	User* user1;
 	User* user2;
 	int numberMessages;
+	std::vector<int> messagesId;
 
 };
 

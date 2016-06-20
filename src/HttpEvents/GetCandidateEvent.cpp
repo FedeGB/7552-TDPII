@@ -26,9 +26,20 @@ void GetCandidateEvent::handle(Manager* manager, SharedManager* sManager) {
 		returnCandidates["candidates"] = candidates;
 		User* myAppUser = manager->getUser(this->parameter);
 		if(!myAppUser) {
-			this->response(1, "There was an error with the Server", (Json::Value)0);
+			this->response(1, "There was an error with the Server", Json::Value());
 			return;
 		}
+
+		struct mg_str *cl_header = mg_get_http_header(hm, "Token");
+		if(!cl_header) {
+			this->response(1, "Token missing", (Json::Value)0);
+			return;
+		}
+		std::string token(getHeaderParam(cl_header->p));
+		if(token.compare(myAppUser->getToken()) != 0) {
+			this->response(1, "Invalid Token", (Json::Value) 0);
+		}
+
 		if(this->checkDailyLimit(myAppUser)) {
 			myAppUser->updateLastRequest();
 			manager->updateUser(myAppUser);
@@ -46,16 +57,24 @@ void GetCandidateEvent::handle(Manager* manager, SharedManager* sManager) {
 		    Json::Value modifiUser = user;
 		    User* otherUser = manager->getUser(user.get("email", "").asString());
 		    if(!otherUser) { // Usuario de shared no esta en este server
+		    	delete otherUser;
 		    	it++;
 		    	continue;
 		    }
 		    if(otherUser->getUsername().compare(myAppUser->getUsername()) == 0) { // Si soy yo
+		    	delete otherUser;
 		    	it++;
 		    	continue;	
 		    }
 		    Like* wasSeen = manager->getLike(myAppUser->getUsername() + otherUser->getUsername());
 		    if(wasSeen != NULL) { // Si ya le di like/dislike no lo paso
 		    	delete wasSeen;
+		    	delete otherUser;
+		    	it++;
+		    	continue;
+		    }
+		    if(!otherUser->returnAsCandidate()) { // Si es popular (1%) y salio sorteado (?) no se pasa como candidato
+		    	delete otherUser;
 		    	it++;
 		    	continue;
 		    }
@@ -140,6 +159,7 @@ void GetCandidateEvent::handle(Manager* manager, SharedManager* sManager) {
 bool GetCandidateEvent::validateInput() {
     bool parentValidation = EventHandler::validateInput();
     if(!parentValidation) return parentValidation;
+
     // Validar header y token para ver si es correcto el acceso!!!
     return true;
 }

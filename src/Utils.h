@@ -16,7 +16,7 @@ using namespace std;
 
 string base64_encode(unsigned char const* , unsigned int len);
 string base64_decode(string const& s);
-string getToken(string header);
+string getHeaderParam(string header);
 float harvestineDistance(double, double, double, double);
 
 #endif //TINDER_UTILS_H

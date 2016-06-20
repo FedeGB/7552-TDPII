@@ -24,7 +24,7 @@ bool GetUserDataEvent::validateInput() {
     mg_get_http_var(&hm->query_string, "username", username, sizeof(username));
     std::string userStr(username);
     if(userStr.empty()) {
-    	this->response(2, "Missing parameters", (Json::Value)0);
+    	this->response(2, "Missing parameters", Json::Value());
     	return false;
     }
 	return true;
@@ -35,7 +35,7 @@ void GetUserDataEvent::handle(Manager* manager, SharedManager* sManager) {
 	//if(validation) {
 	    User* user = manager->getUser(this->parameter);
 	    if(!user) {
-	    	this->response(0, "User does not exist.", (Json::Value)0);
+	    	this->response(0, "User does not exist.", Json::Value());
 	    	return;
 	    }
 	    Json::Value sharedUserData = sManager->getUser(std::to_string(user->getId()));

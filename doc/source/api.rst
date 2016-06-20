@@ -14,7 +14,7 @@ El correcto acceso de login (con un usuario y contraseña validos) devuelve un t
 
 Parametros
 ++++++++++
-Por header via Basic Auth:
+**Por header** via Basic Auth:
 *Ejemplo*
 "Authorization" : "Basic base64_encode(username:password)"
 
@@ -90,14 +90,27 @@ Ejemplo de la respuesta:
 	  "payload": {
 	    "Users": [
 	      {
-	        "latitude": 0,
-	        "longitude": 0,
+	      	"location": {
+		        "latitude": 0,
+		        "longitude": 0
+		    },
 	        "matches": [],
 	        "name": "juan",
 	        "password": "hola",
 	        "perfilImage": "",
 	        "token": "juanmahola",
-	        "username": "juanma"
+	        "username": "juanma@mail.com",
+	        "email": "juanma@mail.com",
+	        "ageRange": {
+	        	"min":18,
+	        	"max":25
+	        },
+	        "distance":10,
+	        "likesReceived":2,
+	        "id":50,
+	        "lastCandidatesRequest":1446254616
+	        "candidatesSend":13,
+	        "popularOnePercent":false
 	      }
 	    ]
 	  }
@@ -141,7 +154,9 @@ Ejemplo de la respuesta:
 	  "metadata": {
 	    "size": 0
 	  },
-	  "payload": 0
+	  "payload": {
+
+	  }
 	}
 
 GET SPECIFIC
@@ -293,7 +308,7 @@ Respuesta
 
 User Matches
 ============
-**URI del recurso** /users/getMatches
+**URI del recurso** /users/username/matches
 
 GET
 ---
@@ -303,6 +318,10 @@ Obtiene los matches ocurridos para el user
 Parámetros
 ++++++++++
 **username**: ID del usuario (mail del usuario)
+
+**Por header**
+Token : <token>
+*El token que se usa es el devuelto en el login*
 
 Respuesta
 +++++++++
@@ -315,6 +334,7 @@ Respuesta
 
 Ejemplo del payload en la respuesta
 +++++++++++++++++++++++++++++++++++
+
 .. code-block:: json
 
 	{
@@ -362,6 +382,7 @@ payload: - Elementos pertinentes a devolver (si no necesita devolver nada éste 
 
 Ejemplo de respuesta
 ++++++++++++++++++++
+
 .. code-block:: json
 
 	{
@@ -370,7 +391,9 @@ Ejemplo de respuesta
 	  "metadata": {
 	    "size": 0
 	  },
-	  "payload": 0
+	  "payload": {
+	  	"match":false
+	  }
 	}
 
 Messages
@@ -440,6 +463,10 @@ user1 - ID del usuario (username)
 user2 - ID del usuario (username)
 data - mensaje a enviar
 
+**Por header**
+Token : <token>
+*El token que se usa es el devuelto en el login*
+
 **Ejemplo de body request**
 
 .. code-block:: json
@@ -469,7 +496,9 @@ Ejemplo de response:
 	  "metadata": {
 	    "size": 0
 	  },
-	  "payload": 0
+	  "payload": {
+
+	  }
 	}
 
 Conversations
@@ -483,11 +512,17 @@ Devuelve la conversación entre dos usuarios
 
 Parámetros
 ++++++++++
-user1 - ID del usuario host (username)
-user2 - ID del usuario guest (username)
+
+**Por header**
+Token : <token>
+*El token que se usa es el devuelto en el login*
+user1 : username1
+user2 : username2
+
+*user1 seria el emisor (yo), user2 el receptor*
 
 Respuesta
-
++++++++++
 errorNum - código de error (0 indica success)
 message - mensaje asociado al código de error
 metadata: - Información de metadata sobre la respuesta

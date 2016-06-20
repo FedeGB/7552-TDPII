@@ -49,6 +49,8 @@ void GetUsers::handle(Manager* manager, SharedManager* sManager) {
             event["Users"] = vec;
             std::cout << event << std::endl;
             this->response(0, "", event);
+        } else {
+            this->response(1, "Not valid request", Json::Value());
         }
 //    }else if(this->methodType == "GET"){ // users/ POST create user
 

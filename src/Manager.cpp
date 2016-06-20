@@ -41,6 +41,12 @@ bool Manager::deleteUser(string username){
 	return this->db->deleteUser(userToDelete);
 }
 
+bool Manager::deleteConversation(std::string user1, std::string user2) {
+	Conversation* conv = this->getConversation(user1, user2);
+	if(!conv) return false;
+	return this->db->deleteConversation(conv);
+}
+
 bool Manager::updateUser(User* user) {
 	return this->getDatabase()->updateUser(user);
 }
@@ -54,7 +60,7 @@ bool Manager::saveMessage(string json){
 
 	int messageID = conv->getNumberMessages();
 	message->setId(to_string(messageID));
-	conv->addOneMessage();
+	conv->addOneMessage(messageID);
 	this->db->saveConversation(conv);
 	LoggerManager::getInstance()->log(LoggerManager::logInfo, "New Message created");
 	return this->db->saveMessage(message);
@@ -66,6 +72,11 @@ bool Manager::saveLike(string json){
 	LoggerManager::getInstance()->log(LoggerManager::logInfo, "Incoming json:" + json );
 	Like* like = likeFactory.createWithJsonString(json);
 	LoggerManager::getInstance()->log(LoggerManager::logDebug, "Like created" );
+	User* userLiked = like->getUser2();
+	if(!userLiked) return false;
+	userLiked = this->getUser(userLiked->getUsername());
+	userLiked->oneLikeUp();
+	this->updateUser(userLiked);
 	if(thereIsMatch(like)){
 		LoggerManager::getInstance()->log(LoggerManager::logInfo,
 		"Hubo match entre " + like->getUser1()->getUsername() + " y " + like->getUser2()->getUsername() );
@@ -75,6 +86,12 @@ bool Manager::saveLike(string json){
 		user2->addMatch(user1->getUsername());
 	}
 	return 	this->db->saveLike(like);
+}
+
+bool Manager::deleteLike(std::string user1, std::string user2) {
+	Like* likeToDelete = this->getLike(user1 + user2);
+	if(!likeToDelete) return false;
+	return this->db->deleteLike(likeToDelete);
 }
 
 bool Manager::thereIsMatch(Like* like){

@@ -15,6 +15,7 @@
 #include <stdlib.h>
 #include <iostream>
 #include <string>
+#include "Resources/Logger.h"
 
 using namespace std;
 using namespace Json;
@@ -85,7 +86,12 @@ public:
 	bool hasReachedMaxCandidatesSend();
 	void resetCandidatesSend();
 
+	void oneLikeUp();
+	int getLikesReceived();
+	bool returnAsCandidate();
 
+	void setIsPopular();
+	void setIsNotPopular();
 
 private:
 	int id;
@@ -103,6 +109,8 @@ private:
 	time_t lastTimeConnected;
 	time_t lastCandiatesRequest;
 	int candidatesSend;
+	int likesReceived;
+	bool popularOnePercent;
 	vector<string> matches;
 
 };
