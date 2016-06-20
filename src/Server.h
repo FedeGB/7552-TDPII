@@ -39,9 +39,7 @@ public:
 	string readRequestHeader(mg_connection* conn, string header);
 	void statisticCalculations();
 
-
 	void setSharedManager(SharedManager*);
-
 	SharedManager* getSharedManager();
 
 private:

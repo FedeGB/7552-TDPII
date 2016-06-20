@@ -95,6 +95,13 @@ bool Manager::thereIsMatch(Like* like){
 	return false;
 }
 
+bool Manager::thereIsMatch(string json){
+	LikeFactory likeFactory;
+	Like* like = likeFactory.createWithJsonString(json);
+	Like* theOtherLike = this->getLike(like->getUser2()->getUsername()+like->getUser1()->getUsername());
+	return theOtherLike && theOtherLike->getLike();
+}
+
 User* Manager::getUser(std::string user) {
 	return this->db->getUser(user);
 }

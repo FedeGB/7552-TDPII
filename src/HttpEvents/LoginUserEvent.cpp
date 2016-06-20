@@ -3,7 +3,7 @@
 
 
 
-string getParameter2(string url){
+string getTokenFromURL(string url){
 	url = url.substr(1, url.length());
 	int positionSpace = url.find(" ");
 	string substring = url.substr(positionSpace+1, url.length());
@@ -30,91 +30,41 @@ LoginUserEvent::~LoginUserEvent() {
 
 
 void LoginUserEvent::handle(Manager* manager, SharedManager* sManager) {
-	//bool validation = this->validateInput();
-	//if(validation) {
-		/* Get form variables */
-
+	// Read header
 	char base[100];
 	struct mg_str *cl_header = mg_get_http_header(hm, "Authorization");
 	mg_get_http_var(cl_header, "Basic", base, sizeof(base));
-
-
-	string output = getParameter2(cl_header->p);
+	string output = getTokenFromURL(cl_header->p);
 	string decoded = base64_decode(output);
 	int separator = decoded.find(":");
 	string user = decoded.substr(0, separator);
 	string passStr = decoded.substr(separator+1, decoded.length());
-
 	User* userFound = manager->getUser(user);
 	Json::Value jsonValue = Json::Value();
 	string token = "";
 	if(userFound && !userFound->getUsername().empty()) {
-		if (passStr.compare(userFound->getPassword()) == 0){
+		if (passStr.compare(userFound->getPassword()) == 0) {
 			userFound->loginNow();
 			std::cout << "LOGIN: " << userFound->getUsername() << std::endl;
 			token = userFound->getUsername();
 			token.append(":");
 			token.append(userFound->getPassword());
-			const unsigned char* t = reinterpret_cast<const unsigned char *>( token.c_str() );
-			mg_get_http_var(cl_header, "Basic", base, sizeof(base));
-
-
-			string output = getParameter2(cl_header->p);
-			string decoded = base64_decode(output);
-			int separator = decoded.find(":");
-			string user = decoded.substr(0, separator);
-			string passStr = decoded.substr(separator+1, decoded.length());
-
-			User* userFound = manager->getUser(user);
-			Json::Value jsonValue = Json::Value();
-			string token = "";
-			if(userFound && !userFound->getUsername().empty()) {
-				if (passStr.compare(userFound->getPassword()) == 0){
-					userFound->loginNow();
-					std::cout << "LOGIN: " << userFound->getUsername() << std::endl;
-					token = userFound->getUsername();
-					token.append(":");
-					token.append(userFound->getPassword());
-					const unsigned char* t = reinterpret_cast<const unsigned char *>( token.c_str() );
-
-					token = base64_encode(t, token.length());
-					userFound->setToken(token);
-					manager->updateUser(userFound);
-					jsonValue["result"] = "OK";
-					// jsonValue["data"] = userFound->getJson(); Quizas pasarle mas data
-				} else {
-					jsonValue["result"] = "FAIL";
-				}
-			} else {
-				jsonValue["result"] = "FAIL";
-			}
-			Json::Value param = Json::Value();
-			jsonValue["token"] = token;
-			if(!token.empty()) {
-				this->response(0, "Success", jsonValue);
-			} else {
-				this->response(1, "Invalid User or Password", jsonValue);
-			}
-
+			const unsigned char *t = reinterpret_cast<const unsigned char *>( token.c_str());
+			User *userFound = manager->getUser(user);
 			token = base64_encode(t, token.length());
 			userFound->setToken(token);
 			manager->updateUser(userFound);
 			jsonValue["result"] = "OK";
-			// jsonValue["data"] = userFound->getJson(); Quizas pasarle mas data
 		} else {
-			jsonValue["result"] = "FAIL";
+			jsonValue["result"] = "Invalid password";
 		}
-	} else {
-		jsonValue["result"] = "FAIL";
 	}
-	Json::Value param = Json::Value();
 	jsonValue["token"] = token;
 	if(!token.empty()) {
 		this->response(0, "Success", jsonValue);
 	} else {
 		this->response(1, "Invalid User or Password", jsonValue);
 	}
-//}
 }
 
 

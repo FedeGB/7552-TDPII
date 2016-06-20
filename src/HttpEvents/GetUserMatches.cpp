@@ -3,6 +3,7 @@
 //
 
 #include "GetUserMatches.h"
+#include "../Utils.h"
 
 
 
@@ -37,30 +38,19 @@ string getUserFromURL(string url){
     return token;
 }
 
-
-string getToken(string header){
-    string delimiter = "\r";
-    int position = header.find(delimiter);
-    string token = header.substr(0, position);
-    return token;
-}
-
-
 void GetUserMatches::handle(Manager* manager, SharedManager* sManager) {
     if(this->validateInput()) {
-        char user[100];
-        mg_get_http_var(&hm->query_string, "user", user, sizeof(user));
+        //char user[100];
+        //mg_get_http_var(&hm->query_string, "user", user, sizeof(user));
         string userString = getUserFromURL(hm->uri.p);
         User* userFound = manager->getUser(userString);
         Json::Value event;
         Json::Value vec = Json::Value(Json::arrayValue);
-
         if(userFound){
-            char base[100];
-            struct mg_str *cl_header = mg_get_http_header(hm, "Authorization");
+            struct mg_str *cl_header = mg_get_http_header(hm, "Token");
             //mg_get_http_var(cl_header, "ApiToken", base, sizeof(base));
             if(!cl_header) {
-                this->response(1, "Invalid Auth", (Json::Value)0);
+                this->response(1, "Token missing", (Json::Value)0);
                 return;
             }
             std::string token(getToken(cl_header->p));
@@ -71,8 +61,9 @@ void GetUserMatches::handle(Manager* manager, SharedManager* sManager) {
                 }
                 event["matches"] = vec;
                 std::cout << event << std::endl;
-
-
+            }else{
+                this->response(1, "Invalid Token", (Json::Value)0);
+                return;
             }
 
         }

@@ -31,7 +31,14 @@ void SaveUserLike::handle(Manager* manager, SharedManager* sManager) {
     if(this->validateInput()) {
         bool likeWasSaved = manager->saveLike(hm->body.p);
         if(likeWasSaved) {
-            this->response(0, "Like Saved", (Json::Value)0);
+	    if (manager->thereIsMatch(hm->body.p)) {
+	    	Json::Value event;
+		event["match"] = true;
+		this->response(0, "Like Saved", event);
+	    }
+	    else {
+            	this->response(0, "Like Saved", (Json::Value)0);
+	    }	    
         } else {
             this->response(1, "Couldn't save like", (Json::Value)0);
         }
