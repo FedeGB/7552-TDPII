@@ -32,12 +32,13 @@ void GetCandidateEvent::handle(Manager* manager, SharedManager* sManager) {
 
 		struct mg_str *cl_header = mg_get_http_header(hm, "Token");
 		if(!cl_header) {
-			this->response(1, "Token missing", (Json::Value)0);
+			this->response(1, "Token missing", Json::Value());
 			return;
 		}
 		std::string token(getHeaderParam(cl_header->p));
 		if(token.compare(myAppUser->getToken()) != 0) {
-			this->response(1, "Invalid Token", (Json::Value) 0);
+			this->response(1, "Invalid Token", Json::Value());
+			return;
 		}
 
 		if(this->checkDailyLimit(myAppUser)) {

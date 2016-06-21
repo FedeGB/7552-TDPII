@@ -108,6 +108,7 @@ int SharedManager::putUser(Json::Value userWithDiffs) {
 	Json::ValueConstIterator it = sharedUser.begin();
 	while(it != sharedUser.end()){
 		if(!userWithDiffs.isMember(it.key().asString())) {
+			LoggerManager::getInstance()->log(LoggerManager::logDebug, "Agregando value: " + it.key().asString());
 			userWithDiffs[it.key().asString()] = *it;
 		}
 		it++;
@@ -135,6 +136,7 @@ int SharedManager::putUserPhoto(Json::Value data) {
 	curl->addHeader("content-type: application/json");
 	curl->addUriParameter(data.get("id", "").asString() + "/photo");
 	curl->addUniqueParameter("photo", data.get("photo","").asString());
+	std::cout << data << std::endl;
 	Json::Value resp = curl->execute();
 	delete curl;
 	LoggerManager::getInstance()->log(LoggerManager::logInfo, "Put request of user photo " + data.get("id", "").asString()
