@@ -24,7 +24,7 @@ TEST(DatabaseTests,TestSaveKeyValue){
 TEST(DatabaseTests,TestSaveUser){
 	Database* database = new Database();
 	int previous = database->getUsers().size();
-	User* user = new User("User1" + std::to_string(previous));
+	User* user = new User("User1" + std::to_string(rand() % 500));
 	user->setPassword("hola");
 	user->setName("Juan");
 	user->setLatitude(20.0);
@@ -41,7 +41,7 @@ TEST(DatabaseTests,TestSaveUser){
 TEST(DatabaseTests,TestSaveAndGetUser){
 	Database* database = new Database();
 	int previous = database->getUsers().size();
-	User* user = new User("User1" + std::to_string(previous));
+	User* user = new User("User1" + std::to_string(rand() % 500));
 	user->setPassword("hola");
 	user->setName("Juan");
 	user->setLatitude(20.0);
@@ -58,14 +58,14 @@ TEST(DatabaseTests,TestSaveAndGetUser){
 TEST(DatabaseTests,TestSaveAndGetAllUsers){
 	Database* database = new Database();
 	int previous = database->getUsers().size();
-	User* user = new User("User1" + std::to_string(previous));
+	User* user = new User("User1" + std::to_string(rand() % 500));
 	user->setPassword("hola");
 	user->setName("Juan");
 	user->setLatitude(20.0);
 	user->setLongitude(40.0);
 	// user->setPerfilImage("URL");
 	database->saveUser(user);
-	User* user2 = new User("User2" + std::to_string(previous + 1));
+	User* user2 = new User("User2" + std::to_string(rand() % 500 + 1));
 	database->saveUser(user2);
 	ASSERT_EQ(previous + 2, database->getUsers().size());
 	database->deleteUser(user);
@@ -79,8 +79,8 @@ TEST(DatabaseTests,TestSaveAndGetAllUsers){
 TEST(DatabaseTests,TestSaveAndGetConversation){
 	Database* database = new Database();
 	int previous = database->getUsers().size();
-	User* user1 = new User("User1" + std::to_string(previous));
-	User* user2 = new User("User2" + std::to_string(previous + 1));
+	User* user1 = new User("User1" + std::to_string(rand() % 1000));
+	User* user2 = new User("User2" + std::to_string(rand() % 500));
 	database->saveUser(user1);
 	database->saveUser(user2);
 	Conversation* conversation = new Conversation(user1, user2);
@@ -98,8 +98,8 @@ TEST(DatabaseTests,TestSaveAndGetConversation){
 TEST(DatabaseTests,TestSaveAndGetLike) {
 	Database* database = new Database();
 	int previous = database->getUsers().size();
-	User* user1 = new User("User1" + std::to_string(previous));
-	User* user2 = new User("User2" + std::to_string(previous + 1));
+	User* user1 = new User("User1" + std::to_string(rand() % 500));
+	User* user2 = new User("User2" + std::to_string(rand() % 500 + 1));
 	database->saveUser(user1);
 	database->saveUser(user2);
 	Like* like = new Like(user1, user2, true);
@@ -118,8 +118,8 @@ TEST(DatabaseTests,TestSaveAndGetLike) {
 TEST(DatabaseTests,TestSaveAndGetMessage){
 	Database* database = new Database();
 	int previous = database->getUsers().size();
-	User* user1 = new User("User1" + std::to_string(previous));
-	User* user2 = new User("User2" + std::to_string(previous + 1));
+	User* user1 = new User("User1" + std::to_string(rand() % 500));
+	User* user2 = new User("User2" + std::to_string(rand() % 500 + 1));
 	string data = "hola";
 	Conversation* conv = database->getConversation(user1->getUsername(), user2->getUsername());
 	int id;
@@ -135,6 +135,7 @@ TEST(DatabaseTests,TestSaveAndGetMessage){
 	ASSERT_EQ(data, database->getMessage(user2->getUsername(), user1->getUsername(), to_string(id))->getData());
 	database->deleteUser(user1);
 	database->deleteUser(user2);
+	database->deleteMessage(message);
 	delete user1;
 	delete user2;
 	delete conv;
@@ -145,7 +146,7 @@ TEST(DatabaseTests,TestSaveAndGetMessage){
 TEST(DatabaseTests,TestUpdateUser){
 	Database* database = new Database();
 	int previous = database->getUsers().size();
-	User* user = new User("User1" + std::to_string(previous));
+	User* user = new User("User1" + std::to_string(rand() % 500));
 	user->setPassword("hola");
 	user->setName("Juan");
 	user->setLatitude(20.0);
@@ -166,8 +167,8 @@ TEST(DatabaseTests,TestUpdateUser){
 TEST(DatabaseTests,TestSaveTwoMessages){
 	Database* database = new Database();
 	int previous = database->getUsers().size();
-	User* user1 = new User("User1" + std::to_string(previous));
-	User* user2 = new User("User2" + std::to_string(previous + 1));
+	User* user1 = new User("User1" + std::to_string(rand() % 500));
+	User* user2 = new User("User2" + std::to_string(rand() % 500 + 1));
 	string data = "Hi";
 	string dataTwo = "How are you? ";
 	Conversation* conv = database->getConversation(user1->getUsername(), user2->getUsername());
@@ -181,6 +182,7 @@ TEST(DatabaseTests,TestSaveTwoMessages){
 	database->saveMessage(messageTwo);
 	conv->addOneMessage(0);
 	conv->addOneMessage(1);
+	database->saveConversation(conv);
 
 
 	vector<Message*> messages = database->getMessages(user1->getUsername(), user2->getUsername());
@@ -192,7 +194,7 @@ TEST(DatabaseTests,TestSaveTwoMessages){
 //	}
 	ASSERT_EQ(data, database->getMessage(user1->getUsername(), user2->getUsername(), "0")->getData());
 	ASSERT_EQ(dataTwo, database->getMessage(user2->getUsername(), user1->getUsername(), "1")->getData());
-	ASSERT_EQ(previous + 1, database->getAllMessages().size());
+	ASSERT_EQ(previous + 2, database->getAllMessages().size());
 	database->deleteUser(user1);
 	database->deleteUser(user2);
 	database->deleteConversation(conv);
