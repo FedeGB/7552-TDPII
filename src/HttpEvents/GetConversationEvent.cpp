@@ -19,19 +19,19 @@ bool GetConversationEvent::validateInput() {
 	if(!parentValidation) return parentValidation;
 	struct mg_str *cl_header = mg_get_http_header(hm, "Token");
 	if(!cl_header) {
-		this->response(2, "Invalid Token", Json::Value());
+		this->response(2, "Invalid Token", returnEmptyJsonObject());
     	return false;
 	}
     struct mg_str *u1_header = mg_get_http_header(hm, "user1");
     struct mg_str *u2_header = mg_get_http_header(hm, "user2");
     if(!u1_header || !u2_header) {
-    	this->response(2, "Missing parameters", Json::Value());
+    	this->response(2, "Missing parameters", returnEmptyJsonObject());
     	return false;
     }
     std::string user1Str = getHeaderParam(u1_header->p);
     std::string user2Str = getHeaderParam(u2_header->p);
     if(user1Str.empty() || user2Str.empty()) {
-    	this->response(2, "Missing parameters", Json::Value());
+    	this->response(2, "Missing parameters", returnEmptyJsonObject());
     	return false;
     }
 	return true;
@@ -43,7 +43,7 @@ void GetConversationEvent::handle(Manager* manager, SharedManager* sManager) {
 	    struct mg_str *u1_header = mg_get_http_header(hm, "user1");
 	    struct mg_str *u2_header = mg_get_http_header(hm, "user2");
 	    if(!u1_header || !u2_header) {
-	    	this->response(2, "Missing parameters", Json::Value());
+	    	this->response(2, "Missing parameters", returnEmptyJsonObject());
 	    	return;
 	    }
 	    std::string user1Str = getHeaderParam(u1_header->p);
@@ -53,12 +53,12 @@ void GetConversationEvent::handle(Manager* manager, SharedManager* sManager) {
 
 		User* userFound = manager->getUser(user1Str);
 		if(!cl_header) {
-			this->response(1, "Token missing", (Json::Value)0);
+			this->response(1, "Token missing", returnEmptyJsonObject());
 			return;
 		}
 
 		if(token.compare(userFound->getToken()) != 0){
-			this->response(1, "Invalid Token", (Json::Value)0);
+			this->response(1, "Invalid Token", returnEmptyJsonObject());
 			return;
 		}
 

@@ -31,7 +31,7 @@ void GetUserDataEvent::handle(Manager* manager, SharedManager* sManager) {
 	if(validation) {
 	    User* user = manager->getUser(this->parameter);
 	    if(!user) {
-	    	this->response(0, "User does not exist.", Json::Value());
+	    	this->response(0, "User does not exist.", returnEmptyJsonObject());
 	    	return;
 	    }
 	    Json::Value sharedUserData = sManager->getUser(std::to_string(user->getId()));
@@ -39,7 +39,7 @@ void GetUserDataEvent::handle(Manager* manager, SharedManager* sManager) {
 	    user->updateWithJson(sharedUserData); // Update de lo que viene de Shared
 	    manager->updateUser(user);
 	    sharedUserData["distance"] = user->getDistance();
-	    sharedUserData["ageRange"] = user->getJson().get("ageRange", Json::Value());
+	    sharedUserData["ageRange"] = user->getJson().get("ageRange", returnEmptyJsonObject());
 	    this->response(0, "", sharedUserData); 
 	    delete user;
 	}

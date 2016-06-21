@@ -122,3 +122,10 @@ string getHeaderParam(string header){
   string token = header.substr(0, position);
   return token;
 }
+
+Json::Value returnEmptyJsonObject() {
+  Json::Value emptyObject;
+  Json::Reader reader;
+  reader.parse("{}", emptyObject);
+  return emptyObject;
+}

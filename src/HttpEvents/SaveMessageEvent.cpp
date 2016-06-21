@@ -36,19 +36,19 @@ void SaveMessageEvent::handle(Manager* manager, SharedManager* sManager) {
     User* user = manager->getUser(userString);
     struct mg_str *cl_header = mg_get_http_header(hm, "Token");
     if(!cl_header) {
-        this->response(1, "Token Missing ", Json::Value());
+        this->response(1, "Token Missing ", returnEmptyJsonObject());
         return;
     }
     std::string token(getHeaderParam(cl_header->p));
     if(token.compare(user->getToken()) == 0){
         bool messageWasSaved = manager->saveMessage(hm->body.p);
         if(messageWasSaved) {
-            this->response(0, "Message Saved", Json::Value());
+            this->response(0, "Message Saved", returnEmptyJsonObject());
         } else {
-            this->response(1, "Couldn't save", Json::Value());
+            this->response(1, "Couldn't save", returnEmptyJsonObject());
         }
     } else {
-        this->response(2, "Invalid Token", Json::Value());
+        this->response(2, "Invalid Token", returnEmptyJsonObject());
     }
 
 }

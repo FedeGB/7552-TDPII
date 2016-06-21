@@ -24,15 +24,15 @@ bool CreateUserEvent::validateInput() {
 	r.parse(hm->body.p,val);
 	//std::cout << val.get("password", "").asString() << std::endl;
 	if(val.get("username", "").asString().compare("") == 0) {
-		this->response(2, "Missing parameters", (Json::Value)0);
+		this->response(2, "Missing parameters", returnEmptyJsonObject());
 		return false;
 	}
 	if(val.get("name", "").asString().compare("") == 0) {
-		this->response(2, "Missing parameters", (Json::Value)0);
+		this->response(2, "Missing parameters", returnEmptyJsonObject());
 		return false;
 	}
 	if(val.get("password", "").asString().compare("") == 0) {
-		this->response(2, "Missing parameters", (Json::Value)0);
+		this->response(2, "Missing parameters", returnEmptyJsonObject());
 		return false;
 	}
 
@@ -75,14 +75,14 @@ void CreateUserEvent::handle(Manager* manager, SharedManager* sManager) {
 			if(id) {
 				user->setId((int)id);
 				manager->updateUser(user);
-				this->response(0, "Registered", (Json::Value)0);
+				this->response(0, "Registered", returnEmptyJsonObject());
 			} else {
 				manager->deleteUser(val.get("username", "").asString());
-				this->response(1, "Already Registered", Json::Value());	
+				this->response(1, "Already Registered", returnEmptyJsonObject());	
 			}
 			delete user;
 		} else {
-			this->response(1, "Already Registered", Json::Value());
+			this->response(1, "Already Registered", returnEmptyJsonObject());
 		}
 	}
 }

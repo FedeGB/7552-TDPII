@@ -26,7 +26,7 @@ bool DeleteUserEvent::validateInput() {
     Json::Value val = Json::Value();
     r.parse(hm->body.p,val);
     if(val.get("username", "").asString().compare("") == 0) {
-        this->response(2, "Missing parameters", Json::Value());
+        this->response(2, "Missing parameters", returnEmptyJsonObject());
         return false;
     }
     return true;
@@ -45,12 +45,12 @@ void DeleteUserEvent::handle(Manager* manager, SharedManager* sManager) {
         if(userWasDeleted) {
             bool userSharedDeleted = sManager->deleteUser(sharedId);
             if(userSharedDeleted) {
-                this->response(0, "Deleted", Json::Value());
+                this->response(0, "Deleted", returnEmptyJsonObject());
             } else {
-                this->response(1, "Deletion was partially done", Json::Value());    
+                this->response(1, "Deletion was partially done", returnEmptyJsonObject());    
             }
         } else {
-            this->response(1, "Couldnt delete user", Json::Value());
+            this->response(1, "Couldnt delete user", returnEmptyJsonObject());
         }
     }
 }

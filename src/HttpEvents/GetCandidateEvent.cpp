@@ -26,25 +26,25 @@ void GetCandidateEvent::handle(Manager* manager, SharedManager* sManager) {
 		returnCandidates["candidates"] = candidates;
 		User* myAppUser = manager->getUser(this->parameter);
 		if(!myAppUser) {
-			this->response(1, "There was an error with the Server", Json::Value());
+			this->response(1, "There was an error with the Server", returnEmptyJsonObject());
 			return;
 		}
 
 		struct mg_str *cl_header = mg_get_http_header(hm, "Token");
 		if(!cl_header) {
-			this->response(1, "Token missing", Json::Value());
+			this->response(1, "Token missing", returnEmptyJsonObject());
 			return;
 		}
 		std::string token(getHeaderParam(cl_header->p));
 		if(token.compare(myAppUser->getToken()) != 0) {
-			this->response(1, "Invalid Token", Json::Value());
+			this->response(1, "Invalid Token", returnEmptyJsonObject());
 			return;
 		}
 
 		if(this->checkDailyLimit(myAppUser)) {
 			myAppUser->updateLastRequest();
 			manager->updateUser(myAppUser);
-			this->response(2, "Maximum candidates per day reached", Json::Value());
+			this->response(2, "Maximum candidates per day reached", returnEmptyJsonObject());
 			return;
 		}
 		if(myAppUser->hasReachedMaxCandidatesSend()) {
@@ -58,29 +58,35 @@ void GetCandidateEvent::handle(Manager* manager, SharedManager* sManager) {
 		    Json::Value modifiUser = user;
 		    User* otherUser = manager->getUser(user.get("email", "").asString());
 		    if(!otherUser) { // Usuario de shared no esta en este server
+		    	std::cout << "No esta en app" << std::endl;
 		    	delete otherUser;
 		    	it++;
 		    	continue;
 		    }
+		    std::cout << otherUser->getUsername() << std::endl;
 		    if(otherUser->getUsername().compare(myAppUser->getUsername()) == 0) { // Si soy yo
+		    	std::cout << "Soy yo" << std::endl;
 		    	delete otherUser;
 		    	it++;
 		    	continue;	
 		    }
 		    Like* wasSeen = manager->getLike(myAppUser->getUsername() + otherUser->getUsername());
 		    if(wasSeen != NULL) { // Si ya le di like/dislike no lo paso
+		    	std::cout << "Le di like" << std::endl;
 		    	delete wasSeen;
 		    	delete otherUser;
 		    	it++;
 		    	continue;
 		    }
 		    if(!otherUser->returnAsCandidate()) { // Si es popular (1%) y salio sorteado (?) no se pasa como candidato
+		    	std::cout << "1%" << std::endl;
 		    	delete otherUser;
 		    	it++;
 		    	continue;
 		    }
 		    // Si no esta dentro de mi rango de edades definidas
 		    if(user.get("age", 18).asInt() < myAppUser->getMinAge() || user.get("age", 18).asInt() > myAppUser->getMaxAge()) {
+		    	std::cout << "No cae en el rango de edad" << std::endl;
 		    	it++;
 		    	continue;
 		    }
@@ -90,6 +96,7 @@ void GetCandidateEvent::handle(Manager* manager, SharedManager* sManager) {
 		    double otherLat = user.get("location", Json::Value()).get("latitude", 0).asDouble();
 		    float distance = harvestineDistance(myLat, myLon, otherLat, otherLon);
 		    if(distance > myAppUser->getDistance()) { // Si el candidato esta lejos (para mi valor)
+		    	std::cout << "distance filter: " + std::to_string(distance) << std::endl;
 		    	it++;
 		    	continue;
 		    }
@@ -101,6 +108,7 @@ void GetCandidateEvent::handle(Manager* manager, SharedManager* sManager) {
 		    	if((*myInterestsIt).get("category", "").asString().compare("sex") == 0) {
 		    		std::string interestedIn = (*myInterestsIt).get("value", "").asString();
 		    		if(interestedIn.substr(0, 1).compare(user.get("sex", "").asString()) != 0) {
+		    			std::cout << "No es por sex" << std::endl;
 		    			isCandidate = false;
 		    			break;
 		    		}
@@ -118,6 +126,7 @@ void GetCandidateEvent::handle(Manager* manager, SharedManager* sManager) {
 		    	if((*otherInterestsIt).get("category", "").asString().compare("sex") == 0) {
 		    		std::string interestedIn = (*otherInterestsIt).get("value", "").asString();
 		    		if(interestedIn.substr(0, 1).compare(myShareUser.get("sex", "").asString()) != 0) {
+		    			std::cout << "No es por sex 2" << std::endl;
 		    			isCandidate = false;
 		    			break;
 		    		}
@@ -128,11 +137,13 @@ void GetCandidateEvent::handle(Manager* manager, SharedManager* sManager) {
 		    	std::map<std::string,bool>::iterator it;
 		    	it = interestMap.find(mapKey);
 		    	if(it !=interestMap.end()) {
+		    		std::cout << *otherInterestsIt << std::endl;
 		    		commonInterests.append((*otherInterestsIt));
 		    	}
 		    	otherInterestsIt++;
 		    }
 		    if(commonInterests.size() < 1) {
+		    	std::cout << "No es por intereses" << std::endl;
 		    	isCandidate = false;
 		    }
 		    // TODO: Tomar en cuenta rango de edad del otro usuario (ya que si yo no caigo en el rango de el otro

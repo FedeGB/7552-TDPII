@@ -50,7 +50,7 @@ void GetUsers::handle(Manager* manager, SharedManager* sManager) {
             std::cout << event << std::endl;
             this->response(0, "", event);
         } else {
-            this->response(1, "Not valid request", Json::Value());
+            this->response(1, "Not valid request", returnEmptyJsonObject());
         }
 //    }else if(this->methodType == "GET"){ // users/ POST create user
 

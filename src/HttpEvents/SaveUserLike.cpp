@@ -37,13 +37,13 @@ void SaveUserLike::handle(Manager* manager, SharedManager* sManager) {
         struct mg_str *cl_header = mg_get_http_header(hm, "Token");
 
         if(!cl_header) {
-            this->response(1, "Token missing", (Json::Value)0);
+            this->response(1, "Token missing", returnEmptyJsonObject());
             return;
         }
 
         std::string token(getHeaderParam(cl_header->p));
         if(token.compare(user->getToken()) != 0){
-            this->response(1, "Invalid Token", (Json::Value)0);
+            this->response(1, "Invalid Token", returnEmptyJsonObject());
             return;
         }
 
@@ -57,7 +57,7 @@ void SaveUserLike::handle(Manager* manager, SharedManager* sManager) {
             }
     		this->response(0, "Like Saved", event);
         } else {
-            this->response(1, "Couldn't save like", Json::Value());
+            this->response(1, "Couldn't save like", returnEmptyJsonObject());
         }
     }
 }

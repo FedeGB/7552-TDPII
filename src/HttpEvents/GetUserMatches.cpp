@@ -46,7 +46,7 @@ void GetUserMatches::handle(Manager* manager, SharedManager* sManager) {
         if(userFound){
             struct mg_str *cl_header = mg_get_http_header(hm, "Token");
             if(!cl_header) {
-                this->response(1, "Token missing", Json::Value());
+                this->response(1, "Token missing", returnEmptyJsonObject());
                 return;
             }
             std::string token(getHeaderParam(cl_header->p));
@@ -57,7 +57,7 @@ void GetUserMatches::handle(Manager* manager, SharedManager* sManager) {
                 }
                 event["matches"] = vec;
             }else{
-                this->response(1, "Invalid Token", Json::Value());
+                this->response(1, "Invalid Token", returnEmptyJsonObject());
                 return;
             }
 

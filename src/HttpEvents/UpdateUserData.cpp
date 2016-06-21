@@ -27,7 +27,7 @@ bool UpdateUserData::validateInput() {
     Json::Value value = Json::Value();
     r.parse(hm->body.p, value);
     if(value.get("username","").asString().empty()) {
-        this->response(2, "Missing parameters", Json::Value());
+        this->response(2, "Missing parameters", returnEmptyJsonObject());
         return false;
     }
     return true;
@@ -36,13 +36,23 @@ bool UpdateUserData::validateInput() {
 void UpdateUserData::handle(Manager* manager, SharedManager* sManager) {
     bool validation = this->validateInput();
     if(validation) {
+        struct mg_str *cl_header = mg_get_http_header(hm, "Token");
+        if(!cl_header) {
+            this->response(1, "Token Missing ", returnEmptyJsonObject());
+            return;
+        }
         Json::Reader r = Json::Reader();
         Json::Value value = Json::Value();
         r.parse(hm->body.p, value);
         // Local user update
         User* user = manager->getUser(value.get("username","").asString());
         if(!user) {
-            this->response(1, "User could not be modified", Json::Value());
+            this->response(1, "User could not be modified", returnEmptyJsonObject());
+            return;
+        }
+        std::string token(getHeaderParam(cl_header->p));
+        if(token.compare(user->getToken()) != 0) {
+            this->response(2, "Invalid Token", returnEmptyJsonObject());
             return;
         }
         user->updateWithJson(value);
@@ -59,7 +69,7 @@ void UpdateUserData::handle(Manager* manager, SharedManager* sManager) {
                 value.removeMember(key);
                 int photoUp = sManager->putUserPhoto(uploadP);
                 if(!photoUp) {
-                    this->response(1, "User photo profile could not be uploaded", Json::Value());
+                    this->response(1, "User photo profile could not be uploaded", returnEmptyJsonObject());
                     return;
                 }
             }
@@ -80,10 +90,10 @@ void UpdateUserData::handle(Manager* manager, SharedManager* sManager) {
             if(sharedUpdate) {
                 this->response(0, "Modified", user->getJson());
             } else {
-                this->response(1, "User could not be modified", Json::Value());
+                this->response(1, "User could not be modified", returnEmptyJsonObject());
             }
         } else {
-            this->response(1, "User could not be modified", Json::Value());
+            this->response(1, "User could not be modified", returnEmptyJsonObject());
         }
         delete user;
     }
