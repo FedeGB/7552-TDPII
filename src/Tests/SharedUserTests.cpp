@@ -58,9 +58,9 @@ TEST(SharedUserTests, TestPostAndDeleteUser) {
 	userJson["sex"] = "M";
 	userJson["age"] = 18;
 	long id = sManager->postUser(userJson);
-	delete[] username;
-	delete[] name;
-	delete[] email;
+	//delete[] username;
+	//delete[] name;
+	//delete[] email;
 	delete user;
 	username = name = email = NULL;
 	user = NULL;
@@ -87,9 +87,9 @@ TEST(SharedUserTests, TestPostPutDeleteUser) {
 	userJson["age"] = 18;
 	long id = sManager->postUser(userJson);
 	ASSERT_TRUE(id != 0);
-	delete[] username;
-	delete[] name;
-	delete[] email;
+	//delete[] username;
+	//delete[] name;
+	//delete[] email;
 	delete user;
 	username = name = email = NULL;
 	user = NULL;
@@ -119,9 +119,9 @@ TEST(SharedUserTests, TestPostPutPhotoAndDeleteUser) {
 	userJson["sex"] = "M";
 	userJson["age"] = 18;
 	long id = sManager->postUser(userJson);
-	delete[] username;
-	delete[] name;
-	delete[] email;
+	//delete[] username;
+	//delete[] name;
+	//delete[] email;
 	ASSERT_TRUE(id != 0);
 	// std::ifstream ifs("/home/fedegb/taller2/7552-TDPII/test/blank-profile-picture-973460_960_720.png");
 	// std::string content((std::istreambuf_iterator<char>(ifs)),
