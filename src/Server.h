@@ -42,6 +42,7 @@ public:
 	void setSharedManager(SharedManager*);
 	SharedManager* getSharedManager();
 	bool isRunning();
+	void fillWithSharedUsers();
 
 private:
 	Manager* manager;

@@ -11,7 +11,7 @@
 #include <string>
 #include <vector>
 
-std::string kDBPath = "/tmp/rocksdb1";
+std::string kDBPath = "rocksdbase";
 std::string buDBPath = "rocksdb_backup1";
 
 Database::Database() {

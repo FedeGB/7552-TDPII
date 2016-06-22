@@ -200,7 +200,11 @@ Json::Value User::getJson() {
 }
 
 void User::initWithJson(Json::Value value){
-	this->id = value.get("id", 0).asInt();
+	if(value.get("id", 0).isInt()) {
+		this->id = value.get("id", 0).asInt();	
+	} else {
+		this->id = std::stoi(value.get("id", 0).asString());
+	}
 	this->username = value.get("username","").asString();
 	this->password = value.get("password","").asString();
 	this->name = value.get("name","").asString();

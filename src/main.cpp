@@ -23,6 +23,9 @@ int main(int argc, char *argv[]){
 	LoggerManager::getInstance()->log(LoggerManager::logInfo, "Server Started");
 	signal(SIGINT, signalHandler);
 	serv = new Server();
+	if(argc > 1) {
+		serv->fillWithSharedUsers();
+	}
 	serv->init();
 	printf("Server iniciado \n");
 

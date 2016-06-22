@@ -124,9 +124,10 @@ void Server::popularCalculatorAlgorithm(Manager* manager) {
 	int total = users.size();
 	User* actualUser = NULL;
 	Json::Value userJson;
-	int onePercent = total/100;
+	int onePercent = total/10; // Reducido el 1% a 1 "x10"
 	if(!onePercent) onePercent = 1;
-	LoggerManager::getInstance()->log(LoggerManager::logInfo, "Popular percent amount: " + std::to_string(onePercent));
+	LoggerManager::getInstance()->log(LoggerManager::logInfo,
+	 "Popular percent amount: " + std::to_string(onePercent) + "out of " + std::to_string(total));
 	int i = 0;
 	std::sort(users.begin(), users.end(), orderByLikesDesc);
 	while(i < total) {
@@ -134,7 +135,8 @@ void Server::popularCalculatorAlgorithm(Manager* manager) {
 		actualUser = new User(userJson.get("username", "").asString());
 		actualUser->initWithJson(userJson);
 		if(onePercent) {
-			LoggerManager::getInstance()->log(LoggerManager::logDebug, actualUser->getUsername() + " is Popular.");
+			LoggerManager::getInstance()->log(LoggerManager::logDebug,
+			 actualUser->getUsername() + " is Popular with " + std::to_string(actualUser->getLikesReceived()));
 			actualUser->setIsPopular();
 			onePercent--;
 		} else {
@@ -145,6 +147,28 @@ void Server::popularCalculatorAlgorithm(Manager* manager) {
 		actualUser = NULL;
 		i++;
 	}
+}
+
+
+void Server::fillWithSharedUsers() {
+	if(!this->manager || !this->sManager) {
+		return;
+	}
+	std::cout << "Importing users from Shared Server.." << std::endl;
+	const Json::Value& users = sManager->getUsers();
+	Json::ValueConstIterator it = users.begin();
+	while(it != users.end()) {
+	    Json::Value user = (Json::Value)(*it);
+	    user["password"] = "123456";
+	    user["username"] = user.get("email", "").asString();
+	    Json::StreamWriterBuilder builder;
+		builder.settings_["identation"] = "\t";
+		std::string userJson = Json::writeString(builder, user);
+	    this->manager->createUser(userJson);
+	    userJson = "";
+	    it++;
+	}
+	std::cout << "Finished import." << std::endl;
 }
 
 bool orderByLikesDesc(Json::Value u1, Json::Value u2) {
