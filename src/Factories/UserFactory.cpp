@@ -26,6 +26,12 @@ User* UserFactory::createUser(string username, string password){
 }
 
 User* UserFactory::createWithJsonValue(Json::Value value) {
+	string id;
+	if(value.get("id", 0).isInt()) {
+		id = std::to_string(value.get("id", 0).asInt());	
+	} else {
+		id = value.get("id", "0").asString();
+	}
 	string name = value.get("name", "").asString();
 	string username = value.get("username","").asString();
 	string password = value.get("password", "").asString();
@@ -58,6 +64,7 @@ User* UserFactory::createWithJsonValue(Json::Value value) {
 	}
 
 	User* u = new User(username);
+	u->setId(std::stoi(id));
 	u->setPassword(hashedPassResult);
 	u->setName(name);
 	u->setToken(token);
