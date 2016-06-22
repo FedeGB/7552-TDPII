@@ -177,3 +177,43 @@ TEST(UsersTests, TestUserFactoryJsonString) {
 	 value.get("ageRange", Json::Value()).get("max", 0).asInt());
 	delete u1;
 }
+
+
+TEST(UsersTests, UserRequestTimerTest) {
+	User* user = new User("UserReq");
+	ASSERT_TRUE(!user->requestWasToday());
+	user->updateLastRequest();
+	ASSERT_TRUE(user->requestWasToday());
+	delete user;
+}
+
+
+TEST(UsersTests, UserCandidatesSendTest) {
+	User* user = new User("UserCand");
+	ASSERT_TRUE(!user->hasReachedMaxCandidatesSend());
+	user->updateCandidatesSend(21);
+	ASSERT_TRUE(user->hasReachedMaxCandidatesSend());
+	user->resetCandidatesSend();
+	ASSERT_TRUE(!user->hasReachedMaxCandidatesSend());
+	delete user;
+}
+
+TEST(UsersTests, UserLikesReceivedTest) {
+	User* user = new User("UserLikes");
+	ASSERT_EQ(user->getLikesReceived(), 0);
+	user->oneLikeUp();
+	ASSERT_EQ(user->getLikesReceived(), 1);
+	delete user;
+}
+
+
+TEST(UsersTests, UserisPopularTest) {
+	User* user = new User("userPopular");
+	ASSERT_TRUE(user->returnAsCandidate());
+	user->setIsPopular();
+	bool test = user->returnAsCandidate();
+	ASSERT_EQ(test, test);
+	user->setIsNotPopular();
+	ASSERT_TRUE(user->returnAsCandidate());
+	delete user;
+}

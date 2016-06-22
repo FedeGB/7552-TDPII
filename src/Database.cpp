@@ -72,7 +72,7 @@ Database::Database() {
 	for(int i = 0 ; i < iterators.size() ; i++){
 		rocksdb::Iterator* it =  iterators.at(i);
 		for (it->SeekToFirst(); it->Valid(); it->Next()) {
-			cout << it->key().ToString() << ": " << it->value().ToString() << endl;
+			// cout << it->key().ToString() << ": " << it->value().ToString() << endl;
 		}
 		assert(it->status().ok()); // Check for any errors found during the scan
 		delete it;
