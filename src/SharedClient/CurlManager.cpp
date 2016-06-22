@@ -121,7 +121,7 @@ Json::Value CurlManager::execute() {
 		URL += "/" + parameters;
 	}
 	curl_easy_setopt(this->curl, CURLOPT_URL, URL.c_str());
-	//curl_easy_setopt(this->curl, CURLOPT_VERBOSE, 1L);
+	curl_easy_setopt(this->curl, CURLOPT_VERBOSE, 1L);
 	char* postData = NULL;
 	if(!bodyParams .empty()) {
 		Json::FastWriter fast;
@@ -131,6 +131,9 @@ Json::Value CurlManager::execute() {
 		postData = new char[bodySender.length()]();
 		strcpy(postData, bodySender.c_str());
     	curl_easy_setopt(this->curl, CURLOPT_POSTFIELDS, postData);
+    	// curl_off_t uploadsize = bodySender.length();
+    	// curl_easy_setopt(this->curl, CURLOPT_UPLOAD, 1L);
+    	// curl_easy_setopt(this->curl, CURLOPT_INFILESIZE_LARGE, uploadsize);
 	}
 	struct cstring s;
 	Json::Value val = Json::Value();
