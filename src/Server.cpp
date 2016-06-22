@@ -22,16 +22,17 @@ Server::~Server() {
 	if(this->statistics.joinable()) {
 		this->statistics.join(); // Wait for running thread
 	}
-	mg_mgr_free(&mgr);
 	delete manager;
 	delete eventFactory;
 	delete sManager;
+	mg_mgr_free(&mgr);
+
 }
 
 
 void Server::init(){
 	mg_mgr_init(&mgr, this);
-	nc = mg_bind(&mgr, "8000", ev_handler);
+	nc = mg_bind(&mgr, "8003", ev_handler);
 	mg_set_protocol_http_websocket(nc);
 	this->running = true;
 	if(!this->statistics.joinable()) {

@@ -4,6 +4,7 @@
 
 TEST(ServerTests, ManagerGetterTest) {
 	Server* serv = new Server();
+	serv->init();
 	Manager* manager = serv->getManager();
 	ASSERT_TRUE(manager != NULL);
 	delete serv;
