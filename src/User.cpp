@@ -6,7 +6,7 @@
  */
 
 #include "User.h"
-#import "Utils.h"
+#include "Utils.h"
 
 User::User(string username) {
 	this->username = username;
