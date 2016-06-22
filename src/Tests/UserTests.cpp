@@ -189,9 +189,10 @@ TEST(UsersTests, UserRequestTimerTest) {
 
 
 TEST(UsersTests, UserCandidatesSendTest) {
-	User* user = new User("UserCand");
+	User* user = new User("UserCand" + std::to_string(rand()%100));
+	user->resetCandidatesSend();
 	ASSERT_TRUE(!user->hasReachedMaxCandidatesSend());
-	user->updateCandidatesSend(21);
+	user->updateCandidatesSend(30);
 	ASSERT_TRUE(user->hasReachedMaxCandidatesSend());
 	user->resetCandidatesSend();
 	ASSERT_TRUE(!user->hasReachedMaxCandidatesSend());
