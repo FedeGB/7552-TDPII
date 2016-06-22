@@ -6,7 +6,7 @@
  */
 
 #include "User.h"
-
+#include "Utils.h"
 
 User::User(string username) {
 	this->username = username;
@@ -206,7 +206,14 @@ void User::initWithJson(Json::Value value){
 		this->id = std::stoi(value.get("id", "0").asString());
 	}
 	this->username = value.get("username","").asString();
-	this->password = value.get("password","").asString();
+
+	string passwordGiven = value.get("password","").asString();
+	char *hashedPass = new char[passwordGiven.length() + 1];
+	strcpy(hashedPass, passwordGiven.c_str());
+	string hashedPassResult = SHA256(hashedPass);
+	delete [] hashedPass;
+
+	this->password =  passwordGiven;
 	this->name = value.get("name","").asString();
 	this->token = value.get("token","").asString();
 	this->latitude = value.get("location", Json::Value()).get("latitude", 0.0).asDouble();
@@ -230,8 +237,17 @@ void User::initWithJson(Json::Value value){
 void User::updateWithJson(Json::Value value){
 	if(value.isMember("id"))
 		this->id = std::stoi(value.get("id","").asString());
-	if(value.isMember("password"))
-		this->password = value.get("password","").asString();
+	if(value.isMember("password")){
+
+		string passwordGiven = value.get("password","").asString();
+
+		char *hashedPass = new char[passwordGiven.length() + 1];
+		strcpy(hashedPass, passwordGiven.c_str());
+		string hashedPassResult = SHA256(hashedPass);
+		delete [] hashedPass;
+		this->password =hashedPassResult;
+
+	}
 	if(value.isMember("name"))
 		this->name = value.get("name","").asString();
 	if(value.isMember("token"))

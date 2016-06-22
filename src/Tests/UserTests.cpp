@@ -1,18 +1,23 @@
 #include <gtest/gtest.h>
 #include "../User.h"
 #include "../Factories/UserFactory.h"
+#include "../Utils.h"
 
 
 
 TEST(UsersTests,TestNewUser){
 	string user1 = "User1";
 	User* user = new User(user1);
+	string password="hola";
 	user->setPassword("hola");
 	user->setName("Juan");
 	user->setLatitude(20.0);
 	user->setLongitude(40.0);
 	// user->setPerfilImage("URL");
 	ASSERT_EQ("User1", user->getUsername());
+
+
+
 	ASSERT_EQ("hola", user->getPassword());
 	ASSERT_EQ("Juan", user->getName());
 	ASSERT_EQ(20.0, user->getLatitude());
@@ -29,7 +34,14 @@ TEST(UsersTests, TestJson){
 	Json::Value value;
 	value["name"] = "User 1";
 	value["email"] = "user1@mail.com";
-	value["password"] = "123456";
+
+	string password="123456";
+	char *hashedPass = new char[password.length() + 1];
+	strcpy(hashedPass, password.c_str());
+	string hashedPassResult = SHA256(hashedPass);
+	delete [] hashedPass;
+
+	value["password"] = password;
 	Json::Value location = Json::Value();
 	location["latitude"] = 10.50;
 	location["longitude"] = -1.5897;
@@ -42,7 +54,7 @@ TEST(UsersTests, TestJson){
 	user->initWithJson(value);
 	Json::Value userComp = user->getJson(false);
 	ASSERT_EQ(userComp.get("email", "").asString(), value.get("email", "").asString());
-	ASSERT_EQ(userComp.get("password", "").asString(), value.get("password", "").asString());
+	ASSERT_EQ(userComp.get("password", "").asString(), password);
 	ASSERT_EQ(userComp.get("distance", "").asDouble(), value.get("distance", "").asDouble());
 	ASSERT_EQ(userComp.get("location", Json::Value()).get("latitude", 0).asDouble(),
 	 value.get("location", Json::Value()).get("latitude", 0).asDouble());
@@ -61,7 +73,14 @@ TEST(UsersTests, TestJsonUpadate){
 	Json::Value value;
 	value["name"] = "User 1";
 	value["email"] = "user1@mail.com";
-	value["password"] = "123456";
+
+	string password="123456";
+	char *hashedPass = new char[password.length() + 1];
+	strcpy(hashedPass, password.c_str());
+	string hashedPassResult = SHA256(hashedPass);
+	delete [] hashedPass;
+
+	value["password"] = password;
 	Json::Value location = Json::Value();
 	location["latitude"] = 10.50;
 	location["longitude"] = -1.5897;
@@ -81,7 +100,7 @@ TEST(UsersTests, TestJsonUpadate){
 	user->updateWithJson(value);
 	Json::Value userComp = user->getJson(false);
 	ASSERT_EQ(userComp.get("email", "").asString(), value.get("email", "").asString());
-	ASSERT_EQ(userComp.get("password", "").asString(), value.get("password", "").asString());
+	ASSERT_EQ(userComp.get("password", "").asString(), hashedPassResult);
 	ASSERT_EQ(userComp.get("distance", "").asDouble(), value.get("distance", "").asDouble());
 	ASSERT_EQ(userComp.get("location", Json::Value()).get("latitude", 0).asDouble(),
 	 value.get("location", Json::Value()).get("latitude", 0).asDouble());
@@ -116,7 +135,14 @@ TEST(UsersTests, TestUserFactoryJsonValue) {
 	value["username"] = "User1";
 	value["name"] = "User 1";
 	value["email"] = "user1@mail.com";
-	value["password"] = "123456";
+
+	string password="123456";
+	char *hashedPass = new char[password.length() + 1];
+	strcpy(hashedPass, password.c_str());
+	string hashedPassResult = SHA256(hashedPass);
+	delete [] hashedPass;
+	value["password"] = password;
+
 	Json::Value location = Json::Value();
 	location["latitude"] = 10.50;
 	location["longitude"] = -1.5897;
@@ -130,7 +156,7 @@ TEST(UsersTests, TestUserFactoryJsonValue) {
 	Json::Value userComp = u1->getJson(false);
 	ASSERT_EQ(userComp.get("username", "").asString(), value.get("username", "").asString());
 	ASSERT_EQ(userComp.get("email", "").asString(), value.get("email", "").asString());
-	ASSERT_EQ(userComp.get("password", "").asString(), value.get("password", "").asString());
+	ASSERT_EQ(userComp.get("password", "").asString(), hashedPassResult);
 	ASSERT_EQ(userComp.get("distance", "").asDouble(), value.get("distance", "").asDouble());
 	ASSERT_EQ(userComp.get("location", Json::Value()).get("latitude", 0).asDouble(),
 	 value.get("location", Json::Value()).get("latitude", 0).asDouble());
@@ -149,7 +175,14 @@ TEST(UsersTests, TestUserFactoryJsonString) {
 	value["username"] = "User1";
 	value["name"] = "User 1";
 	value["email"] = "User1";
-	value["password"] = "123456";
+
+	string password="123456";
+	char *hashedPass = new char[password.length() + 1];
+	strcpy(hashedPass, password.c_str());
+	string hashedPassResult = SHA256(hashedPass);
+	delete [] hashedPass;
+	value["password"] = password;
+
 	Json::Value location = Json::Value();
 	location["latitude"] = 10.50;
 	location["longitude"] = -1.5897;
@@ -165,7 +198,7 @@ TEST(UsersTests, TestUserFactoryJsonString) {
 	Json::Value userComp = u1->getJson(false);
 	ASSERT_EQ(userComp.get("username", "").asString(), value.get("username", "").asString());
 	ASSERT_EQ(userComp.get("email", "").asString(), value.get("email", "").asString());
-	ASSERT_EQ(userComp.get("password", "").asString(), value.get("password", "").asString());
+	ASSERT_EQ(userComp.get("password", "").asString(), hashedPassResult);
 	ASSERT_EQ(userComp.get("distance", "").asDouble(), value.get("distance", "").asDouble());
 	ASSERT_EQ(userComp.get("location", Json::Value()).get("latitude", 0).asDouble(),
 	 value.get("location", Json::Value()).get("latitude", 0).asDouble());
