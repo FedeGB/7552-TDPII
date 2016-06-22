@@ -38,9 +38,10 @@ public:
 	Manager* getManager();
 	string readRequestHeader(mg_connection* conn, string header);
 	void statisticCalculations();
-
+	void popularCalculatorAlgorithm(Manager*);
 	void setSharedManager(SharedManager*);
 	SharedManager* getSharedManager();
+	bool isRunning();
 
 private:
 	Manager* manager;

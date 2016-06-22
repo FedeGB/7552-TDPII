@@ -11,6 +11,7 @@ void signalHandler( int signum )
 {
 	std::cout << "Signal (" << signum << ") received. Closing Server.." << std::endl;
 	if(serv) {
+		serv->uninit();
 		LoggerManager::getInstance()->log(LoggerManager::logInfo, "Server Closed");
 		delete serv;
 	}
