@@ -2,7 +2,6 @@
 #include "../User.h"
 #include "../Message.h"
 #include "../Database.h"
-#include "../Manager.h"
 
 #include "../Like.h"
 

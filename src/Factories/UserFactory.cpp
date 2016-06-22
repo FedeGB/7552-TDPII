@@ -35,12 +35,10 @@ User* UserFactory::createWithJsonValue(Json::Value value) {
 	string name = value.get("name", "").asString();
 	string username = value.get("username","").asString();
 	string password = value.get("password", "").asString();
-
 	char *hashedPass = new char[password.length() + 1];
 	strcpy(hashedPass, password.c_str());
 	string hashedPassResult = SHA256(hashedPass);
 	delete [] hashedPass;
-
 	double locationX, locationY;
 	if(value.isMember("location")) {
 		locationX = value.get("location", Json::Value()).get("latitude", 0.0).asDouble();
@@ -62,7 +60,6 @@ User* UserFactory::createWithJsonValue(Json::Value value) {
 		minAge = value.get("ageRange", Json::Value()).get("min", 18).asInt();
 		maxAge = value.get("ageRange", Json::Value()).get("max", 25).asInt();
 	}
-
 	User* u = new User(username);
 	u->setId(std::stoi(id));
 	u->setPassword(hashedPassResult);

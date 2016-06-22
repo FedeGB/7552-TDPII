@@ -157,6 +157,7 @@ string Database::getFromColumn(ColumnFamilyHandle* tableHandler, string key){
 bool Database::saveUser(User* user) {
 	string username = user->getUsername();
 	string json = user->getJsonString();
+		std::cout << username << std::endl;
 	User* userload = this->getUser(username);
 	if(userload) {
 		return false;
