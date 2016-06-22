@@ -213,7 +213,7 @@ void User::initWithJson(Json::Value value){
 	string hashedPassResult = SHA256(hashedPass);
 	delete [] hashedPass;
 
-	this->password =  hashedPassResult;
+	this->password =  passwordGiven;
 	this->name = value.get("name","").asString();
 	this->token = value.get("token","").asString();
 	this->latitude = value.get("location", Json::Value()).get("latitude", 0.0).asDouble();

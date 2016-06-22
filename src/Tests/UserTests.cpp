@@ -54,7 +54,7 @@ TEST(UsersTests, TestJson){
 	user->initWithJson(value);
 	Json::Value userComp = user->getJson(false);
 	ASSERT_EQ(userComp.get("email", "").asString(), value.get("email", "").asString());
-	ASSERT_EQ(userComp.get("password", "").asString(), hashedPassResult);
+	ASSERT_EQ(userComp.get("password", "").asString(), password);
 	ASSERT_EQ(userComp.get("distance", "").asDouble(), value.get("distance", "").asDouble());
 	ASSERT_EQ(userComp.get("location", Json::Value()).get("latitude", 0).asDouble(),
 	 value.get("location", Json::Value()).get("latitude", 0).asDouble());

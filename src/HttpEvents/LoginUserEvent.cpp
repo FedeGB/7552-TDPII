@@ -1,6 +1,7 @@
 #include "LoginUserEvent.h"
 
-
+#include "time.h"
+#include <sstream>
 
 string getTokenFromURL(string url){
 	url = url.substr(1, url.length());
@@ -54,6 +55,12 @@ void LoginUserEvent::handle(Manager* manager, SharedManager* sManager) {
 			token = userFound->getUsername();
 			token.append(":");
 			token.append(userFound->getPassword());
+			time_t time = std::time(0);
+			std::stringstream ss;
+			ss << time;
+			string ts = ss.str();
+			token.append(ts);
+
 			const unsigned char *t = reinterpret_cast<const unsigned char *>( token.c_str());
 			//User *userFound = manager->getUser(user);
 			token = base64_encode(t, token.length());
