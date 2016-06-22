@@ -15,6 +15,8 @@
 
 using namespace std;
 
+
+string SHA256(char* data);
 string base64_encode(unsigned char const* , unsigned int len);
 string base64_decode(string const& s);
 string getHeaderParam(string header);

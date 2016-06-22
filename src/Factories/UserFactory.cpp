@@ -6,6 +6,7 @@
  */
 
 #include "UserFactory.h"
+#include "../Utils.h"
 
 UserFactory::UserFactory() {
 	// TODO Auto-generated constructor stub
@@ -34,6 +35,12 @@ User* UserFactory::createWithJsonValue(Json::Value value) {
 	string name = value.get("name", "").asString();
 	string username = value.get("username","").asString();
 	string password = value.get("password", "").asString();
+
+	char *hashedPass = new char[password.length() + 1];
+	strcpy(hashedPass, password.c_str());
+	string hashedPassResult = SHA256(hashedPass);
+	delete [] hashedPass;
+
 	double locationX, locationY;
 	if(value.isMember("location")) {
 		locationX = value.get("location", Json::Value()).get("latitude", 0.0).asDouble();
@@ -58,7 +65,7 @@ User* UserFactory::createWithJsonValue(Json::Value value) {
 
 	User* u = new User(username);
 	u->setId(std::stoi(id));
-	u->setPassword(password);
+	u->setPassword(hashedPassResult);
 	u->setName(name);
 	u->setToken(token);
 	u->setEmail(email);

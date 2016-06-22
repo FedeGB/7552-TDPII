@@ -41,8 +41,14 @@ void LoginUserEvent::handle(Manager* manager, SharedManager* sManager) {
 	User* userFound = manager->getUser(user);
 	Json::Value jsonValue = Json::Value();
 	string token = "";
+
+	char *hashedPass = new char[passStr.length() + 1];
+	strcpy(hashedPass, passStr.c_str());
+	string hashedPassResult = SHA256(hashedPass);
+	delete [] hashedPass;
+
 	if(userFound && !userFound->getUsername().empty()) {
-		if (passStr.compare(userFound->getPassword()) == 0) {
+		if (userFound->getPassword().compare(hashedPassResult) == 0) {
 			userFound->loginNow();
 			std::cout << "LOGIN: " << userFound->getUsername() << std::endl;
 			token = userFound->getUsername();
