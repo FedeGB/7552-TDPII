@@ -39,7 +39,12 @@ void DeleteUserEvent::handle(Manager* manager, SharedManager* sManager) {
         Json::Value val = Json::Value();
         r.parse(hm->body.p,val);
         User* userToDelete = manager->getUser(val.get("username", "").asString());
+        if(!userToDelete) {
+            this->response(0, "The User doesn't exist", returnEmptyJsonObject());
+            return;
+        }
         int sharedId = userToDelete->getId();
+
         bool userWasDeleted = manager->deleteUser(val.get("username", "").asString());
         delete userToDelete;
         if(userWasDeleted) {
