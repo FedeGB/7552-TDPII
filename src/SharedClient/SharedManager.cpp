@@ -163,7 +163,7 @@ Json::Value SharedManager::getInterests() {
 }
 
 Json::Value SharedManager::postInterest(Json::Value interest) {
-	LoggerManager::getInstance()->log(LoggerManager::logInfo, 
+	LoggerManager::getInstance()->log(LoggerManager::logInfo,
 		"Post request of interest " + interest.get("category", "").asString()
 		+ " - " + interest.get("value", "").asString());
 	CurlManager* curl = new CurlManager();
