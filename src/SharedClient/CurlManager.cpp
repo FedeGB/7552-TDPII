@@ -5,6 +5,7 @@ CurlManager::CurlManager() {
 	this->curl = curl_easy_init();
 	this->headers = NULL;
 	this->url = "http://tp-7552-g05-sharedserver.herokuapp.com";
+	// this->url = "http://localhost:5000";
 	this->bodyParams = Json::Value();
 }
 
@@ -35,7 +36,7 @@ void EscapeJSON(const std::string& sSrc, std::string& sDest) {
 		string sTmp;
 		switch(sSrc[i]) {
 			case '\"':
-				sTmp = '\"';
+				sTmp = "\"";
 				break;
 			case '\\':
 				sTmp = "\\";
@@ -55,6 +56,16 @@ void EscapeJSON(const std::string& sSrc, std::string& sDest) {
 		};
 		sDest += sTmp;
 	}
+	// std::ostringstream o;
+ //    for (auto c = sSrc.cbegin(); c != sSrc.cend(); c++) {
+ //        if (*c == '"' || *c == '\\' || ('\x00' <= *c && *c <= '\x1f')) {
+ //            o << "\\u"
+ //              << std::hex << std::setw(4) << std::setfill('0') << (int)*c;
+ //        } else {
+ //            o << *c;
+ //        }
+ //    }
+ //    sDest = o.str();
 }
 
 size_t writefunc(void *ptr, size_t size, size_t nmemb, struct cstring *s)
@@ -129,11 +140,9 @@ Json::Value CurlManager::execute() {
 		static std::string bodySender;
 		EscapeJSON(body, bodySender);
 		postData = new char[bodySender.length()]();
+		std::cout << postData << std::endl;
 		strcpy(postData, bodySender.c_str());
     	curl_easy_setopt(this->curl, CURLOPT_POSTFIELDS, postData);
-    	// curl_off_t uploadsize = bodySender.length();
-    	// curl_easy_setopt(this->curl, CURLOPT_UPLOAD, 1L);
-    	// curl_easy_setopt(this->curl, CURLOPT_INFILESIZE_LARGE, uploadsize);
 	}
 	struct cstring s;
 	Json::Value val = Json::Value();

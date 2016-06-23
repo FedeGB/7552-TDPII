@@ -10,6 +10,8 @@
 #include <vector>
 #include "../Resources/Logger.h"
 #include <time.h>
+#include <sstream>
+#include <iomanip>
 
 struct cstring {
 	char *ptr;

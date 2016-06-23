@@ -138,6 +138,8 @@ int SharedManager::putUserPhoto(Json::Value data) {
 	curl->setUri("users");
 	curl->setMethodType(curl->PUT);
 	curl->addHeader("content-type: application/json");
+	curl->addHeader("Expect:");
+	curl->addHeader("Postman-Token: 1ffb5807-b433-cab5-502a-94982625fc7e");
 	curl->addUriParameter(data.get("id", "").asString() + "/photo");
 	curl->addUniqueParameter("photo", data.get("photo","").asString());
 	Json::Value resp = curl->execute();
