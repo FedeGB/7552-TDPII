@@ -1,7 +1,9 @@
 # 7552-TDPII
 Grupo de Taller de Programación II
 
-Guia de instalacion del ambiente:
+Guia de instalacion del ambiente:  
+
+## Requerimientos base para la compilación y ejecución:
 
 1- Instalar CMake
 	- sudo apt-get install cmake
@@ -71,7 +73,18 @@ Debe, además, descargar la librería de GTest, y buildear las librerías estát
 	- Ejecutar el comando: cp -a libjsoncpp.a /usr/local/lib
 
 4 - Bajar dependecia de CURL y  curlpp
-	- sudo apt-get install libcurl4-openssl-dev
+	- sudo apt-get install libcurl4-openssl-dev  
+
+## Compilación y ejecución via CMake  
+
+1 - mkdir build && cd build
+2 - cmake ..
+3 - make main
+
+Para correrlo:  
+- ./main 
+- Si se quiere importar usuario del shared server asignado: ./main 1
+
 
  
 
