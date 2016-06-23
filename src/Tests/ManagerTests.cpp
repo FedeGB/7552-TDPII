@@ -11,8 +11,8 @@ TEST(ManagerTests, GetterManagerTest) {
 
 TEST(ManagerTests, CreateAndDeleteUserTest) {
 	Manager* manager = new Manager();
+	srand (time(NULL));
 	User* user = new User("user" + std::to_string(rand() % 1000));
-	std::cout << user->getJsonString() << std::endl;
 	bool result = manager->createUser(user->getJsonString());
 	ASSERT_TRUE(result);
 	User* userGet = manager->getUser(user->getUsername());
@@ -29,6 +29,7 @@ TEST(ManagerTests, CreateAndDeleteUserTest) {
 
 TEST(ManagerTests, CreateUpdateAndDeleteUserTest) {
 	Manager* manager = new Manager();
+	srand (time(NULL));
 	User* user = new User("user" + std::to_string(rand() % 2000));
 	bool result = manager->createUser(user->getJsonString());
 	ASSERT_TRUE(result);
@@ -37,6 +38,7 @@ TEST(ManagerTests, CreateUpdateAndDeleteUserTest) {
 	delete userGet;
 	userGet = NULL;
 	Json::Value updates;
+	srand (time(NULL));
 	updates["username"] = "user" + std::to_string(rand() % 555);
 	user->updateWithJson(updates);
 	result = manager->updateUser(user);
@@ -56,9 +58,11 @@ TEST(ManagerTests, CreateUpdateAndDeleteUserTest) {
 TEST(ManagerTests, SaveAndDeleteLikeTest) {
 	Manager* manager = new Manager();
 	Json::Value u1;
+	srand (time(NULL));
 	u1["username"] = "user" + std::to_string(rand() % 55555);
 	u1["password"] = "123";
 	Json::Value u2;
+	srand (time(NULL));
 	u2["username"] = "user" + std::to_string(rand() % 77777);
 	u2["password"] = "123";
 	Json::FastWriter fast;
