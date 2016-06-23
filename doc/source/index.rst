@@ -12,7 +12,7 @@ Contents:
    :maxdepth: 2
 
    api
-
+   tecnica
 
 Indices and tables
 ==================

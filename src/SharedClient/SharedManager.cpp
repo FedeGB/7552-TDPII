@@ -48,7 +48,7 @@ long SharedManager::postUser(Json::Value user) {
     	Json::Value interests = Json::Value(Json::arrayValue);
 	    Json::Value defInterest = Json::Value();
 	    defInterest["category"] = "sex";
-	    defInterest["value"] = user.get("sex", "").asString().compare("M") == 0 ? "Woman" : "Man";
+	    defInterest["value"] = user.get("sex", "").asString().compare("M") == 0 ? "Female" : "Man";
 	    interests[0] = defInterest;
 		user["interests"] = interests;
     }
