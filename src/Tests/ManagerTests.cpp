@@ -1,11 +1,12 @@
+
 #include <gtest/gtest.h>
 #include "../Manager.h"
 
 TEST(ManagerTests, GetterManagerTest) {
-	Manager* manager = new Manager();
-	ASSERT_TRUE(manager->getDatabase() != NULL);
-	delete manager;
-	manager = NULL;
+    Manager* manager = new Manager();
+    ASSERT_TRUE(manager->getDatabase() != NULL);
+    delete manager;
+    manager = NULL;
 }
 
 
