@@ -1,0 +1,813 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>API Documentation &mdash; 7552_TDPII_AServer 0.2.0 documentation</title>
+    
+    <link rel="stylesheet" href="_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    './',
+        VERSION:     '0.2.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <link rel="top" title="7552_TDPII_AServer 0.2.0 documentation" href="index.html" />
+    <link rel="next" title="Documentación técnica" href="tecnica.html" />
+    <link rel="prev" title="75.52 Taller de Programación Grupo 5 App Server" href="index.html" />
+   
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head>
+  <body role="document">  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="api-documentation">
+<h1>API Documentation<a class="headerlink" href="#api-documentation" title="Permalink to this headline">¶</a></h1>
+<p>En esta sección estará documentada la REST API del App Server</p>
+<div class="section" id="login-authorization">
+<h2>Login (Authorization)<a class="headerlink" href="#login-authorization" title="Permalink to this headline">¶</a></h2>
+<p><strong>URI del recurso</strong> /users/login</p>
+<div class="section" id="get">
+<h3>GET<a class="headerlink" href="#get" title="Permalink to this headline">¶</a></h3>
+<p>Realizar pedido de autenticación para usar ciertos servicios de la API que lo requieren.
+El correcto acceso de login (con un usuario y contraseña validos) devuelve un token el cual puede ser usado en otras llamadas que necesiten permiso de un usuario registrado.</p>
+<div class="section" id="parametros">
+<h4>Parametros<a class="headerlink" href="#parametros" title="Permalink to this headline">¶</a></h4>
+<p><strong>Por header</strong> via Basic Auth:
+<em>Ejemplo</em>
+&#8220;Authorization&#8221; : &#8220;Basic base64_encode(username:password)&#8221;</p>
+</div>
+<div class="section" id="respuesta">
+<h4>Respuesta<a class="headerlink" href="#respuesta" title="Permalink to this headline">¶</a></h4>
+<ul class="simple">
+<li>errorNum: código de error (0 indica success)</li>
+<li>message: mensaje asociado al código de error</li>
+<li>metadata: Información de metadata sobre la respuesta</li>
+</ul>
+<ol class="arabic simple">
+<li>size: Cantidad de elementos devueltos en el payload</li>
+</ol>
+<ul class="simple">
+<li>payload:</li>
+</ul>
+<ol class="arabic simple">
+<li>result (<strong>OK</strong> en caso satisfactorio, <strong>FAIL</strong> En caso erroneo)</li>
+<li>token (token para usar en otros servicios en caso de volver con result <strong>OK</strong>)</li>
+</ol>
+</div>
+<div class="section" id="ejemplo-de-la-respuesta">
+<h4>Ejemplo de la respuesta:<a class="headerlink" href="#ejemplo-de-la-respuesta" title="Permalink to this headline">¶</a></h4>
+<div class="highlight-json"><div class="highlight"><pre><span></span>{
+  &quot;errorNum&quot;: 0,
+  &quot;message&quot;: &quot;Success&quot;,
+  &quot;metadata&quot;: {
+    &quot;size&quot;: 2
+  },
+  &quot;payload&quot;: {
+        &quot;result&quot;: &quot;OK&quot;,
+        &quot;token&quot;: as54das564dasd45s64da6s4d=
+
+  }
+}
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="section" id="users">
+<h2>Users<a class="headerlink" href="#users" title="Permalink to this headline">¶</a></h2>
+<p><strong>URI del recurso</strong> /users</p>
+<div class="section" id="get-all">
+<h3>GET ALL<a class="headerlink" href="#get-all" title="Permalink to this headline">¶</a></h3>
+<p>Obtener información sobre todos los usuarios.</p>
+<div class="section" id="id1">
+<h4>Parámetros<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h4>
+<p>No toma parametros</p>
+</div>
+<div class="section" id="id2">
+<h4>Respuesta<a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h4>
+<ul class="simple">
+<li>errorNum: código de error (0 indica success)</li>
+<li>message: mensaje asociado al código de error</li>
+<li>metadata: Información de metadata sobre la respuesta</li>
+</ul>
+<ol class="arabic simple">
+<li>size: Cantidad de elementos devueltos en el payload</li>
+</ol>
+<ul class="simple">
+<li>payload: Elementos pertinentes a devolver (si no necesita devolver nada éste esta vacio)</li>
+</ul>
+<ol class="arabic simple">
+<li>id</li>
+<li>name</li>
+<li>alias</li>
+<li>email</li>
+<li>photo_profile</li>
+<li>interests</li>
+<li>location</li>
+</ol>
+</div>
+<div class="section" id="id3">
+<h4>Ejemplo de la respuesta:<a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h4>
+<div class="highlight-json"><div class="highlight"><pre><span></span><span class="p">{</span>
+  <span class="nt">&quot;errorNum&quot;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
+  <span class="nt">&quot;message&quot;</span><span class="p">:</span> <span class="s2">&quot;&quot;</span><span class="p">,</span>
+  <span class="nt">&quot;metadata&quot;</span><span class="p">:</span> <span class="p">{</span>
+    <span class="nt">&quot;size&quot;</span><span class="p">:</span> <span class="mi">1</span>
+  <span class="p">},</span>
+  <span class="nt">&quot;payload&quot;</span><span class="p">:</span> <span class="p">{</span>
+    <span class="nt">&quot;Users&quot;</span><span class="p">:</span> <span class="p">[</span>
+      <span class="p">{</span>
+        <span class="nt">&quot;location&quot;</span><span class="p">:</span> <span class="p">{</span>
+                <span class="nt">&quot;latitude&quot;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
+                <span class="nt">&quot;longitude&quot;</span><span class="p">:</span> <span class="mi">0</span>
+            <span class="p">},</span>
+        <span class="nt">&quot;matches&quot;</span><span class="p">:</span> <span class="p">[],</span>
+        <span class="nt">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;juan&quot;</span><span class="p">,</span>
+        <span class="nt">&quot;password&quot;</span><span class="p">:</span> <span class="s2">&quot;hola&quot;</span><span class="p">,</span>
+        <span class="nt">&quot;perfilImage&quot;</span><span class="p">:</span> <span class="s2">&quot;&quot;</span><span class="p">,</span>
+        <span class="nt">&quot;token&quot;</span><span class="p">:</span> <span class="s2">&quot;juanmahola&quot;</span><span class="p">,</span>
+        <span class="nt">&quot;username&quot;</span><span class="p">:</span> <span class="s2">&quot;juanma@mail.com&quot;</span><span class="p">,</span>
+        <span class="nt">&quot;email&quot;</span><span class="p">:</span> <span class="s2">&quot;juanma@mail.com&quot;</span><span class="p">,</span>
+        <span class="nt">&quot;ageRange&quot;</span><span class="p">:</span> <span class="p">{</span>
+                <span class="nt">&quot;min&quot;</span><span class="p">:</span><span class="mi">18</span><span class="p">,</span>
+                <span class="nt">&quot;max&quot;</span><span class="p">:</span><span class="mi">25</span>
+        <span class="p">},</span>
+        <span class="nt">&quot;distance&quot;</span><span class="p">:</span><span class="mi">10</span><span class="p">,</span>
+        <span class="nt">&quot;likesReceived&quot;</span><span class="p">:</span><span class="mi">2</span><span class="p">,</span>
+        <span class="nt">&quot;id&quot;</span><span class="p">:</span><span class="mi">50</span><span class="p">,</span>
+        <span class="nt">&quot;lastCandidatesRequest&quot;</span><span class="p">:</span><span class="mi">1446254616</span>
+        <span class="s2">&quot;candidatesSend&quot;</span><span class="p">:</span><span class="mi">13</span><span class="p">,</span>
+        <span class="nt">&quot;popularOnePercent&quot;</span><span class="p">:</span><span class="kc">false</span>
+      <span class="p">}</span>
+    <span class="p">]</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="post">
+<h3>POST<a class="headerlink" href="#post" title="Permalink to this headline">¶</a></h3>
+<p>Dar de alta a un usuario nuevo</p>
+<div class="section" id="id4">
+<h4>Parámetros<a class="headerlink" href="#id4" title="Permalink to this headline">¶</a></h4>
+<p><strong>username</strong>, <strong>name</strong>, <strong>password</strong>
+Opcionales:
+<strong>location</strong>, <strong>interests</strong>, <strong>age</strong>, <strong>alias</strong>, <strong>sex</strong>, <strong>distance</strong></p>
+<p><em>Ejemplo:</em></p>
+<div class="highlight-json"><div class="highlight"><pre><span></span><span class="p">{</span><span class="nt">&quot;username&quot;</span><span class="p">:</span><span class="s2">&quot;juanma&quot;</span><span class="p">,</span> <span class="nt">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;juan&quot;</span><span class="p">,</span> <span class="nt">&quot;password&quot;</span><span class="p">:</span><span class="s2">&quot;hola&quot;</span><span class="p">,</span> <span class="nt">&quot;sex&quot;</span><span class="p">:</span><span class="s2">&quot;M&quot;</span><span class="p">}</span>
+</pre></div>
+</div>
+<p>Sex puede ser &#8220;M&#8221; o &#8220;F&#8221;</p>
+</div>
+<div class="section" id="id5">
+<h4>Respuesta<a class="headerlink" href="#id5" title="Permalink to this headline">¶</a></h4>
+<ul class="simple">
+<li>errorNum: código de error (0 indica success)</li>
+<li>message: mensaje asociado al código de error</li>
+<li>metadata: Información de metadata sobre la respuesta</li>
+</ul>
+<ol class="arabic simple">
+<li>size: Cantidad de elementos devueltos en el payload</li>
+</ol>
+<ul class="simple">
+<li>payload: Elementos pertinentes a devolver (si no necesita devolver nada éste esta vacio)</li>
+</ul>
+<p>0</p>
+</div>
+<div class="section" id="id6">
+<h4>Ejemplo de la respuesta:<a class="headerlink" href="#id6" title="Permalink to this headline">¶</a></h4>
+<div class="highlight-json"><div class="highlight"><pre><span></span><span class="p">{</span>
+  <span class="nt">&quot;errorNum&quot;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
+  <span class="nt">&quot;message&quot;</span><span class="p">:</span> <span class="s2">&quot;Registered&quot;</span><span class="p">,</span>
+  <span class="nt">&quot;metadata&quot;</span><span class="p">:</span> <span class="p">{</span>
+    <span class="nt">&quot;size&quot;</span><span class="p">:</span> <span class="mi">0</span>
+  <span class="p">},</span>
+  <span class="nt">&quot;payload&quot;</span><span class="p">:</span> <span class="p">{</span>
+
+  <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="get-specific">
+<h3>GET SPECIFIC<a class="headerlink" href="#get-specific" title="Permalink to this headline">¶</a></h3>
+<p>Obtener usuario especifico por su username</p>
+<div class="section" id="id7">
+<h4>Parámetros<a class="headerlink" href="#id7" title="Permalink to this headline">¶</a></h4>
+<p><strong>username</strong>: ID del usuario (mail del usuario)</p>
+</div>
+<div class="section" id="id8">
+<h4>Respuesta<a class="headerlink" href="#id8" title="Permalink to this headline">¶</a></h4>
+<ul class="simple">
+<li>errorNum código de error (0 indica success)</li>
+<li>message mensaje asociado al código de error</li>
+</ul>
+<p>metadata: Información de metadata sobre la respuesta
+1. size: Cantidad de elementos devueltos en el payload</p>
+<ul class="simple">
+<li>payload: Elementos pertinentes a devolver (si no necesita devolver nada éste esta vacio)</li>
+</ul>
+<ol class="arabic simple">
+<li>id</li>
+<li>name</li>
+<li>alias</li>
+<li>email</li>
+<li>photo_profile</li>
+<li>interests</li>
+<li>location</li>
+</ol>
+<p><em>Ejemplo de payload!</em></p>
+<div class="highlight-json"><div class="highlight"><pre><span></span><span class="p">{</span>
+   <span class="nt">&quot;id&quot;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
+   <span class="nt">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;usuario&quot;</span><span class="p">,</span>
+   <span class="nt">&quot;alias&quot;</span><span class="p">:</span> <span class="s2">&quot;not a user&quot;</span><span class="p">,</span>
+   <span class="nt">&quot;email&quot;</span><span class="p">:</span> <span class="s2">&quot;usuario@usuario.com&quot;</span><span class="p">,</span>
+   <span class="nt">&quot;photo_profile&quot;</span><span class="p">:</span> <span class="s2">&quot;&lt; base64 &gt;&quot;</span><span class="p">,</span>
+   <span class="nt">&quot;sex&quot;</span> <span class="p">:</span> <span class="s2">&quot;M&quot;</span><span class="p">,</span>
+   <span class="nt">&quot;interests&quot;</span><span class="p">:</span> <span class="p">[</span>
+      <span class="p">{</span><span class="nt">&quot;category&quot;</span><span class="p">:</span> <span class="s2">&quot;music/band&quot;</span><span class="p">,</span> <span class="nt">&quot;value&quot;</span><span class="p">:</span> <span class="s2">&quot;michael jackson&quot;</span><span class="p">},</span>
+      <span class="p">{</span><span class="nt">&quot;category&quot;</span><span class="p">:</span> <span class="s2">&quot;music/band&quot;</span><span class="p">,</span> <span class="nt">&quot;value&quot;</span><span class="p">:</span> <span class="s2">&quot;pearl jam&quot;</span><span class="p">},</span>
+      <span class="p">{</span><span class="nt">&quot;category&quot;</span><span class="p">:</span> <span class="s2">&quot;outdoors&quot;</span><span class="p">,</span> <span class="nt">&quot;value&quot;</span><span class="p">:</span> <span class="s2">&quot;running&quot;</span><span class="p">}</span>
+   <span class="p">],</span>
+   <span class="nt">&quot;location&quot;</span><span class="p">:</span> <span class="p">{</span><span class="nt">&quot;latitude&quot;</span><span class="p">:</span> <span class="mf">-121.45356</span><span class="p">,</span> <span class="nt">&quot;longitude&quot;</span><span class="p">:</span> <span class="mf">46.51119</span><span class="p">},</span>
+   <span class="nt">&quot;disantece&quot;</span><span class="p">:</span><span class="mi">10</span><span class="p">,</span>
+   <span class="nt">&quot;ageRange&quot;</span><span class="p">:{</span>
+                <span class="nt">&quot;min&quot;</span><span class="p">:</span><span class="mi">20</span><span class="p">,</span>
+                <span class="nt">&quot;max&quot;</span><span class="p">:</span><span class="mi">26</span>
+   <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="put">
+<h3>PUT<a class="headerlink" href="#put" title="Permalink to this headline">¶</a></h3>
+<p>Editar usuario especifico /users/username</p>
+<div class="section" id="id9">
+<h4>Parámetros<a class="headerlink" href="#id9" title="Permalink to this headline">¶</a></h4>
+<p><strong>username</strong>: ID del usuario (mail del usuario) Requierido</p>
+<p>Opcionales:
+<strong>location</strong>, <strong>interests</strong>, <strong>age</strong>, <strong>alias</strong>, <strong>sex</strong>, <strong>distance</strong>, <strong>name</strong>, <strong>password</strong>, <strong>ageRange</strong></p>
+</div>
+<div class="section" id="id10">
+<h4>Respuesta<a class="headerlink" href="#id10" title="Permalink to this headline">¶</a></h4>
+<ul class="simple">
+<li>errorNum: código de error (0 indica success)</li>
+<li>message: mensaje asociado al código de error</li>
+<li>metadata: Información de metadata sobre la respuesta</li>
+</ul>
+<ol class="arabic simple">
+<li>size: Cantidad de elementos devueltos en el payload</li>
+</ol>
+<ul class="simple">
+<li>payload: Elementos pertinentes a devolver (si no necesita devolver nada éste esta vacio)</li>
+</ul>
+<ol class="arabic simple">
+<li>id</li>
+<li>name</li>
+<li>alias</li>
+<li>email</li>
+<li>photo_profile</li>
+<li>interests</li>
+<li>location</li>
+</ol>
+<p><em>Ejemplo de PUT parametros de body de PUT request:</em></p>
+<div class="highlight-json"><div class="highlight"><pre><span></span><span class="p">{</span>
+<span class="nt">&quot;username&quot;</span><span class="p">:</span> <span class="s2">&quot;username&quot;</span><span class="p">,</span>
+<span class="nt">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;usuario&quot;</span><span class="p">,</span>
+<span class="nt">&quot;alias&quot;</span><span class="p">:</span> <span class="s2">&quot;not a user&quot;</span><span class="p">,</span>
+<span class="nt">&quot;email&quot;</span><span class="p">:</span> <span class="s2">&quot;usuario@usuario.com&quot;</span><span class="p">,</span>
+<span class="nt">&quot;sex&quot;</span><span class="p">:</span> <span class="s2">&quot;M&quot;</span><span class="p">,</span>
+<span class="nt">&quot;age&quot;</span><span class="p">:</span> <span class="mi">30</span><span class="p">,</span>
+<span class="nt">&quot;photo_profile&quot;</span><span class="p">:</span> <span class="s2">&quot;&lt; base64 &gt;&quot;</span><span class="p">,</span>
+<span class="nt">&quot;interests&quot;</span><span class="p">:</span> <span class="p">[{</span>
+        <span class="nt">&quot;category&quot;</span><span class="p">:</span> <span class="s2">&quot;music / band&quot;</span><span class="p">,</span>
+        <span class="nt">&quot;value&quot;</span><span class="p">:</span> <span class="s2">&quot;radiohead&quot;</span>
+        <span class="p">},</span> <span class="p">{</span>
+        <span class="nt">&quot;category&quot;</span><span class="p">:</span> <span class="s2">&quot;music / band&quot;</span><span class="p">,</span>
+        <span class="nt">&quot;value&quot;</span><span class="p">:</span> <span class="s2">&quot;pearl jam&quot;</span>
+        <span class="p">},</span> <span class="p">{</span>
+        <span class="nt">&quot;category&quot;</span><span class="p">:</span> <span class="s2">&quot;outdoors&quot;</span><span class="p">,</span>
+        <span class="nt">&quot;value&quot;</span><span class="p">:</span> <span class="s2">&quot;running&quot;</span>
+        <span class="p">}],</span>
+<span class="nt">&quot;location&quot;</span><span class="p">:</span> <span class="p">{</span>
+        <span class="nt">&quot;latitude&quot;</span><span class="p">:</span> <span class="mf">-121.45356</span><span class="p">,</span>
+        <span class="nt">&quot;longitude&quot;</span><span class="p">:</span> <span class="mf">46.51119</span>
+        <span class="p">},</span>
+<span class="nt">&quot;distance&quot;</span><span class="p">:</span><span class="mi">10</span><span class="p">,</span>
+<span class="nt">&quot;ageRange&quot;</span><span class="p">:</span> <span class="p">{</span>
+        <span class="nt">&quot;min&quot;</span><span class="p">:</span> <span class="mi">19</span><span class="p">,</span>
+        <span class="nt">&quot;max&quot;</span><span class="p">:</span><span class="mi">26</span>
+        <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="delete">
+<h3>DELETE<a class="headerlink" href="#delete" title="Permalink to this headline">¶</a></h3>
+<p>Eliminar usuario especifico por username</p>
+<div class="section" id="id11">
+<h4>Parámetros<a class="headerlink" href="#id11" title="Permalink to this headline">¶</a></h4>
+<p><strong>username</strong>: ID del usuario (mail del usuario)</p>
+</div>
+<div class="section" id="id12">
+<h4>Respuesta<a class="headerlink" href="#id12" title="Permalink to this headline">¶</a></h4>
+<ul class="simple">
+<li>errorNum: código de error (0 indica success)</li>
+<li>message: mensaje asociado al código de error</li>
+<li>metadata: Información de metadata sobre la respuesta</li>
+</ul>
+<p>1. size: Cantidad de elementos devueltos en el payload
+- payload: Elementos pertinentes a devolver (si no necesita devolver nada éste esta vacio)
+1. id
+2. name
+3. alias
+4. email
+5. photo_profile
+6. interests
+7. location</p>
+<p><em>Ejemplo de body de Delete request</em></p>
+<div class="highlight-json"><div class="highlight"><pre><span></span><span class="p">{</span>
+    <span class="nt">&quot;username&quot;</span><span class="p">:</span><span class="s2">&quot;ff5&quot;</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="section" id="user-matches">
+<h2>User Matches<a class="headerlink" href="#user-matches" title="Permalink to this headline">¶</a></h2>
+<p><strong>URI del recurso</strong> /users/username/matches</p>
+<div class="section" id="id13">
+<h3>GET<a class="headerlink" href="#id13" title="Permalink to this headline">¶</a></h3>
+<p>Obtiene los matches ocurridos para el user</p>
+<div class="section" id="id14">
+<h4>Parámetros<a class="headerlink" href="#id14" title="Permalink to this headline">¶</a></h4>
+<p><strong>username</strong>: ID del usuario (mail del usuario)</p>
+<p><strong>Por header</strong>
+Token : &lt;token&gt;
+<em>El token que se usa es el devuelto en el login</em></p>
+</div>
+<div class="section" id="id15">
+<h4>Respuesta<a class="headerlink" href="#id15" title="Permalink to this headline">¶</a></h4>
+<ul class="simple">
+<li>errorNum: código de error (0 indica success)</li>
+<li>message: mensaje asociado al código de error</li>
+<li>metadata: Información de metadata sobre la respuesta</li>
+</ul>
+<p>1. size: Cantidad de elementos devueltos en el payload
+- payload: Elementos pertinentes a devolver (si no necesita devolver nada éste esta vacio)
+1. matches (Json array con usernames)</p>
+</div>
+<div class="section" id="ejemplo-del-payload-en-la-respuesta">
+<h4>Ejemplo del payload en la respuesta<a class="headerlink" href="#ejemplo-del-payload-en-la-respuesta" title="Permalink to this headline">¶</a></h4>
+<div class="highlight-json"><div class="highlight"><pre><span></span><span class="p">{</span>
+        <span class="nt">&quot;matches&quot;</span><span class="p">:</span> <span class="p">[</span>
+                <span class="s2">&quot;username1&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;username2&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;username3&quot;</span>
+        <span class="p">]</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="section" id="user-likes">
+<h2>User Likes<a class="headerlink" href="#user-likes" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="id16">
+<h3>POST<a class="headerlink" href="#id16" title="Permalink to this headline">¶</a></h3>
+<p>Enviar aceptación (like) o rechazo (not like) de un usuario &#8220;candidato&#8221;.</p>
+<p><strong>URI del recurso</strong>
+/likes</p>
+<div class="section" id="id17">
+<h4>Parámetros<a class="headerlink" href="#id17" title="Permalink to this headline">¶</a></h4>
+<p>user1 - ID del usuario que envia si acepta o rechaza (username)
+user2 - ID del usuario, aceptado o rechazado (username)
+like - Aceptación o rechazo (boolean)</p>
+<p><strong>Ejemplo de body request:</strong></p>
+<div class="highlight-json"><div class="highlight"><pre><span></span><span class="p">{</span>
+    <span class="nt">&quot;user1&quot;</span><span class="p">:</span> <span class="s2">&quot;username1&quot;</span><span class="p">,</span>
+    <span class="nt">&quot;user2&quot;</span><span class="p">:</span> <span class="s2">&quot;username2&quot;</span><span class="p">,</span>
+    <span class="nt">&quot;like&quot;</span><span class="p">:</span> <span class="kc">true</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="id18">
+<h4>Respuesta<a class="headerlink" href="#id18" title="Permalink to this headline">¶</a></h4>
+<p>errorNum - código de error (0 indica success)
+message - mensaje asociado al código de error
+metadata: - Información de metadata sobre la respuesta
+1. size - Cantidad de elementos devueltos en el payload
+payload: - Elementos pertinentes a devolver (si no necesita devolver nada éste esta vacio)
+0</p>
+</div>
+<div class="section" id="ejemplo-de-respuesta">
+<h4>Ejemplo de respuesta<a class="headerlink" href="#ejemplo-de-respuesta" title="Permalink to this headline">¶</a></h4>
+<div class="highlight-json"><div class="highlight"><pre><span></span><span class="p">{</span>
+  <span class="nt">&quot;errorNum&quot;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
+  <span class="nt">&quot;message&quot;</span><span class="p">:</span> <span class="s2">&quot;Like Saved&quot;</span><span class="p">,</span>
+  <span class="nt">&quot;metadata&quot;</span><span class="p">:</span> <span class="p">{</span>
+    <span class="nt">&quot;size&quot;</span><span class="p">:</span> <span class="mi">0</span>
+  <span class="p">},</span>
+  <span class="nt">&quot;payload&quot;</span><span class="p">:</span> <span class="p">{</span>
+        <span class="nt">&quot;match&quot;</span><span class="p">:</span><span class="kc">false</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="section" id="messages">
+<h2>Messages<a class="headerlink" href="#messages" title="Permalink to this headline">¶</a></h2>
+<p><strong>URI del recurso:</strong>
+/messages</p>
+<div class="section" id="id19">
+<h3>GET<a class="headerlink" href="#id19" title="Permalink to this headline">¶</a></h3>
+<p>Obtener todos los mensajes que existen</p>
+<div class="section" id="id20">
+<h4>Parámetros<a class="headerlink" href="#id20" title="Permalink to this headline">¶</a></h4>
+<p>No</p>
+</div>
+<div class="section" id="id21">
+<h4>Respuesta<a class="headerlink" href="#id21" title="Permalink to this headline">¶</a></h4>
+<p>errorNum - código de error (0 indica success)
+message - mensaje asociado al código de error
+metadata: - Información de metadata sobre la respuesta
+1. size - Cantidad de elementos devueltos en el payload
+payload: - Elementos pertinentes a devolver (si no necesita devolver nada éste esta vacio)
+1. messages (Json array con objetos json con lo siguiente)
+- id (del mensaje)
+- sender (quien envio el mensaje, username1)
+- receptor (quien recibio el mensaje, username2)
+- date (fecha del mensaje)
+- data (contenido del mensaje)</p>
+</div>
+<div class="section" id="id22">
+<h4>Ejemplo de respuesta<a class="headerlink" href="#id22" title="Permalink to this headline">¶</a></h4>
+<div class="highlight-json"><div class="highlight"><pre><span></span><span class="p">{</span>
+  <span class="nt">&quot;errorNum&quot;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
+  <span class="nt">&quot;message&quot;</span><span class="p">:</span> <span class="s2">&quot;&quot;</span><span class="p">,</span>
+  <span class="nt">&quot;metadata&quot;</span><span class="p">:</span> <span class="p">{</span>
+    <span class="nt">&quot;size&quot;</span><span class="p">:</span> <span class="mi">1</span>
+  <span class="p">},</span>
+  <span class="nt">&quot;payload&quot;</span><span class="p">:</span> <span class="p">{</span>
+        <span class="nt">&quot;messages&quot;</span><span class="p">:</span> <span class="p">[</span>
+                <span class="p">{</span>
+                        <span class="nt">&quot;id&quot;</span><span class="p">:</span> <span class="mi">10</span><span class="p">,</span>
+                        <span class="nt">&quot;sender&quot;</span><span class="p">:</span> <span class="s2">&quot;username1&quot;</span><span class="p">,</span>
+                        <span class="nt">&quot;receptor&quot;</span><span class="p">:</span> <span class="s2">&quot;username2&quot;</span><span class="p">,</span>
+                        <span class="nt">&quot;date&quot;</span><span class="p">:</span> <span class="s2">&quot;00:32:44 - 2016/06/01.&quot;</span><span class="p">,</span>
+                        <span class="nt">&quot;data&quot;</span><span class="p">:</span> <span class="s2">&quot;como estas?!&quot;</span>
+                <span class="p">},</span>
+                <span class="p">{</span>
+                        <span class="nt">&quot;id&quot;</span><span class="p">:</span> <span class="mi">15</span><span class="p">,</span>
+                        <span class="nt">&quot;sender&quot;</span><span class="p">:</span> <span class="s2">&quot;username2&quot;</span><span class="p">,</span>
+                        <span class="nt">&quot;receptor&quot;</span><span class="p">:</span> <span class="s2">&quot;username1&quot;</span><span class="p">,</span>
+                        <span class="nt">&quot;date&quot;</span><span class="p">:</span> <span class="s2">&quot;00:33:35 - 2016/06/01.&quot;</span><span class="p">,</span>
+                        <span class="nt">&quot;data&quot;</span><span class="p">:</span> <span class="s2">&quot;todo tranqui vos?&quot;</span>
+                <span class="p">}</span>
+        <span class="p">]</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="id23">
+<h3>POST<a class="headerlink" href="#id23" title="Permalink to this headline">¶</a></h3>
+<p>Enviar un mensaje en cierta conversación entre usuarios</p>
+<div class="section" id="id24">
+<h4>Parámetros<a class="headerlink" href="#id24" title="Permalink to this headline">¶</a></h4>
+<p>user1 - ID del usuario (username)
+user2 - ID del usuario (username)
+data - mensaje a enviar</p>
+<p><strong>Por header</strong>
+Token : &lt;token&gt;
+<em>El token que se usa es el devuelto en el login</em></p>
+<p><strong>Ejemplo de body request</strong></p>
+<div class="highlight-json"><div class="highlight"><pre><span></span><span class="p">{</span>
+    <span class="nt">&quot;user1&quot;</span><span class="p">:</span><span class="s2">&quot;username1&quot;</span><span class="p">,</span>
+    <span class="nt">&quot;user2&quot;</span><span class="p">:</span><span class="s2">&quot;username2&quot;</span><span class="p">,</span>
+    <span class="nt">&quot;data&quot;</span><span class="p">:</span><span class="s2">&quot;hola&quot;</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="id25">
+<h4>Respuesta<a class="headerlink" href="#id25" title="Permalink to this headline">¶</a></h4>
+<p>Content-Type: application/json
+errorNum - código de error (0 indica success)
+message - mensaje asociado al código de error
+metadata: - Información de metadata sobre la respuesta
+1. size - Cantidad de elementos devueltos en el payload
+payload: - Elementos pertinentes a devolver (si no necesita devolver nada éste esta vacio)</p>
+</div>
+<div class="section" id="ejemplo-de-response">
+<h4>Ejemplo de response:<a class="headerlink" href="#ejemplo-de-response" title="Permalink to this headline">¶</a></h4>
+<div class="highlight-json"><div class="highlight"><pre><span></span><span class="p">{</span>
+  <span class="nt">&quot;errorNum&quot;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
+  <span class="nt">&quot;message&quot;</span><span class="p">:</span> <span class="s2">&quot;Message Saved&quot;</span><span class="p">,</span>
+  <span class="nt">&quot;metadata&quot;</span><span class="p">:</span> <span class="p">{</span>
+    <span class="nt">&quot;size&quot;</span><span class="p">:</span> <span class="mi">0</span>
+  <span class="p">},</span>
+  <span class="nt">&quot;payload&quot;</span><span class="p">:</span> <span class="p">{</span>
+
+  <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="section" id="conversations">
+<h2>Conversations<a class="headerlink" href="#conversations" title="Permalink to this headline">¶</a></h2>
+<p><strong>URI del recurso</strong>
+/conversations</p>
+<div class="section" id="id26">
+<h3>GET<a class="headerlink" href="#id26" title="Permalink to this headline">¶</a></h3>
+<p>Devuelve la conversación entre dos usuarios</p>
+<div class="section" id="id27">
+<h4>Parámetros<a class="headerlink" href="#id27" title="Permalink to this headline">¶</a></h4>
+<p><strong>Por header</strong>
+Token : &lt;token&gt;
+<em>El token que se usa es el devuelto en el login</em>
+user1 : username1
+user2 : username2</p>
+<p><em>user1 seria el emisor (yo), user2 el receptor</em></p>
+</div>
+<div class="section" id="id28">
+<h4>Respuesta<a class="headerlink" href="#id28" title="Permalink to this headline">¶</a></h4>
+<p>errorNum - código de error (0 indica success)
+message - mensaje asociado al código de error
+metadata: - Información de metadata sobre la respuesta
+1. size - Cantidad de elementos devueltos en el payload
+payload: - Elementos pertinentes a devolver (si no necesita devolver nada éste esta vacio)
+1. messages - Json Array con los mensajes de la conversación.
+Estos mensajes contienen:
+- id
+- sender
+- receptor
+- date
+- data</p>
+</div>
+<div class="section" id="ejemplo-respuesta">
+<h4>Ejemplo respuesta:<a class="headerlink" href="#ejemplo-respuesta" title="Permalink to this headline">¶</a></h4>
+<div class="highlight-json"><div class="highlight"><pre><span></span><span class="p">{</span>
+  <span class="nt">&quot;errorNum&quot;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
+  <span class="nt">&quot;message&quot;</span><span class="p">:</span> <span class="s2">&quot;&quot;</span><span class="p">,</span>
+  <span class="nt">&quot;metadata&quot;</span><span class="p">:</span> <span class="p">{</span>
+    <span class="nt">&quot;size&quot;</span><span class="p">:</span> <span class="mi">1</span>
+  <span class="p">},</span>
+  <span class="nt">&quot;payload&quot;</span><span class="p">:</span> <span class="p">{</span>
+    <span class="nt">&quot;messages&quot;</span><span class="p">:</span> <span class="p">[</span>
+      <span class="p">{</span>
+        <span class="nt">&quot;data&quot;</span><span class="p">:</span> <span class="s2">&quot;buenas&quot;</span><span class="p">,</span>
+        <span class="nt">&quot;date&quot;</span><span class="p">:</span> <span class="s2">&quot;00:32:44 - 2016/05/31.&quot;</span><span class="p">,</span>
+        <span class="nt">&quot;id&quot;</span><span class="p">:</span> <span class="s2">&quot;9&quot;</span><span class="p">,</span>
+        <span class="nt">&quot;receptor&quot;</span><span class="p">:</span> <span class="s2">&quot;5&quot;</span><span class="p">,</span>
+        <span class="nt">&quot;sender&quot;</span><span class="p">:</span> <span class="s2">&quot;4&quot;</span>
+      <span class="p">},</span>
+      <span class="p">{</span>
+        <span class="nt">&quot;data&quot;</span><span class="p">:</span> <span class="s2">&quot;hola&quot;</span><span class="p">,</span>
+        <span class="nt">&quot;date&quot;</span><span class="p">:</span> <span class="s2">&quot;00:39:19 - 2016/05/31.&quot;</span><span class="p">,</span>
+        <span class="nt">&quot;id&quot;</span><span class="p">:</span> <span class="s2">&quot;11&quot;</span><span class="p">,</span>
+        <span class="nt">&quot;receptor&quot;</span><span class="p">:</span> <span class="s2">&quot;5&quot;</span><span class="p">,</span>
+        <span class="nt">&quot;sender&quot;</span><span class="p">:</span> <span class="s2">&quot;4&quot;</span>
+      <span class="p">}</span>
+    <span class="p">]</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="section" id="candidates">
+<h2>Candidates<a class="headerlink" href="#candidates" title="Permalink to this headline">¶</a></h2>
+<p><strong>URI del recurso</strong>
+/candidates</p>
+<div class="section" id="id29">
+<h3>GET<a class="headerlink" href="#id29" title="Permalink to this headline">¶</a></h3>
+<p>Obtener candidatos para un usuario especifico</p>
+<div class="section" id="id30">
+<h4>Parámetros<a class="headerlink" href="#id30" title="Permalink to this headline">¶</a></h4>
+<p>username - ID del usuario (mail del usuario)</p>
+</div>
+<div class="section" id="id31">
+<h4>Respuesta<a class="headerlink" href="#id31" title="Permalink to this headline">¶</a></h4>
+<p>errorNum - código de error (0 indica success)
+message - mensaje asociado al código de error
+metadata: - Información de metadata sobre la respuesta
+1. size - Cantidad de elementos devueltos en el payload
+payload: - Elementos pertinentes a devolver (si no necesita devolver nada éste esta vacio)
+0. candidates: es un arrayJson que contiene varios usuarios candidatos con lo siguiente:
+1. id
+2. name
+3. alias
+4. email
+5. photo_profile
+6. interests (en común)
+7. distance (en km)
+8. sex (M o F)
+9. age</p>
+</div>
+<div class="section" id="ejemplo-de-payload-de-la-respuesta">
+<h4>Ejemplo de payload de la respuesta<a class="headerlink" href="#ejemplo-de-payload-de-la-respuesta" title="Permalink to this headline">¶</a></h4>
+<div class="highlight-json"><div class="highlight"><pre><span></span><span class="p">{</span>
+        <span class="nt">&quot;candidates&quot;</span><span class="p">:[</span>
+           <span class="p">{</span>
+           <span class="nt">&quot;id&quot;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
+           <span class="nt">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;usuario&quot;</span><span class="p">,</span>
+           <span class="nt">&quot;alias&quot;</span><span class="p">:</span> <span class="s2">&quot;not a user&quot;</span><span class="p">,</span>
+           <span class="nt">&quot;email&quot;</span><span class="p">:</span> <span class="s2">&quot;usuario@usuario.com&quot;</span><span class="p">,</span>
+           <span class="nt">&quot;photo_profile&quot;</span><span class="p">:</span> <span class="s2">&quot;&lt; base_64 &gt;&quot;</span><span class="p">,</span>
+           <span class="nt">&quot;sex&quot;</span> <span class="p">:</span> <span class="s2">&quot;M&quot;</span><span class="p">,</span>
+           <span class="nt">&quot;age&quot;</span><span class="p">:</span> <span class="mi">20</span><span class="p">,</span>
+           <span class="nt">&quot;interests&quot;</span><span class="p">:</span> <span class="p">[</span>
+              <span class="p">{</span><span class="nt">&quot;category&quot;</span><span class="p">:</span> <span class="s2">&quot;music/band&quot;</span><span class="p">,</span> <span class="nt">&quot;value&quot;</span><span class="p">:</span> <span class="s2">&quot;michael jackson&quot;</span><span class="p">},</span>
+              <span class="p">{</span><span class="nt">&quot;category&quot;</span><span class="p">:</span> <span class="s2">&quot;music/band&quot;</span><span class="p">,</span> <span class="nt">&quot;value&quot;</span><span class="p">:</span> <span class="s2">&quot;pearl jam&quot;</span><span class="p">},</span>
+              <span class="p">{</span><span class="nt">&quot;category&quot;</span><span class="p">:</span> <span class="s2">&quot;outdoors&quot;</span><span class="p">,</span> <span class="nt">&quot;value&quot;</span><span class="p">:</span> <span class="s2">&quot;running&quot;</span><span class="p">}</span>
+           <span class="p">],</span>
+           <span class="nt">&quot;distance&quot;</span><span class="p">:</span> <span class="mf">10.0</span>
+           <span class="p">}]</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">API Documentation</a><ul>
+<li><a class="reference internal" href="#login-authorization">Login (Authorization)</a><ul>
+<li><a class="reference internal" href="#get">GET</a><ul>
+<li><a class="reference internal" href="#parametros">Parametros</a></li>
+<li><a class="reference internal" href="#respuesta">Respuesta</a></li>
+<li><a class="reference internal" href="#ejemplo-de-la-respuesta">Ejemplo de la respuesta:</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a class="reference internal" href="#users">Users</a><ul>
+<li><a class="reference internal" href="#get-all">GET ALL</a><ul>
+<li><a class="reference internal" href="#id1">Parámetros</a></li>
+<li><a class="reference internal" href="#id2">Respuesta</a></li>
+<li><a class="reference internal" href="#id3">Ejemplo de la respuesta:</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#post">POST</a><ul>
+<li><a class="reference internal" href="#id4">Parámetros</a></li>
+<li><a class="reference internal" href="#id5">Respuesta</a></li>
+<li><a class="reference internal" href="#id6">Ejemplo de la respuesta:</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#get-specific">GET SPECIFIC</a><ul>
+<li><a class="reference internal" href="#id7">Parámetros</a></li>
+<li><a class="reference internal" href="#id8">Respuesta</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#put">PUT</a><ul>
+<li><a class="reference internal" href="#id9">Parámetros</a></li>
+<li><a class="reference internal" href="#id10">Respuesta</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#delete">DELETE</a><ul>
+<li><a class="reference internal" href="#id11">Parámetros</a></li>
+<li><a class="reference internal" href="#id12">Respuesta</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a class="reference internal" href="#user-matches">User Matches</a><ul>
+<li><a class="reference internal" href="#id13">GET</a><ul>
+<li><a class="reference internal" href="#id14">Parámetros</a></li>
+<li><a class="reference internal" href="#id15">Respuesta</a></li>
+<li><a class="reference internal" href="#ejemplo-del-payload-en-la-respuesta">Ejemplo del payload en la respuesta</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a class="reference internal" href="#user-likes">User Likes</a><ul>
+<li><a class="reference internal" href="#id16">POST</a><ul>
+<li><a class="reference internal" href="#id17">Parámetros</a></li>
+<li><a class="reference internal" href="#id18">Respuesta</a></li>
+<li><a class="reference internal" href="#ejemplo-de-respuesta">Ejemplo de respuesta</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a class="reference internal" href="#messages">Messages</a><ul>
+<li><a class="reference internal" href="#id19">GET</a><ul>
+<li><a class="reference internal" href="#id20">Parámetros</a></li>
+<li><a class="reference internal" href="#id21">Respuesta</a></li>
+<li><a class="reference internal" href="#id22">Ejemplo de respuesta</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#id23">POST</a><ul>
+<li><a class="reference internal" href="#id24">Parámetros</a></li>
+<li><a class="reference internal" href="#id25">Respuesta</a></li>
+<li><a class="reference internal" href="#ejemplo-de-response">Ejemplo de response:</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a class="reference internal" href="#conversations">Conversations</a><ul>
+<li><a class="reference internal" href="#id26">GET</a><ul>
+<li><a class="reference internal" href="#id27">Parámetros</a></li>
+<li><a class="reference internal" href="#id28">Respuesta</a></li>
+<li><a class="reference internal" href="#ejemplo-respuesta">Ejemplo respuesta:</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a class="reference internal" href="#candidates">Candidates</a><ul>
+<li><a class="reference internal" href="#id29">GET</a><ul>
+<li><a class="reference internal" href="#id30">Parámetros</a></li>
+<li><a class="reference internal" href="#id31">Respuesta</a></li>
+<li><a class="reference internal" href="#ejemplo-de-payload-de-la-respuesta">Ejemplo de payload de la respuesta</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="index.html">Documentation overview</a><ul>
+      <li>Previous: <a href="index.html" title="previous chapter">75.52 Taller de Programación Grupo 5 App Server</a></li>
+      <li>Next: <a href="tecnica.html" title="next chapter">Documentación técnica</a></li>
+  </ul></li>
+</ul>
+</div>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="_sources/api.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2016, Federico Garcia Brion, Juan Manuel Hidalgo, Bruno Liberini, Demian Lopez.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.4.1</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.7</a>
+      
+      |
+      <a href="_sources/api.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>

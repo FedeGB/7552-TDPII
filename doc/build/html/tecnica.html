@@ -1,0 +1,185 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Documentación técnica &mdash; 7552_TDPII_AServer 0.2.0 documentation</title>
+    
+    <link rel="stylesheet" href="_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    './',
+        VERSION:     '0.2.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <link rel="top" title="7552_TDPII_AServer 0.2.0 documentation" href="index.html" />
+    <link rel="prev" title="API Documentation" href="api.html" />
+   
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head>
+  <body role="document">  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="documentacion-tecnica">
+<h1>Documentación técnica<a class="headerlink" href="#documentacion-tecnica" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="manejo-de-llamados-a-la-api">
+<h2>Manejo de llamados a la API<a class="headerlink" href="#manejo-de-llamados-a-la-api" title="Permalink to this headline">¶</a></h2>
+<a class="reference internal image-reference" href="_images/EventHandler.png"><img alt="_images/EventHandler.png" src="_images/EventHandler.png" style="width: 711.5px; height: 307.5px;" /></a>
+<p><em>Diagrama de clases del manejo de eventos de request que llegan a la API del server.</em></p>
+<p>Implementados hay varios más de los mostrados en el diagrama. Cada request de la API tiene su propia clase que hereda de EventHandler y maneja el evento según corresponda. Entre el manejo tenemos la validación de la entrada del request. Esto incluye validar que los requisitos de la llamada se cumplan (el tipo de llamada sea el correcto, todos los parámetros obligatorios estén, validar header, etc). Luego también tiene un manejo sobre qué hacer en su caso. Para ello, a este se le provee de parte del server el Manager y el SharedManager siendo el primero la clase que tiene acceso a la clase de la Database y el segundo la clase que sirve como cliente para realizar llamadas al Shared Server.</p>
+<a class="reference internal image-reference" href="_images/EventFlow.png"><img alt="_images/EventFlow.png" src="_images/EventFlow.png" style="width: 256.5px; height: 305.5px;" /></a>
+<p><em>Diagrama de flujo al llegar un request al Server</em></p>
+</div>
+<div class="section" id="base-de-datos">
+<h2>Base de datos<a class="headerlink" href="#base-de-datos" title="Permalink to this headline">¶</a></h2>
+<p>Para la base de datos, al utilizar RocksDB, las tablas son de clave - valor. Por ello estas se dividieron en lo siguiente para este proyecto:</p>
+<div class="section" id="users">
+<h3>Users<a class="headerlink" href="#users" title="Permalink to this headline">¶</a></h3>
+<p>username : Json String</p>
+<p>Para los usuarios se decidio manejarlos con un username como clave, que a su vez es el email asociado en el Shared Server. Este es el punto en común inicial entre los dos. El id que provee Shared Server también es único y es en común pero este se genera en el Shared y no en el App Server.
+Los valores del usuario se guardan en un Json serializado a String. Esto permite un almacenado directo y un pasaje rapido entre string y Json.
+Los usuarios persisten los siguientes atributos:</p>
+<ul class="simple">
+<li>id -&gt; valor Int al Json</li>
+<li>username</li>
+<li>name</li>
+<li>email</li>
+<li>password</li>
+<li>location -&gt; valor Json con latitude y longitude dentro</li>
+<li>latitude</li>
+<li>longitude</li>
+<li>distance</li>
+<li>ageRange -&gt; valor Json con minAge y maxAge dentro</li>
+<li>minAge</li>
+<li>maxAge</li>
+<li>token</li>
+<li>lastTimeConnected</li>
+<li>lastCandiatesRequest</li>
+<li>candidatesSend</li>
+<li>likesReceived</li>
+<li>popularOnePercent</li>
+<li>matches -&gt; Json Array con matches usernames</li>
+</ul>
+</div>
+<div class="section" id="likes">
+<h3>Likes<a class="headerlink" href="#likes" title="Permalink to this headline">¶</a></h3>
+<p>&lt;username dador&gt; + &lt;username receptor&gt; : Json String</p>
+<p>Para los likes se utilizo como clave &lt;username dador&gt; + &lt;username receptor&gt; y como valor el Json String de los atributos de Like. Se podria haber guardado en un principio unicamente el boolean que indica si se le esta dando like o no like, pero para una transformación de String a Json más directa se terminó guardando el Json completo.
+Los likes persisten los siguientes atributos:</p>
+<ul class="simple">
+<li>user1 -&gt; username del que da el like/no like</li>
+<li>user2 -&gt; username del que recibe el like/no like</li>
+<li>like -&gt; booleano indicando like/no like</li>
+</ul>
+</div>
+<div class="section" id="messages">
+<h3>Messages<a class="headerlink" href="#messages" title="Permalink to this headline">¶</a></h3>
+<p>id + &lt;username sender&gt; + &lt;username receptor&gt; : Json String</p>
+<p>Para los mensajes, ademas de los username del emisor y receptor del mensaje se agrego el id del mensaje, relativo al de la conversación que están teniendo ese emisor y receptor en particular. Por lo cual todo id comenzaría de 0 en adelante. Como valor nuevamente se puso el Json String de los atributos del mensaje, que son los siguientes:</p>
+<ul class="simple">
+<li>id;</li>
+<li>sender</li>
+<li>receptor</li>
+<li>date -&gt; fecha de envío</li>
+<li>data -&gt; Mensaje enviado en cuestión</li>
+</ul>
+</div>
+<div class="section" id="conversations">
+<h3>Conversations<a class="headerlink" href="#conversations" title="Permalink to this headline">¶</a></h3>
+<p>&lt;username usuario1&gt; + &lt;username usuario2&gt; : Json String</p>
+<p>Las conversaciones entre usuario son únicas, aunque no lo parezca por como se están guardando. La idea es que al enviarse el primer mensaje se genera la conversación con clave usuario1 + usuario2. Después para obtener la conversación si estamos del lado del usuario2, únicamente tenemos que probar ambos sentidos y seguir con esa única conversación.
+Las conversaciones guardan el siguiente Json String:</p>
+<ul class="simple">
+<li>id</li>
+<li>user1</li>
+<li>user2</li>
+<li>numberMessages -&gt; cantidad de mensajes totales en la conversación</li>
+<li>messagesId -&gt; Json Array con los ids de los mensajes</li>
+</ul>
+</div>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Documentación técnica</a><ul>
+<li><a class="reference internal" href="#manejo-de-llamados-a-la-api">Manejo de llamados a la API</a></li>
+<li><a class="reference internal" href="#base-de-datos">Base de datos</a><ul>
+<li><a class="reference internal" href="#users">Users</a></li>
+<li><a class="reference internal" href="#likes">Likes</a></li>
+<li><a class="reference internal" href="#messages">Messages</a></li>
+<li><a class="reference internal" href="#conversations">Conversations</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="index.html">Documentation overview</a><ul>
+      <li>Previous: <a href="api.html" title="previous chapter">API Documentation</a></li>
+  </ul></li>
+</ul>
+</div>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="_sources/tecnica.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2016, Federico Garcia Brion, Juan Manuel Hidalgo, Bruno Liberini, Demian Lopez.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.4.1</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.7</a>
+      
+      |
+      <a href="_sources/tecnica.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>
