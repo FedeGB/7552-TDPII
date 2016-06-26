@@ -85,6 +85,7 @@ Para correrlo:
 - ./main 
 - Si se quiere importar usuario del shared server asignado: ./main 1
 
-
+Para cerrar el servidor correctamente:
+ - Control + C 
  
 

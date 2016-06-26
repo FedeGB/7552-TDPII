@@ -132,7 +132,7 @@ Json::Value CurlManager::execute() {
 		URL += "/" + parameters;
 	}
 	curl_easy_setopt(this->curl, CURLOPT_URL, URL.c_str());
-	curl_easy_setopt(this->curl, CURLOPT_VERBOSE, 1L);
+	// curl_easy_setopt(this->curl, CURLOPT_VERBOSE, 1L);
 	char* postData = NULL;
 	if(!bodyParams .empty()) {
 		Json::FastWriter fast;
@@ -140,7 +140,6 @@ Json::Value CurlManager::execute() {
 		static std::string bodySender;
 		EscapeJSON(body, bodySender);
 		postData = new char[bodySender.length()]();
-		std::cout << postData << std::endl;
 		strcpy(postData, bodySender.c_str());
     	curl_easy_setopt(this->curl, CURLOPT_POSTFIELDS, postData);
 	}
@@ -157,7 +156,10 @@ Json::Value CurlManager::execute() {
 			val["error"] = std::string(curl_easy_strerror(res));
 		} else {
 			std::string response(s.ptr);
-		    free(s.ptr);
+			if(s.ptr) {
+		    	free(s.ptr);
+		    	s.ptr = NULL;
+			}
 			if(responseCode == 200 || responseCode == 201) {
 			    Json::Reader r = Json::Reader();
 				r.parse(response.c_str(), val);
