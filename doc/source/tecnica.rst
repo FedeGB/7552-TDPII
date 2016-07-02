@@ -86,3 +86,23 @@ Las conversaciones guardan el siguiente Json String:
 - user2
 - numberMessages -> cantidad de mensajes totales en la conversación
 - messagesId -> Json Array con los ids de los mensajes
+
+
+Algoritmo de obtención de candidatos
+====================================
+
+Para el algoritmo de obtención de candidatura se filtraron los usuarios en el siguiente orden, comenzando con los filtros de inconsistencia o que tenían más que ver con datos en el App Server para un descarte más rápido:
+
+1. Descartar si el usuario se encontraba en el Shared Server, pero no en el App Server (inconsistencia)  
+2. Descartar si el usuario soy yo  
+3. Descartar si al usuario ya lo habia recibido como candidato. Esto se toma en base a si al usuario se le dio Like o No Like, con esto se lo consideraba como un usuario ya "visto" por el que pide los candidatos.  
+4. Descartabamos si era un usuario que se encontraba dentro del 1% y si se dio el azar. Esto es pues, los usuario dentro del 1% con más Likes deben salir con menos frecuencia y se optó por dejarlo al azar en si debía ser devuelto como candidato o no, con una probabilidad de ~50%.  
+
+Luego pasamos a las validaciones que ya incluyen más data del Shared Server:  
+
+1. Descartar si el usuario no se encuentra dentro de mi rango de edad de preferencia.
+2. Descartar si el usuario no se encuentra dentro de el rango de  distancía pedido. Se optó por descartar primero por edad pues es más directo que ir directo a hacer el cálculo de distancia. Este cálculo se realizo con la fórmula de "Harvestine Distance", que es lo que se usa para el cálculo de distancia entre dos puntos, dados sus ángulos desde los ejes cartecianos en una esfera de radio R.  
+3. Por último viene el filtro por intereses. Como los intereses son un input directo del usuario estos pueden variar entre mayúsculas, minusculas y espacios, que puedan estar bien o no, pero depende del usuario. Se podría dejar esto con falsos negativos en los match de intereses, pero es preferible poder llegar a tener un falso positivo y quizas enviar un interes parecido antes que perderlo. Para esto los intereses se van insertando en un Map, pasados a minúsculas y sin espacios. Si las key del map coinciden se cuenta como un match de interes.  
+4. A su vez se va fijando si estamos con el interes de la categoría "Sex" para verificar si la preferencia se da correctamente hacia ambos lados.  
+
+Si pasa por todo eso y por lo menos tiene un interes en común, que no sea de la categoría "Sex", este es devuelto como candidato.  
